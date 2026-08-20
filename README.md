@@ -1,6 +1,6 @@
 # an Euclidean space
 
-Source for [aneuclideanspace.github.io](https://aneuclideanspace.github.io), a
+Source for [noneuclideanspace.github.io](https://noneuclideanspace.github.io), a
 public collection of notes.
 
 ## Local checks
