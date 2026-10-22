@@ -8,6 +8,7 @@
 // bare URLs linked, ==highlights==, ![[embeds]], [[links]], $math$, highlighted code.
 
 import fs from "node:fs";
+import crypto from "node:crypto";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import MarkdownIt from "markdown-it";
@@ -206,6 +207,21 @@ function stripComments(src) {
   return src.replace(/%%[\s\S]*?%%/g, "");
 }
 
+// Cache-busting: stylesheet URLs carry a hash of their contents, so a changed
+// stylesheet is fetched fresh instead of coming from the browser cache.
+const stamp = (file) =>
+  crypto.createHash("sha1").update(fs.readFileSync(path.join(ROOT, file))).digest("hex").slice(0, 8);
+const CSS_STYLE = `/assets/css/style.css?v=${stamp("assets/css/style.css")}`;
+const CSS_NOTES = `/assets/css/notes.css?v=${stamp("assets/css/notes.css")}`;
+
+// Hand-written pages link style.css too; keep their version stamp in step.
+for (const file of ["index.html", "about/index.html"]) {
+  const abs = path.join(ROOT, file);
+  if (!fs.existsSync(abs)) continue;
+  const html = fs.readFileSync(abs, "utf8").replace(/(href="[^"]*assets\/css\/style\.css)(\?v=[0-9a-f]+)?"/, `$1?v=${stamp("assets/css/style.css")}"`);
+  fs.writeFileSync(abs, html);
+}
+
 // ---------- pages ----------
 
 function crumbs(trail) {
@@ -222,8 +238,8 @@ function page({ title, trail, body, math }) {
   <title>${escapeHtml(title)} · ${SITE_TITLE}</title>
   <meta name="theme-color" content="#FFFFFF">
   <link rel="preload" href="/assets/fonts/hanken-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/css/style.css">
-  <link rel="stylesheet" href="/assets/css/notes.css">${math ? '\n  <link rel="stylesheet" href="/assets/katex/katex.min.css">' : ""}
+  <link rel="stylesheet" href="${CSS_STYLE}">
+  <link rel="stylesheet" href="${CSS_NOTES}">${math ? '\n  <link rel="stylesheet" href="/assets/katex/katex.min.css">' : ""}
 </head>
 <body>
   ${crumbs(trail)}
