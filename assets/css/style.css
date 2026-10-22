@@ -39,13 +39,15 @@ a:focus-visible {
   border-radius: 2px;
 }
 
-/* Home: the site name alone, centered in the viewport */
+/* Home: the site name, centered in the viewport, with section links below */
 .home {
   min-height: 100svh;
   display: grid;
   place-items: center;
   padding: var(--gutter);
 }
+
+.home-inner { text-align: center; }
 
 .home h1 {
   margin: 0;
@@ -54,4 +56,44 @@ a:focus-visible {
   line-height: 1;
   letter-spacing: -0.035em;
   overflow-wrap: anywhere;
+}
+
+.home-nav {
+  margin-top: clamp(20px, 3vw, 36px);
+  display: flex;
+  justify-content: center;
+  gap: 2em;
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+}
+
+.home-nav a,
+.site-name {
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s ease;
+}
+
+.home-nav a:hover,
+.site-name:hover { border-bottom-color: currentColor; }
+
+/* Inner pages */
+.site-header {
+  padding: 24px var(--gutter);
+}
+
+.site-name {
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.page {
+  padding: clamp(24px, 6vw, 72px) var(--gutter) 96px;
+  max-width: 46rem;
+}
+
+.page h1 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
 }
