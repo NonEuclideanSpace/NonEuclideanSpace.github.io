@@ -1,0 +1,15 @@
+{
+  "name": "noneuclideanspace-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:notes": "node scripts/build-notes.mjs"
+  },
+  "devDependencies": {
+    "katex": "0.16.11",
+    "markdown-it": "14.1.0",
+    "markdown-it-mark": "4.0.0",
+    "markdown-it-texmath": "1.0.0",
+    "prismjs": "1.29.0"
+  }
+}

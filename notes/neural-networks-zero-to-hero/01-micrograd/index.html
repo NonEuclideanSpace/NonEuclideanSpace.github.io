@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>01-Micrograd · NonEuclideanSpace</title>
+  <meta name="theme-color" content="#FFFFFF">
+  <link rel="preload" href="/assets/fonts/hanken-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/notes.css">
+</head>
+<body>
+  <header class="site-header"><nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/notes/">Notes</a><span aria-hidden="true">/</span><a href="/notes/neural-networks-zero-to-hero/">Neural Networks Zero to Hero</a></nav></header>
+  <main class="page">
+    <article class="note">
+      <h1 class="note-title">01-Micrograd</h1>
+<p><strong>Micrograd</strong> is an <strong>automatic differentiation engine</strong> that operates on single numbers rather than tensors, which makes it slow and completely transparent.</p>
+<h2 id="step-1-wrap-numbers-in-an-object">Step-1: Wrap Numbers in  an Object</h2>
+<pre class="code" data-lang="python"><code><span class="token keyword">class</span> <span class="token class-name">Value</span><span class="token punctuation">:</span>
+	<span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>data<span class="token punctuation">,</span>_children<span class="token operator">=</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>_op<span class="token operator">=</span><span class="token string">''</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+		self<span class="token punctuation">.</span>data<span class="token operator">=</span>data
+		self<span class="token punctuation">.</span>grad<span class="token operator">=</span><span class="token number">0.0</span>
+		self<span class="token punctuation">.</span>_backward<span class="token operator">=</span><span class="token keyword">lambda</span><span class="token punctuation">:</span><span class="token boolean">None</span>
+		self<span class="token punctuation">.</span>_prev<span class="token operator">=</span><span class="token builtin">set</span><span class="token punctuation">(</span>_children<span class="token punctuation">)</span>
+		self<span class="token punctuation">.</span>_op<span class="token operator">=</span>_op
+	<span class="token keyword">def</span> <span class="token function">__repr__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+		<span class="token keyword">return</span> <span class="token string-interpolation"><span class="token string">f"Value(data=</span><span class="token interpolation"><span class="token punctuation">{</span>self<span class="token punctuation">.</span>data<span class="token punctuation">}</span></span><span class="token string">, grad=</span><span class="token interpolation"><span class="token punctuation">{</span>self<span class="token punctuation">.</span>grad<span class="token punctuation">}</span></span><span class="token string">)"</span></span>
+</code></pre>
+<ul>
+<li><strong><strong>init</strong></strong> is a special method that runs when you create an instance. Think of it as Python's constructor.</li>
+<li><strong>self</strong> refers to the current object, much like Java's <strong>this</strong> ,and it must appear explicitly in method definition.</li>
+<li><strong>_children=()</strong> means if omitted, use an empty tuple</li>
+<li><strong>1-element tuple (a<mark>🔴,</mark>)</strong> notice that the <strong>comma</strong> matters</li>
+<li><mark>🔴<strong>lambda:None</strong> stores a <strong>function</strong> .</mark><br>
+for example: f = lambda x: x*2<br>
+f(4)<br>
+returns:8<br>
+<mark>🔵syntax: lambda parameters: expression</mark></li>
+<li>set() creates a set<br>
+for instance:<br>
+set([1, 1, 2])--&gt;{1, 2}</li>
+</ul>
+<pre class="code" data-lang="python"><code>a<span class="token operator">=</span>Value<span class="token punctuation">(</span><span class="token number">2.0</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>
+<span class="token comment">#result:Value(data=2.0,grad=0.0)</span>
+</code></pre>
+<h2 id="step-2-make-arithmetic-record-itself">Step-2: Make Arithmetic Record itself</h2>
+<p>Add following inside Value class</p>
+<pre class="code" data-lang="python"><code>	<span class="token keyword">def</span> <span class="token function">__add__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>other<span class="token punctuation">)</span><span class="token punctuation">:</span>
+		other<span class="token operator">=</span>other <span class="token keyword">if</span> isinstacnce<span class="token punctuation">(</span>other<span class="token punctuation">,</span>Value<span class="token punctuation">)</span> <span class="token keyword">else</span> Value<span class="token punctuation">(</span>other<span class="token punctuation">)</span>
+		out<span class="token operator">=</span>Value<span class="token punctuation">(</span>self<span class="token punctuation">.</span>data<span class="token operator">+</span>other<span class="token punctuation">.</span>data<span class="token punctuation">,</span> <span class="token punctuation">(</span>self<span class="token punctuation">,</span>other<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">'+'</span><span class="token punctuation">)</span>
+		<span class="token keyword">def</span> <span class="token function">_backward</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+			self<span class="token punctuation">.</span>grad<span class="token operator">+=</span><span class="token number">1.0</span><span class="token operator">*</span>out<span class="token punctuation">.</span>grad
+			other<span class="token punctuation">.</span>grad<span class="token operator">+=</span><span class="token number">1.0</span><span class="token operator">*</span>out<span class="token punctuation">.</span>grad
+		out<span class="token punctuation">.</span>_backward<span class="token operator">=</span>_backward
+		<span class="token keyword">return</span> out
+	
+</code></pre>
+    </article>
+  </main>
+</body>
+</html>
