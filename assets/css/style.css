@@ -13,6 +13,8 @@
   --tide: #4F7A9C;     /* links */
   --deep: #1D3850;     /* text */
   --mist: #667F93;     /* secondary text */
+  --abyss: #0C1820;    /* open water in the hero photo */
+  --foam: #EEF6FA;     /* text on the hero photo */
 
   --gutter: clamp(16px, 4vw, 56px);
   --font: "Hanken Grotesk", -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
@@ -43,42 +45,22 @@ a:focus-visible {
   border-radius: 2px;
 }
 
-/* Top bar sits on the hero image */
-.topbar {
-  position: absolute;
-  inset: 0 0 auto 0;
-  z-index: 1;
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding: 22px var(--gutter);
-  font-size: 0.9375rem;
-  letter-spacing: 0.01em;
-}
-
-.wordmark { font-weight: 600; }
-
-.topbar nav a { opacity: 0.8; }
-.topbar nav a:hover { opacity: 1; }
-
-/* Hero: full-bleed photograph. Until assets/img/hero.jpg exists,
-   the gradient underneath stands in as a pale sky over water. */
+/* Hero: full-bleed photograph of the breaking wave.
+   The dark fill matches the open water while the image loads. */
 .hero {
   margin: 0;
   height: min(84svh, 860px);
   min-height: 420px;
   overflow: hidden;
-  background: var(--frost);
+  background: var(--abyss);
 }
 
 .hero-image {
   width: 100%;
   height: 100%;
-  background-image:
-    url("../img/hero.jpg"),
-    linear-gradient(180deg, #EEF4F9 0%, var(--frost) 58%, var(--glacier) 58.2%, #A9C2D5 100%);
+  background-image: url("../img/hero.jpg");
   background-size: cover;
-  background-position: center 40%;
+  background-position: 58% 44%;
   animation: surface 1.4s ease-out both;
 }
 
@@ -99,13 +81,6 @@ a:focus-visible {
   line-height: 1;
   letter-spacing: -0.035em;
   overflow-wrap: anywhere;
-}
-
-.intro p {
-  margin: 1.1em 0 0;
-  max-width: 34em;
-  color: var(--mist);
-  font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
 }
 
 @media (prefers-reduced-motion: reduce) {
