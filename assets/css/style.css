@@ -13,7 +13,7 @@
   --tide: #4F7A9C;     /* links */
   --deep: #1D3850;     /* text */
   --mist: #667F93;     /* secondary text */
-  --abyss: #0C1820;    /* open water in the hero photo */
+  --abyss: #0E1830;    /* night sky in the hero photo */
   --foam: #EEF6FA;     /* text on the hero photo */
 
   --gutter: clamp(16px, 4vw, 56px);
@@ -45,8 +45,8 @@ a:focus-visible {
   border-radius: 2px;
 }
 
-/* Hero: full-bleed photograph of the breaking wave.
-   The dark fill matches the open water while the image loads. */
+/* Hero: full-bleed photograph (camera pole at night).
+   The dark fill matches the sky while the image loads. */
 .hero {
   margin: 0;
   height: min(84svh, 860px);
@@ -60,7 +60,7 @@ a:focus-visible {
   height: 100%;
   background-image: url("../img/hero.jpg");
   background-size: cover;
-  background-position: 58% 44%;
+  background-position: 50% 30%;
   animation: surface 1.4s ease-out both;
 }
 
