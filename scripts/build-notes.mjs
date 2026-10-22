@@ -121,6 +121,24 @@ const md = new MarkdownIt({
 md.use(markPlugin);
 md.use(texmath, { engine: katex, delimiters: "dollars", katexOptions: { throwOnError: false, output: "html" } });
 
+// Coloured highlights: a coloured circle right after "==" picks the colour,
+// e.g. ==🔴text== is a red highlight. The circle itself is not shown.
+const HIGHLIGHT_COLORS = { "🔴": "red", "🟠": "orange", "🟡": "yellow", "🟢": "green", "🔵": "blue", "🟣": "purple" };
+md.core.ruler.push("colored_highlight", (state) => {
+  for (const block of state.tokens) {
+    if (block.type !== "inline" || !block.children) continue;
+    const kids = block.children;
+    for (let i = 0; i < kids.length - 1; i++) {
+      if (kids[i].type !== "mark_open" || kids[i + 1].type !== "text") continue;
+      const text = kids[i + 1].content;
+      const emoji = Object.keys(HIGHLIGHT_COLORS).find((e) => text.startsWith(e));
+      if (!emoji) continue;
+      kids[i].attrJoin("class", `hl-${HIGHLIGHT_COLORS[emoji]}`);
+      kids[i + 1].content = text.slice(emoji.length).replace(/^\uFE0F/, "");
+    }
+  }
+});
+
 // Obsidian wiki links and embeds: [[target|label]] and ![[target|size]]
 md.inline.ruler.before("link", "wikilink", (state, silent) => {
   const src = state.src;
