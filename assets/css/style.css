@@ -105,7 +105,7 @@ a:focus-visible {
 
 .timeline-row {
   display: grid;
-  grid-template-columns: 7.5em 1fr;
+  grid-template-columns: 8.5em 1fr;
   column-gap: 1.5em;
 }
 
