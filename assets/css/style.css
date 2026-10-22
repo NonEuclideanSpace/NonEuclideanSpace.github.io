@@ -1,0 +1,113 @@
+@font-face {
+  font-family: "Hanken Grotesk";
+  src: url("../fonts/hanken-grotesk-latin.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --ice: #F4F8FB;      /* page */
+  --frost: #E3EDF4;    /* placeholder sky, soft fills */
+  --glacier: #B9CFDF;  /* lines, placeholder water */
+  --tide: #4F7A9C;     /* links */
+  --deep: #1D3850;     /* text */
+  --mist: #667F93;     /* secondary text */
+
+  --gutter: clamp(16px, 4vw, 56px);
+  --font: "Hanken Grotesk", -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--ice);
+  color: var(--deep);
+  font-family: var(--font);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--tide);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* Top bar sits on the hero image */
+.topbar {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 22px var(--gutter);
+  font-size: 0.9375rem;
+  letter-spacing: 0.01em;
+}
+
+.wordmark { font-weight: 600; }
+
+.topbar nav a { opacity: 0.8; }
+.topbar nav a:hover { opacity: 1; }
+
+/* Hero: full-bleed photograph. Until assets/img/hero.jpg exists,
+   the gradient underneath stands in as a pale sky over water. */
+.hero {
+  margin: 0;
+  height: min(84svh, 860px);
+  min-height: 420px;
+  overflow: hidden;
+  background: var(--frost);
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  background-image:
+    url("../img/hero.jpg"),
+    linear-gradient(180deg, #EEF4F9 0%, var(--frost) 58%, var(--glacier) 58.2%, #A9C2D5 100%);
+  background-size: cover;
+  background-position: center 40%;
+  animation: surface 1.4s ease-out both;
+}
+
+@keyframes surface {
+  from { opacity: 0; transform: scale(1.02); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Name and one line beneath the image */
+.intro {
+  padding: clamp(32px, 6vw, 72px) var(--gutter) clamp(56px, 10vw, 120px);
+}
+
+.intro h1 {
+  margin: 0;
+  font-size: clamp(2.5rem, 8.4vw, 7rem);
+  font-weight: 250;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  overflow-wrap: anywhere;
+}
+
+.intro p {
+  margin: 1.1em 0 0;
+  max-width: 34em;
+  color: var(--mist);
+  font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-image { animation: none; }
+}
