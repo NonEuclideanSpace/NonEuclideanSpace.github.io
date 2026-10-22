@@ -103,7 +103,7 @@ a:focus-visible {
   margin: clamp(28px, 5vw, 48px) 0 0;
 }
 
-/* Separate groups (education, then internships) by a clearly larger gap */
+/* Separate groups (internship, then education) by a clearly larger gap */
 .timeline + .timeline { margin-top: clamp(40px, 7vw, 72px); }
 
 .timeline-row {
