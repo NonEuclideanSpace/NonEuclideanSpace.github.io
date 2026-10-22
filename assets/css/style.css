@@ -103,9 +103,12 @@ a:focus-visible {
   margin: clamp(28px, 5vw, 48px) 0 0;
 }
 
+/* Separate groups (education, then internships) by a clearly larger gap */
+.timeline + .timeline { margin-top: clamp(40px, 7vw, 72px); }
+
 .timeline-row {
   display: grid;
-  grid-template-columns: 8.5em 1fr;
+  grid-template-columns: 11em 1fr;
   column-gap: 1.5em;
 }
 
@@ -113,6 +116,7 @@ a:focus-visible {
 
 .timeline dt {
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
   color: #5B6F86;
 }
 
