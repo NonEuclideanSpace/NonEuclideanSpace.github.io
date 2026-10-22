@@ -97,3 +97,34 @@ a:focus-visible {
   line-height: 1.1;
   letter-spacing: -0.03em;
 }
+
+/* About me: dated entries, years on the left */
+.timeline {
+  margin: clamp(28px, 5vw, 48px) 0 0;
+}
+
+.timeline-row {
+  display: grid;
+  grid-template-columns: 7.5em 1fr;
+  column-gap: 1.5em;
+}
+
+.timeline-row + .timeline-row { margin-top: 1.4em; }
+
+.timeline dt {
+  font-variant-numeric: tabular-nums;
+  color: #5B6F86;
+}
+
+.timeline dd { margin: 0; }
+
+.timeline-place,
+.timeline-detail { display: block; }
+
+.timeline-place { font-weight: 500; }
+
+.timeline-detail { color: #5B6F86; }
+
+@media (max-width: 480px) {
+  .timeline-row { grid-template-columns: 1fr; row-gap: 0.15em; }
+}
