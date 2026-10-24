@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Building a Tree · NonEuclideanSpace</title>
+  <meta name="theme-color" content="#FFFFFF">
+  <link rel="preload" href="/assets/fonts/hanken-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/style.css?v=657db9fa">
+  <link rel="stylesheet" href="/assets/css/notes.css?v=67c3aaa4">
+</head>
+<body>
+  <header class="site-header"><nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/notes/">Notes</a><span aria-hidden="true">/</span><a href="/notes/ds-a/">DS &amp; A</a></nav></header>
+  <main class="page">
+    <article class="note">
+      <h1 class="note-title">Building a Tree</h1>
+<p>建立树</p>
+<pre class="code" data-lang="cpp"><code><span class="token keyword">struct</span> <span class="token class-name">Node</span><span class="token punctuation">{</span>
+	<span class="token keyword">char</span> val<span class="token punctuation">;</span>
+	Node<span class="token operator">*</span> left<span class="token punctuation">;</span>
+	Node<span class="token operator">*</span> right<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+Node<span class="token operator">*</span> <span class="token operator">=</span><span class="token keyword">new</span> Node<span class="token punctuation">{</span><span class="token char">'A'</span><span class="token punctuation">,</span><span class="token keyword">nullptr</span><span class="token punctuation">,</span><span class="token keyword">nullptr</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+p<span class="token operator">-></span>left<span class="token operator">=</span><span class="token keyword">new</span> Node<span class="token punctuation">{</span><span class="token char">'B'</span><span class="token punctuation">,</span><span class="token keyword">nullptr</span><span class="token punctuation">,</span><span class="token keyword">nullptr</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>ABD..EF..G..C..<br>
+<img src="/notes/ds-a/images/screenshot-2026-10-24-at-02.47.00.png" alt="Screenshot 2026-10-24 at 02.47.00.png" loading="lazy"><br>
+ABD..EF..G..C..<br>
+读入ABD..之后，E怎么判断挂在哪里？<br>
+v1 ac</p>
+<pre class="code" data-lang="cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;bits/stdc++.h></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">struct</span> <span class="token class-name">Node</span><span class="token punctuation">{</span>
+    <span class="token keyword">char</span> val<span class="token punctuation">;</span>
+    Node<span class="token operator">*</span> left<span class="token punctuation">;</span>
+    Node<span class="token operator">*</span> right<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+vector<span class="token operator">&lt;</span>Node<span class="token operator">*</span><span class="token operator">></span>tree<span class="token punctuation">;</span>
+string s<span class="token punctuation">;</span>
+<span class="token keyword">int</span> cnt<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">build</span><span class="token punctuation">(</span>Node<span class="token operator">*</span> node<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>cnt<span class="token punctuation">]</span><span class="token operator">==</span><span class="token char">'.'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        cnt<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+        node<span class="token operator">-></span>left<span class="token operator">=</span><span class="token keyword">new</span> Node<span class="token punctuation">{</span>s<span class="token punctuation">[</span>cnt<span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token keyword">nullptr</span><span class="token punctuation">,</span><span class="token keyword">nullptr</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+        tree<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>node<span class="token operator">-></span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        cnt<span class="token operator">++</span><span class="token punctuation">;</span>            <span class="token function">build</span><span class="token punctuation">(</span>node<span class="token operator">-></span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>cnt<span class="token punctuation">]</span><span class="token operator">==</span><span class="token char">'.'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        cnt<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+        node<span class="token operator">-></span>right<span class="token operator">=</span><span class="token keyword">new</span> Node<span class="token punctuation">{</span>s<span class="token punctuation">[</span>cnt<span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token keyword">nullptr</span><span class="token punctuation">,</span><span class="token keyword">nullptr</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+        tree<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>node<span class="token operator">-></span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        cnt<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token function">build</span><span class="token punctuation">(</span>node<span class="token operator">-></span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">midtraverse</span><span class="token punctuation">(</span>Node <span class="token operator">*</span>node<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>node<span class="token operator">==</span><span class="token keyword">nullptr</span><span class="token punctuation">)</span><span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token function">midtraverse</span><span class="token punctuation">(</span>node<span class="token operator">-></span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    cout<span class="token operator">&lt;&lt;</span>node<span class="token operator">-></span>val<span class="token punctuation">;</span>
+    <span class="token function">midtraverse</span><span class="token punctuation">(</span>node<span class="token operator">-></span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">posttraverse</span><span class="token punctuation">(</span>Node <span class="token operator">*</span>node<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>node<span class="token operator">==</span><span class="token keyword">nullptr</span><span class="token punctuation">)</span><span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token function">posttraverse</span><span class="token punctuation">(</span>node<span class="token operator">-></span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">posttraverse</span><span class="token punctuation">(</span>node<span class="token operator">-></span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    cout<span class="token operator">&lt;&lt;</span>node<span class="token operator">-></span>val<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    cin<span class="token operator">>></span>s<span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token char">'.'</span><span class="token punctuation">)</span><span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    Node<span class="token operator">*</span> root<span class="token operator">=</span><span class="token keyword">new</span> Node<span class="token punctuation">{</span>s<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token keyword">nullptr</span><span class="token punctuation">,</span><span class="token keyword">nullptr</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    tree<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">build</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">midtraverse</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>cout<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+    <span class="token function">posttraverse</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>cout<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+    </article>
+  </main>
+</body>
+</html>

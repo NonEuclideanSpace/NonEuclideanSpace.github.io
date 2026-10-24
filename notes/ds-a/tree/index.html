@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tree · NonEuclideanSpace</title>
+  <meta name="theme-color" content="#FFFFFF">
+  <link rel="preload" href="/assets/fonts/hanken-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/style.css?v=657db9fa">
+  <link rel="stylesheet" href="/assets/css/notes.css?v=67c3aaa4">
+</head>
+<body>
+  <header class="site-header"><nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/notes/">Notes</a><span aria-hidden="true">/</span><a href="/notes/ds-a/">DS &amp; A</a></nav></header>
+  <main class="page">
+    <article class="note">
+      <h1 class="note-title">Tree</h1>
+<p><a href="https://oi-wiki.org/graph/tree-basic/">https://oi-wiki.org/graph/tree-basic/</a><br>
+<a href="https://labuladong.online/zh/algo/data-structure-basic/binary-tree-traverse-basic/">https://labuladong.online/zh/algo/data-structure-basic/binary-tree-traverse-basic/</a></p>
+<h1 id="存储">存储</h1>
+<h2 id="邻接表">邻接表</h2>
+<h3 id="无根树">无根树</h3>
+<p>为每个结点开一个线性列表，记录所有与之相连接的结点</p>
+<pre class="code" data-lang="cpp"><code>vecotor<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span>adj<span class="token punctuation">[</span>N<span class="token punctuation">]</span>
+</code></pre>
+<h3 id="有根树">有根树</h3>
+<ol>
+<li>若无向图, 可同上</li>
+<li>若输入数据能确保结点的上下关系, 利用这一点, 为每个结点开一个线性列表, 记录其所有子结点, 若必要, 再加一个数组记录其父结点</li>
+</ol>
+<pre class="code" data-lang="cpp"><code>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span>children<span class="token punctuation">[</span>N<span class="token punctuation">]</span>
+<span class="token keyword">int</span> parent<span class="token punctuation">[</span>N<span class="token punctuation">]</span>
+</code></pre>
+<h2 id="左孩子右兄弟">左孩子右兄弟</h2>
+<p>对于有根树的简单表示方法<br>
+首先 给每个结点的所有子结点任意确定一个顺序<br>
+然后 每个结点记录2个值<br>
+1. 其第一个子结点child u<br>
+2. 其下一个兄弟结点 sib u<br>
+遍历一个结点的所有子结点，方法:<br>
+从第一个子结点开始<br>
+处理每个子结点<br>
+转移到下一个兄弟结点</p>
+<pre class="code" data-lang="cpp"><code><span class="token keyword">int</span> v<span class="token operator">=</span>child<span class="token punctuation">[</span>u<span class="token punctuation">]</span>
+<span class="token keyword">while</span><span class="token punctuation">(</span>v<span class="token operator">!=</span>EMPTY_NODE<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token comment">//....</span>
+	v<span class="token operator">=</span>sib<span class="token punctuation">[</span>v<span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+
+</code></pre>
+<h2 id="二叉树">二叉树</h2>
+<p>需要记录每个结点的左右子结点</p>
+<pre class="code" data-lang="cpp"><code><span class="token keyword">int</span> parent<span class="token punctuation">[</span>N<span class="token punctuation">]</span>
+<span class="token keyword">int</span> lch<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">,</span>rch<span class="token punctuation">[</span>N<span class="token punctuation">]</span>
+</code></pre>
+<p>DFS遍历<br>
+先 中 后序<br>
+<img src="/notes/ds-a/images/95308acbda8ce43e8c246269377a7df0.jpg" alt="95308acbda8ce43e8c246269377a7df0.jpg" loading="lazy"><br>
+先序遍历<br>
+根-&gt;左-&gt;右</p>
+<pre class="code" data-lang="cpp"><code><span class="token keyword">void</span> <span class="token function">preorder</span><span class="token punctuation">(</span>BitTree<span class="token operator">*</span> root<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span>root<span class="token operator">-></span>key<span class="token operator">&lt;&lt;</span><span class="token string">" "</span><span class="token punctuation">;</span>
+		<span class="token function">preorder</span><span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">)</span>
+		<span class="token function">preorder</span><span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">)</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>中序<br>
+左根右<br>
+后序<br>
+左右根<br>
+已知中序遍历序列和另外一个序列可以求第三个序列．</p>
+<p><img src="https://oi-wiki.org/graph/images/tree-basic-reverse.svg" alt="reverse" loading="lazy"></p>
+<ol>
+<li>前序的第一个是 <code>root</code>，后序的最后一个是 <code>root</code>．</li>
+<li>先确定根节点，然后根据中序遍历，在根左边的为左子树，根右边的为右子树．</li>
+<li>对于每一个子树可以看成一个全新的树，仍然遵循上面的规律．<img src="/notes/ds-a/images/screenshot-2026-10-24-at-02.03.17.png" alt="Screenshot 2026-10-24 at 02.03.17.png" loading="lazy"><br>
+递归遍历/层序遍历<br>
+递归遍历 衍生 DFS<br>
+层序遍历 衍生 BFS<br>
+递归遍历二叉树的顺序是固定的，但是有三个关键位置，在不同位置插入代码，会产生不同的效果<br>
+层序遍历顺序也固定，但是三种写法<br>
+递归遍历</li>
+</ol>
+<pre class="code" data-lang="cpp"><code><span class="token keyword">class</span> <span class="token class-name">Node</span><span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+	<span class="token keyword">int</span> val<span class="token punctuation">;</span>
+	Node<span class="token operator">*</span> left<span class="token punctuation">;</span>
+	Node<span class="token operator">*</span> right<span class="token punctuation">;</span>
+	<span class="token function">Node</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span><span class="token operator">:</span><span class="token function">val</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">left</span><span class="token punctuation">(</span><span class="token keyword">nullptr</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">right</span><span class="token punctuation">(</span><span class="token keyword">nullptr</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">traverse</span><span class="token punctuation">(</span>Node<span class="token operator">*</span> root<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>root<span class="token operator">==</span><span class="token keyword">nullptr</span><span class="token punctuation">)</span><span class="token keyword">return</span><span class="token punctuation">;</span>
+	<span class="token comment">//前序位置</span>
+	<span class="token function">traverse</span><span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token comment">//中序位置</span>
+	<span class="token function">traverse</span><span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token comment">//后序位置</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>递归遍历的顺序 函数访问结点的顺序确实是固定的<br>
+<img src="/notes/ds-a/images/95308acbda8ce43e8c246269377a7df0-1.jpg" alt="95308acbda8ce43e8c246269377a7df0 1.jpg" loading="lazy"><br>
+在traverse中不同位置放代码<br>
+即 三种位置的关键在于执行时机的不同</p>
+<ul>
+<li>二叉搜索树的中序遍历，结果是有序的<br>
+<img src="/notes/ds-a/images/screenshot-2026-10-24-at-02.13.49.png" alt="Screenshot 2026-10-24 at 02.13.49.png" loading="lazy"></li>
+</ul>
+<h2 id="层序遍历">层序遍历</h2>
+<p><img src="/notes/ds-a/images/pasted-image-20261024021459.png" alt="Pasted image 20261024021459.png" loading="lazy"></p>
+<h3 id="写法一">写法一</h3>
+<pre class="code" data-lang="cpp"><code><span class="token keyword">void</span> <span class="token function">traverse</span><span class="token punctuation">(</span>Node<span class="token operator">*</span> root<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>root<span class="token operator">==</span><span class="token keyword">nullptr</span><span class="token punctuation">)</span><span class="token keyword">return</span><span class="token punctuation">;</span>
+	queue<span class="token operator">&lt;</span>Node<span class="token operator">*</span><span class="token operator">></span>q<span class="token punctuation">;</span>
+	q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>q<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		Node<span class="token operator">*</span> cur<span class="token operator">=</span>q<span class="token punctuation">.</span><span class="token function">front</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+		q<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+		cout<span class="token operator">&lt;&lt;</span>cur<span class="token operator">-></span>val<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>left<span class="token operator">!=</span><span class="token keyword">nullptr</span><span class="token punctuation">)</span>
+		q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>right<span class="token operator">!=</span><span class="token keyword">nullptr</span><span class="token punctuation">)</span>
+		q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>缺点 无法知道当前结点在第几层 简单但不常用</p>
+<h3 id="写法二">写法二</h3>
+<pre class="code" data-lang="cpp"><code><span class="token keyword">void</span> <span class="token function">traverse</span><span class="token punctuation">(</span>Node<span class="token operator">*</span> root<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>root<span class="token operator">==</span><span class="token keyword">nullptr</span><span class="token punctuation">)</span><span class="token keyword">return</span><span class="token punctuation">;</span>
+	queue<span class="token operator">&lt;</span>Node<span class="token operator">*</span><span class="token operator">></span>q<span class="token punctuation">;</span>
+	q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token keyword">int</span> depth<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+	
+	<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>q<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token keyword">int</span> size<span class="token operator">=</span>q<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>size<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+			Node<span class="token operator">*</span> cur<span class="token operator">=</span>q<span class="token punctuation">.</span><span class="token function">front</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			q<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			cout<span class="token operator">&lt;&lt;</span>depth<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+			cout<span class="token operator">&lt;&lt;</span>cur<span class="token operator">-></span>val<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+			<span class="token keyword">if</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>left<span class="token operator">!=</span><span class="token keyword">nullptr</span><span class="token punctuation">)</span>
+				q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token keyword">if</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>right<span class="token operator">!=</span><span class="token keyword">nullptr</span><span class="token punctuation">)</span>
+				q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	depth<span class="token operator">++</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>写法二，每向下一层，depth+1，可以理解为每条边权重为1<br>
+如果每条边权重可以为任意值</p>
+<h3 id="写法三">写法三</h3>
+<p>加一个State类，每个节点自己负责维护自己的路径权重和</p>
+<pre class="code" data-lang="cpp"><code><span class="token keyword">class</span> <span class="token class-name">State</span><span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+	Node<span class="token operator">*</span> node<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> depth<span class="token punctuation">;</span>
+	<span class="token function">State</span><span class="token punctuation">(</span>Node<span class="token operator">*</span> node<span class="token punctuation">,</span><span class="token keyword">int</span> depth<span class="token punctuation">)</span><span class="token operator">:</span><span class="token function">node</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">depth</span><span class="token punctuation">(</span>depth<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">traverse</span><span class="token punctuation">(</span>Node<span class="token operator">*</span> root<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>root<span class="token operator">==</span><span class="token keyword">nullptr</span><span class="token punctuation">)</span><span class="token keyword">return</span><span class="token punctuation">;</span>
+	queue<span class="token operator">&lt;</span>State<span class="token operator">></span>q<span class="token punctuation">;</span>
+	q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token function">State</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>q<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		State cur<span class="token operator">=</span>q<span class="token punctuation">.</span><span class="token function">front</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		q<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		cout<span class="token operator">&lt;&lt;</span>depth<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+		cour<span class="token operator">&lt;&lt;</span>cur<span class="token punctuation">.</span>node<span class="token operator">-></span>val<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>cur<span class="token punctuation">.</span>node<span class="token operator">-></span>left<span class="token operator">!=</span><span class="token keyword">nullptr</span><span class="token punctuation">)</span>
+			q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>cur<span class="token punctuation">.</span>node<span class="token operator">-></span>left<span class="token punctuation">,</span>depth<span class="token operator">+</span>lweight<span class="token punctuation">)</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>cur<span class="token punctuation">.</span>node<span class="token operator">-></span>right<span class="token operator">!=</span><span class="token keyword">nullptr</span><span class="token punctuation">)</span>
+			q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>cur<span class="token punctuation">.</span>node<span class="token operator">-></span>right<span class="token punctuation">,</span>depth<span class="token operator">+</span>rweight<span class="token punctuation">)</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+    </article>
+  </main>
+</body>
+</html>

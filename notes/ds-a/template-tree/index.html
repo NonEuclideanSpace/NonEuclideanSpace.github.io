@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Template-Tree · NonEuclideanSpace</title>
+  <meta name="theme-color" content="#FFFFFF">
+  <link rel="preload" href="/assets/fonts/hanken-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/style.css?v=657db9fa">
+  <link rel="stylesheet" href="/assets/css/notes.css?v=67c3aaa4">
+</head>
+<body>
+  <header class="site-header"><nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/notes/">Notes</a><span aria-hidden="true">/</span><a href="/notes/ds-a/">DS &amp; A</a></nav></header>
+  <main class="page">
+    <article class="note">
+      <h1 class="note-title">Template-Tree</h1>
+<pre class="code" data-lang="cpp"><code><span class="token keyword">struct</span> <span class="token class-name">Node</span><span class="token punctuation">{</span>
+	<span class="token keyword">int</span> val<span class="token punctuation">;</span>
+	Node<span class="token operator">*</span> left<span class="token punctuation">;</span>
+	Node<span class="token operator">*</span> right<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+Node<span class="token operator">*</span> p<span class="token operator">=</span><span class="token keyword">new</span> Node<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token keyword">nullptr</span><span class="token punctuation">,</span><span class="token keyword">nullptr</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<pre class="code" data-lang="cpp"><code><span class="token keyword">const</span> N<span class="token operator">=</span><span class="token number">1009</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> lch<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">,</span>rch<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">,</span>fa<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>
+</code></pre>
+<p>template 1: 输入直接给出父子关系<br>
+结点 左孩子 右孩子<br>
+要点：要先把所有结点建立出来，再读入连边。题目没有给根的话，根就是那个没有fa的结点</p>
+<pre class="code" data-lang="cpp"><code><span class="token keyword">struct</span> <span class="token class-name">Node</span><span class="token punctuation">{</span>
+	<span class="token keyword">int</span> val<span class="token punctuation">;</span>
+	Node<span class="token operator">*</span> parent<span class="token punctuation">;</span>
+	Node<span class="token operator">*</span> left<span class="token punctuation">;</span>
+	Node<span class="token operator">*</span> right<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+Node<span class="token operator">*</span> tree<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span>
+	tree<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span><span class="token keyword">new</span> Node<span class="token punctuation">{</span>i<span class="token punctuation">,</span><span class="token keyword">nullptr</span><span class="token punctuation">,</span><span class="token keyword">nullptr</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">int</span> x<span class="token punctuation">,</span>y<span class="token punctuation">,</span>z<span class="token punctuation">;</span>cin<span class="token operator">>></span>x<span class="token operator">>></span>y<span class="token operator">>></span>z<span class="token punctuation">;</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>y<span class="token operator">!=</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		tree<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token operator">-></span>left<span class="token operator">=</span>tree<span class="token punctuation">[</span>y<span class="token punctuation">]</span>
+		tree<span class="token punctuation">[</span>y<span class="token punctuation">]</span><span class="token operator">-></span>parent<span class="token operator">=</span>tree<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>z<span class="token operator">!=</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		tree<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token operator">-></span>right<span class="token operator">=</span>tree<span class="token punctuation">[</span>z<span class="token punctuation">]</span>
+		tree<span class="token punctuation">[</span>z<span class="token punctuation">]</span><span class="token operator">-></span>parent<span class="token operator">=</span>tree<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+Node<span class="token operator">*</span> root<span class="token operator">=</span><span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>tree<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">-></span>parent<span class="token operator">==</span><span class="token keyword">nullptr</span><span class="token punctuation">)</span>
+		root<span class="token operator">=</span>tree<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+</code></pre>
+<pre class="code" data-lang="cpp"><code><span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span>
+	lch<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span>rch<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span>fa<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">int</span> x<span class="token punctuation">,</span>y<span class="token punctuation">,</span>z<span class="token punctuation">;</span>cin<span class="token operator">>></span>x<span class="token operator">>></span>y<span class="token operator">>></span>z<span class="token punctuation">;</span>
+	lch<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token operator">=</span>y<span class="token punctuation">;</span>rch<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token operator">=</span>z<span class="token punctuation">;</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>y<span class="token operator">!=</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>fa<span class="token punctuation">[</span>y<span class="token punctuation">]</span><span class="token operator">=</span>x<span class="token punctuation">;</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>z<span class="token operator">!=</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>fa<span class="token punctuation">[</span>z<span class="token punctuation">]</span><span class="token operator">=</span>x<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">int</span> root<span class="token operator">=</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>fa<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">==</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>root<span class="token operator">=</span>i<span class="token punctuation">;</span>	
+</code></pre>
+<p>template2: 带空标记的先序序列</p>
+    </article>
+  </main>
+</body>
+</html>

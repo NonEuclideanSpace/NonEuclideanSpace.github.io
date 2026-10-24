@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Huffman Tree · NonEuclideanSpace</title>
+  <meta name="theme-color" content="#FFFFFF">
+  <link rel="preload" href="/assets/fonts/hanken-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/style.css?v=657db9fa">
+  <link rel="stylesheet" href="/assets/css/notes.css?v=67c3aaa4">
+  <link rel="stylesheet" href="/assets/katex/katex.min.css">
+</head>
+<body>
+  <header class="site-header"><nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/notes/">Notes</a><span aria-hidden="true">/</span><a href="/notes/ds-a/">DS &amp; A</a></nav></header>
+  <main class="page">
+    <article class="note">
+      <h1 class="note-title">Huffman Tree</h1>
+<p>二叉树 n个带权叶结点<br>
+树的带权路径长度 Weighted Path Length of Tree WPL<br>
+从根结点到各个叶结点的路径长度和相应叶结点权值乘积之和<br>
+<img src="/notes/ds-a/images/pasted-image-20261024063209.png" alt="Pasted image 20261024063209.png" loading="lazy"><br>
+<section><eqn><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord mathnormal">L</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.6em;vertical-align:-0.55em;"></span><span class="mop op-symbol large-op" style="position:relative;top:0em;">∑</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.01968em;">wl</span></span></span></span></span></eqn></section><br>
+WPL最小的二叉树 霍夫曼树Huffman Tree</p>
+<h2 id="构造">构造</h2>
+<p><img src="/notes/ds-a/images/pasted-image-20261024063504.png" alt="Pasted image 20261024063504.png" loading="lazy"></p>
+<ol>
+<li>初始化：由给定的n个权值构造n个只有一个根结点的二叉树集合F</li>
+<li>选取、合并：从F中选取根结点最小的两棵，分别作为左右子树构造一棵新二叉树，根结点为左右结点权值之和</li>
+<li>删除、加入：从F中删除作为左右子树的两颗二叉树，并将新建立的二叉树加入到F中</li>
+<li>重复2、3，当集合中只剩下1棵树时结束</li>
+</ol>
+    </article>
+  </main>
+</body>
+</html>
