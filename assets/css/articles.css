@@ -170,12 +170,6 @@
 
 .note .katex-display { overflow-x: auto; overflow-y: hidden; }
 
-.article-tools {
-  margin: -0.5em 0 2em;
-  font-size: 0.9375rem;
-  color: #5B6F86;
-}
-
 .academic-article figure { margin: 2em 0; }
 .academic-article figure img { margin: 0 auto 0.75em; }
 .academic-article figcaption {
