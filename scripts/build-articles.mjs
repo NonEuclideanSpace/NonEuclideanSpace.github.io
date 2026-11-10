@@ -30,6 +30,12 @@ const collator = new Intl.Collator("en", { numeric: true, sensitivity: "base" })
 
 const isHidden = (name) => name.startsWith(".");
 
+function articleTitle(abs, fallback) {
+  const source = fs.readFileSync(abs, "utf8");
+  const metadata = /^---\r?\n([\s\S]*?)\r?\n---/.exec(source)?.[1];
+  return metadata?.match(/^title:\s*(.+)$/m)?.[1]?.trim() || fallback;
+}
+
 function scan(dir, rel = "") {
   const node = { name: path.basename(dir), rel, folders: [], notes: [], files: [] };
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -37,7 +43,10 @@ function scan(dir, rel = "") {
     const abs = path.join(dir, entry.name);
     const childRel = rel ? `${rel}/${entry.name}` : entry.name;
     if (entry.isDirectory()) node.folders.push(scan(abs, childRel));
-    else if (entry.name.toLowerCase().endsWith(".md")) node.notes.push({ name: entry.name.slice(0, -3), rel: childRel, abs });
+    else if (entry.name.toLowerCase().endsWith(".md")) {
+      const name = entry.name.slice(0, -3);
+      node.notes.push({ name, title: articleTitle(abs, name), rel: childRel, abs });
+    }
     else node.files.push({ name: entry.name, rel: childRel, abs });
   }
   node.folders.sort((a, b) => collator.compare(a.name, b.name));
@@ -254,7 +263,7 @@ ${body}
 function listing(folder, trail) {
   const items = [
     ...folder.folders.filter(hasNotes).map((f) => `<li><a href="${folderUrl(f)}">${escapeHtml(f.name)}</a></li>`),
-    ...folder.notes.map((n) => `<li><a href="${noteUrl(n)}">${escapeHtml(n.name)}</a></li>`),
+    ...folder.notes.map((n) => `<li><a href="${noteUrl(n)}">${escapeHtml(n.title)}</a></li>`),
   ];
   const title = folder.rel ? folder.name : "Articles";
   const listing = items.length
@@ -281,8 +290,8 @@ fs.rmSync(OUT, { recursive: true, force: true });
   for (const note of folder.notes) {
     const src = stripComments(stripFrontmatter(fs.readFileSync(note.abs, "utf8")));
     const html = md.render(src, { rel: note.rel });
-    const body = `    <article class="note">\n      <h1 class="note-title">${escapeHtml(note.name)}</h1>\n${html}    </article>`;
-    write(noteUrl(note), page({ title: note.name, trail: childTrail, body, math: html.includes('class="katex') }));
+    const body = `    <article class="note">\n      <h1 class="note-title">${escapeHtml(note.title)}</h1>\n${html}    </article>`;
+    write(noteUrl(note), page({ title: note.title, trail: childTrail, body, math: html.includes('class="katex') }));
   }
   for (const file of folder.files) {
     const dest = path.join(OUT, decodeURIComponent(fileUrl(file).replace(/^\/articles\//, "")));

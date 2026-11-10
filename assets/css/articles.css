@@ -170,6 +170,46 @@
 
 .note .katex-display { overflow-x: auto; overflow-y: hidden; }
 
+.article-tools {
+  margin: -0.5em 0 2em;
+  font-size: 0.9375rem;
+  color: #5B6F86;
+}
+
+.academic-article figure { margin: 2em 0; }
+.academic-article figure img { margin: 0 auto 0.75em; }
+.academic-article figcaption {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: #5B6F86;
+}
+.academic-article .citation { font-size: 0.7em; }
+.academic-article .citation a { text-decoration: none; }
+.academic-article .equation {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  margin: 1.5em 0;
+}
+.academic-article .equation-math {
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  padding: 0.25em 0;
+}
+.academic-article .equation-math .katex-display {
+  margin: 0;
+  overflow: visible;
+}
+.academic-article .equation-math .katex-display > .katex {
+  width: max-content;
+  min-width: 100%;
+}
+.academic-article .equation-number { flex: none; }
+.academic-article .references { font-size: 0.9rem; }
+.academic-article .references li + li { margin-top: 1em; }
+.academic-article [id] { scroll-margin-top: 1.5rem; }
+
 /* Code highlighting tokens, kept to a few quiet colours */
 .token.comment,
 .token.prolog,
