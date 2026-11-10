@@ -1,7 +1,7 @@
-// Builds the Notes section of the site from an Obsidian vault copy.
+// Builds the Articles section from Markdown files selected for publication.
 //
-//   content/notes/   the vault, copied as is (minus .obsidian)
-//   notes/           generated HTML: one listing page per folder, one page per note
+//   content/articles/   article sources and attachments
+//   articles/           generated HTML: one listing page per folder and article
 //
 // Folders that hold no notes (e.g. attachment folders) are not listed.
 // Rendering follows Obsidian's reading view defaults: soft line breaks shown,
@@ -19,8 +19,8 @@ import Prism from "prismjs";
 import loadLanguages from "prismjs/components/index.js";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const SRC = path.join(ROOT, "content", "notes");
-const OUT = path.join(ROOT, "notes");
+const SRC = path.join(ROOT, "content", "articles");
+const OUT = path.join(ROOT, "articles");
 const SITE_TITLE = "NonEuclideanSpace";
 
 const IMAGE_EXT = new Set([".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".bmp", ".avif"]);
@@ -64,16 +64,16 @@ const slugPath = (rel) => rel.split("/").map(slug).join("/");
 const encodePath = (p) => p.split("/").map(encodeURIComponent).join("/");
 
 function noteUrl(note) {
-  return `/notes/${encodePath(slugPath(note.rel.slice(0, -3)))}/`;
+  return `/articles/${encodePath(slugPath(note.rel.slice(0, -3)))}/`;
 }
 function folderUrl(folder) {
-  return folder.rel ? `/notes/${encodePath(slugPath(folder.rel))}/` : "/notes/";
+  return folder.rel ? `/articles/${encodePath(slugPath(folder.rel))}/` : "/articles/";
 }
 function fileUrl(file) {
   const dir = path.posix.dirname(file.rel);
   const ext = path.extname(file.name).toLowerCase();
   const base = slug(path.basename(file.name, path.extname(file.name))) + ext;
-  return `/notes/${dir === "." ? "" : encodePath(slugPath(dir)) + "/"}${encodeURIComponent(base)}`;
+  return `/articles/${dir === "." ? "" : encodePath(slugPath(dir)) + "/"}${encodeURIComponent(base)}`;
 }
 
 // ---------- link resolution (Obsidian: by name, anywhere in the vault) ----------
@@ -212,7 +212,7 @@ function stripComments(src) {
 const stamp = (file) =>
   crypto.createHash("sha1").update(fs.readFileSync(path.join(ROOT, file))).digest("hex").slice(0, 8);
 const CSS_STYLE = `/assets/css/style.css?v=${stamp("assets/css/style.css")}`;
-const CSS_NOTES = `/assets/css/notes.css?v=${stamp("assets/css/notes.css")}`;
+const CSS_ARTICLES = `/assets/css/articles.css?v=${stamp("assets/css/articles.css")}`;
 
 // Hand-written pages link style.css too; keep their version stamp in step.
 for (const file of ["index.html", "about/index.html"]) {
@@ -239,7 +239,7 @@ function page({ title, trail, body, math }) {
   <meta name="theme-color" content="#FFFFFF">
   <link rel="preload" href="/assets/fonts/hanken-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="${CSS_STYLE}">
-  <link rel="stylesheet" href="${CSS_NOTES}">${math ? '\n  <link rel="stylesheet" href="/assets/katex/katex.min.css">' : ""}
+  <link rel="stylesheet" href="${CSS_ARTICLES}">${math ? '\n  <link rel="stylesheet" href="/assets/katex/katex.min.css">' : ""}
 </head>
 <body>
   ${crumbs(trail)}
@@ -256,13 +256,16 @@ function listing(folder, trail) {
     ...folder.folders.filter(hasNotes).map((f) => `<li><a href="${folderUrl(f)}">${escapeHtml(f.name)}</a></li>`),
     ...folder.notes.map((n) => `<li><a href="${noteUrl(n)}">${escapeHtml(n.name)}</a></li>`),
   ];
-  const title = folder.rel ? folder.name : "Notes";
-  const body = `    <h1>${escapeHtml(title)}</h1>\n    <ul class="listing">\n      ${items.join("\n      ")}\n    </ul>`;
+  const title = folder.rel ? folder.name : "Articles";
+  const listing = items.length
+    ? `<ul class="listing">\n      ${items.join("\n      ")}\n    </ul>`
+    : '<p class="empty-state">No articles yet.</p>';
+  const body = `    <h1>${escapeHtml(title)}</h1>\n    ${listing}`;
   return page({ title, trail, body });
 }
 
 function write(urlPath, html) {
-  const file = path.join(OUT, decodeURIComponent(urlPath.replace(/^\/notes\/?/, "")), "index.html");
+  const file = path.join(OUT, decodeURIComponent(urlPath.replace(/^\/articles\/?/, "")), "index.html");
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(file, html);
 }
@@ -273,7 +276,7 @@ fs.rmSync(OUT, { recursive: true, force: true });
   if (!hasNotes(folder) && folder.rel) return;
   const here = folder.rel ? [...trail] : [];
   write(folderUrl(folder), listing(folder, here));
-  const childTrail = [...trail, { name: folder.rel ? folder.name : "Notes", url: folderUrl(folder) }];
+  const childTrail = [...trail, { name: folder.rel ? folder.name : "Articles", url: folderUrl(folder) }];
 
   for (const note of folder.notes) {
     const src = stripComments(stripFrontmatter(fs.readFileSync(note.abs, "utf8")));
@@ -282,7 +285,7 @@ fs.rmSync(OUT, { recursive: true, force: true });
     write(noteUrl(note), page({ title: note.name, trail: childTrail, body, math: html.includes('class="katex') }));
   }
   for (const file of folder.files) {
-    const dest = path.join(OUT, decodeURIComponent(fileUrl(file).replace(/^\/notes\//, "")));
+    const dest = path.join(OUT, decodeURIComponent(fileUrl(file).replace(/^\/articles\//, "")));
     fs.mkdirSync(path.dirname(dest), { recursive: true });
     fs.copyFileSync(file.abs, dest);
   }
@@ -291,7 +294,7 @@ fs.rmSync(OUT, { recursive: true, force: true });
 
 // Attachments inside folders without notes are still needed by embeds.
 for (const file of allFiles) {
-  const dest = path.join(OUT, decodeURIComponent(fileUrl(file).replace(/^\/notes\//, "")));
+  const dest = path.join(OUT, decodeURIComponent(fileUrl(file).replace(/^\/articles\//, "")));
   if (!fs.existsSync(dest)) {
     fs.mkdirSync(path.dirname(dest), { recursive: true });
     fs.copyFileSync(file.abs, dest);
@@ -308,4 +311,4 @@ for (const f of fs.readdirSync(path.join(KATEX, "fonts")).filter((f) => f.endsWi
   fs.copyFileSync(path.join(KATEX, "fonts", f), path.join(KATEX_OUT, "fonts", f));
 }
 
-console.log(`notes: ${allNotes.length}, attachments: ${allFiles.length}`);
+console.log(`articles: ${allNotes.length}, attachments: ${allFiles.length}`);

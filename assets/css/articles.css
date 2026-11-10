@@ -1,4 +1,4 @@
-/* Notes section: breadcrumb, folder listings, and rendered Obsidian notes. */
+/* Articles section: breadcrumb, folder listings, and rendered Markdown. */
 
 :root {
   --muted: #7C8DA1;        /* separators, secondary marks */
@@ -41,6 +41,11 @@
 }
 
 .listing a:hover { border-bottom-color: currentColor; }
+
+.empty-state {
+  margin: clamp(24px, 4vw, 40px) 0 0;
+  color: var(--muted);
+}
 
 /* Note body */
 .note {
