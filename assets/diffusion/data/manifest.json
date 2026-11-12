@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "point_count": 5200,
+  "diffusion_steps": 1000,
+  "training_updates": 48000,
+  "training_matches_frozen_model": true,
+  "model_sha256": "ccdfe7c6e7b5fd848c05f2719166eb1e1db9484720136833ea032d41f841e148",
+  "reverse_seeds": [
+    2718,
+    137,
+    2027
+  ],
+  "training_seed": 2718,
+  "playback": "Cubic interpolation between cached DDPM states and cached training previews; intermediate playback frames are presentation only.",
+  "training_seconds_with_previews": 106.27,
+  "validation_mse": 0.2673688232898712,
+  "cache_sha256": "157a031c2d86abe2f684422cb72b1707f9926a8df1c846b2dfcccba83ba6e056",
+  "encoding": "DIF1: little-endian frame count and point count, then per-frame float32 scale and signed int16 XYZ; gzip compressed.",
+  "training_intro": "Only the untrained first preview is scaled to fit; all later training frames retain their original scale.",
+  "assets": {
+    "initial": {
+      "file": "initial.bin.gz",
+      "bytes": 31186,
+      "max_coordinate_error": 4.589557647705078e-05
+    },
+    "forward": {
+      "file": "forward.bin.gz",
+      "bytes": 3733970,
+      "max_coordinate_error": 7.414817810058594e-05
+    },
+    "training": {
+      "file": "training.bin.gz",
+      "bytes": 763104,
+      "max_coordinate_error": 0.00011181831359863281
+    },
+    "reverse_0": {
+      "file": "reverse-0.bin.gz",
+      "bytes": 3704803,
+      "max_coordinate_error": 9.292364120483398e-05
+    },
+    "reverse_1": {
+      "file": "reverse-1.bin.gz",
+      "bytes": 3639326,
+      "max_coordinate_error": 0.00013494491577148438
+    },
+    "reverse_2": {
+      "file": "reverse-2.bin.gz",
+      "bytes": 3691607,
+      "max_coordinate_error": 0.00013184547424316406
+    }
+  }
+}

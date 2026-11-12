@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build:articles": "node scripts/build-articles.mjs"
+    "build:articles": "node scripts/build-articles.mjs",
+    "test:diffusion": "node scripts/test-diffusion.mjs"
   },
   "devDependencies": {
     "katex": "0.16.11",
