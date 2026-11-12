@@ -49,6 +49,48 @@ void main() {
   color = vec4(mix(vec3(1.0), vec3(20.0, 44.0, 76.0) / 255.0, alpha), 1.0);
 }`;
 
+const sphereVertex = `#version 300 es
+void main() {
+  vec2 corner = vec2(float((gl_VertexID << 1) & 2), float(gl_VertexID & 2));
+  gl_Position = vec4(corner * 2.0 - 1.0, 0.0, 1.0);
+}`;
+
+const sphereFragment = `#version 300 es
+precision highp float;
+uniform vec2 viewport;
+uniform vec3 camera;
+uniform float surface;
+uniform float pixelRatio;
+out vec4 color;
+void main() {
+  float radius = min(viewport.x, viewport.y) * 0.38 * exp(camera.z);
+  vec2 position = (gl_FragCoord.xy / pixelRatio - viewport * 0.5) / radius;
+  float distance = length(position);
+  float edge = 0.5 / (radius * pixelRatio);
+  if (distance > 1.0 + edge) discard;
+  float z = sqrt(max(0.0, 1.0 - dot(position, position)));
+  vec3 normal = normalize(vec3(position, z));
+  float light = max(dot(normal, normalize(vec3(-0.45, 0.65, 0.9))), 0.0);
+  float shading = 0.018 + 0.015 * (1.0 - light) + 0.018 * pow(1.0 - z, 2.0);
+  float alpha = shading * surface * (1.0 - smoothstep(1.0 - edge, 1.0 + edge, distance));
+  color = vec4(mix(vec3(1.0), vec3(20.0, 44.0, 76.0) / 255.0, alpha), 1.0);
+}`;
+
+function createProgram(gl, vertexSource, fragmentSource) {
+  const program = gl.createProgram();
+  for (const [type, source] of [[gl.VERTEX_SHADER, vertexSource], [gl.FRAGMENT_SHADER, fragmentSource]]) {
+    const shader = gl.createShader(type);
+    gl.shaderSource(shader, source);
+    gl.compileShader(shader);
+    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(shader));
+    gl.attachShader(program, shader);
+    gl.deleteShader(shader);
+  }
+  gl.linkProgram(program);
+  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(program));
+  return program;
+}
+
 export class DotRenderer {
   constructor(canvas, count) {
     this.canvas = canvas;
@@ -56,18 +98,12 @@ export class DotRenderer {
     const gl = canvas.getContext('webgl2', { alpha: false, antialias: false, depth: false, powerPreference: 'low-power' });
     if (!gl) throw new Error('This browser cannot display the globe. Please try a browser with WebGL 2.');
     this.gl = gl;
-    this.program = gl.createProgram();
-    for (const [type, source] of [[gl.VERTEX_SHADER, vertex], [gl.FRAGMENT_SHADER, fragment]]) {
-      const shader = gl.createShader(type);
-      gl.shaderSource(shader, source);
-      gl.compileShader(shader);
-      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(shader));
-      gl.attachShader(this.program, shader);
-      gl.deleteShader(shader);
-    }
-    gl.linkProgram(this.program);
-    if (!gl.getProgramParameter(this.program, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(this.program));
+    this.program = createProgram(gl, vertex, fragment);
+    this.sphereProgram = createProgram(gl, sphereVertex, sphereFragment);
+    this.sphereArray = gl.createVertexArray();
+    this.pointArray = gl.createVertexArray();
     gl.useProgram(this.program);
+    gl.bindVertexArray(this.pointArray);
     this.positions = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, this.positions);
     gl.bufferData(gl.ARRAY_BUFFER, count * 3 * 4, gl.DYNAMIC_DRAW);
@@ -85,6 +121,7 @@ export class DotRenderer {
     gl.enableVertexAttribArray(radius);
     gl.vertexAttribPointer(radius, 1, gl.FLOAT, false, 0, 0);
     this.uniforms = Object.fromEntries(['viewport', 'camera', 'surface', 'pixelRatio'].map(name => [name, gl.getUniformLocation(this.program, name)]));
+    this.sphereUniforms = Object.fromEntries(['viewport', 'camera', 'surface', 'pixelRatio'].map(name => [name, gl.getUniformLocation(this.sphereProgram, name)]));
     gl.clearColor(1, 1, 1, 1);
     gl.enable(gl.BLEND);
     gl.blendEquation(gl.MIN);
@@ -102,13 +139,31 @@ export class DotRenderer {
       canvas.height = h;
       gl.viewport(0, 0, w, h);
     }
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    if (surface > 0) {
+      let deviation = 0;
+      for (let i = 0; i < points.length; i += 3) deviation += Math.abs(Math.hypot(points[i], points[i + 1], points[i + 2]) - 3);
+      const phase = Math.max(0, Math.min(1, (deviation / this.count - 0.12) / 0.55));
+      const opacity = surface * (1 - phase * phase * (3 - 2 * phase));
+      if (opacity > 0) {
+        const sphere = this.sphereUniforms;
+        gl.useProgram(this.sphereProgram);
+        gl.bindVertexArray(this.sphereArray);
+        gl.uniform2f(sphere.viewport, width, height);
+        gl.uniform3f(sphere.camera, ...camera);
+        gl.uniform1f(sphere.surface, opacity);
+        gl.uniform1f(sphere.pixelRatio, ratio);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+      }
+    }
+    gl.useProgram(this.program);
+    gl.bindVertexArray(this.pointArray);
     gl.uniform2f(uniforms.viewport, width, height);
     gl.uniform3f(uniforms.camera, ...camera);
     gl.uniform1f(uniforms.surface, surface);
     gl.uniform1f(uniforms.pixelRatio, ratio);
     gl.bindBuffer(gl.ARRAY_BUFFER, this.positions);
     gl.bufferSubData(gl.ARRAY_BUFFER, 0, points);
-    gl.clear(gl.COLOR_BUFFER_BIT);
     gl.drawArrays(gl.POINTS, 0, this.count);
   }
 }

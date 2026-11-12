@@ -1,5 +1,5 @@
 import { clamp, Replay, MotionPlayer, IdleCamera } from './motion.js';
-import { DotRenderer } from './renderer.js';
+import { DotRenderer } from './renderer.js?v=2';
 import { loadFrames } from './data.js';
 
 const canvas = document.querySelector('#diffusion-canvas');
