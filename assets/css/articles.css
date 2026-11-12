@@ -26,6 +26,10 @@
 
 .crumbs span { color: var(--muted); }
 
+.article-page {
+  margin-inline: auto;
+}
+
 /* Folder listings */
 .listing {
   list-style: none;
@@ -186,6 +190,7 @@
   margin: 1.5em 0;
 }
 .academic-article .equation-math {
+  position: relative;
   flex: 1;
   min-width: 0;
   overflow-x: auto;

@@ -238,7 +238,7 @@ function crumbs(trail) {
   return `<header class="site-header"><nav class="crumbs" aria-label="Breadcrumb">${parts.join('<span aria-hidden="true">/</span>')}</nav></header>`;
 }
 
-function page({ title, trail, body, math }) {
+function page({ title, trail, body, math, article = false }) {
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -252,7 +252,7 @@ function page({ title, trail, body, math }) {
 </head>
 <body>
   ${crumbs(trail)}
-  <main class="page">
+  <main class="page${article ? " article-page" : ""}">
 ${body}
   </main>
 </body>
@@ -291,7 +291,7 @@ fs.rmSync(OUT, { recursive: true, force: true });
     const src = stripComments(stripFrontmatter(fs.readFileSync(note.abs, "utf8")));
     const html = md.render(src, { rel: note.rel });
     const body = `    <article class="note">\n      <h1 class="note-title">${escapeHtml(note.title)}</h1>\n${html}    </article>`;
-    write(noteUrl(note), page({ title: note.title, trail: childTrail, body, math: html.includes('class="katex') }));
+    write(noteUrl(note), page({ title: note.title, trail: childTrail, body, math: html.includes('class="katex'), article: true }));
   }
   for (const file of folder.files) {
     const dest = path.join(OUT, decodeURIComponent(fileUrl(file).replace(/^\/articles\//, "")));
