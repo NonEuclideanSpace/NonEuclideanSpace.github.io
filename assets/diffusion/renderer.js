@@ -71,7 +71,7 @@ void main() {
   float z = sqrt(max(0.0, 1.0 - dot(position, position)));
   vec3 normal = normalize(vec3(position, z));
   float light = max(dot(normal, normalize(vec3(-0.45, 0.65, 0.9))), 0.0);
-  float shading = 0.018 + 0.015 * (1.0 - light) + 0.018 * pow(1.0 - z, 2.0);
+  float shading = 0.004 + 0.003 * (1.0 - light) + 0.003 * pow(1.0 - z, 2.0);
   float alpha = shading * surface * (1.0 - smoothstep(1.0 - edge, 1.0 + edge, distance));
   color = vec4(mix(vec3(1.0), vec3(20.0, 44.0, 76.0) / 255.0, alpha), 1.0);
 }`;
