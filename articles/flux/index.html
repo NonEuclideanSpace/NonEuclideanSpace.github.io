@@ -30,6 +30,7 @@
     .tokenizer { width: 108px; height: 105px; stroke-width: 1.05; }
     .embedding { width: 184px; height: 118px; }
     .embedding text { fill: var(--ink); stroke: none; }
+    .embedding .vector-row text, #embedding-vector-frame text { fill: #801f2a; }
     .step-link { width: 14px; height: 34px; flex: 0 0 34px; }
     .vector-row { font: 17px "STIX Two Text", "Times New Roman", serif; }
     .vector-row tspan { font-size: 11px; baseline-shift: -4px; }
@@ -92,7 +93,7 @@
           <path d="M55 24v-4h126v4" stroke-width="1.2"/>
           <defs>
             <g id="embedding-vector-frame">
-              <path d="M39 0h10m-3.5-3.5L49 0l-3.5 3.5 M60-9h-5V10h5 M176-9h5V10h-5"/>
+              <path d="M39 0h10m-3.5-3.5L49 0l-3.5 3.5"/><path stroke="#801f2a" d="M60-9h-5V10h5 M176-9h5V10h-5"/>
               <text x="103" y="4">⋯,</text>
             </g>
           </defs>

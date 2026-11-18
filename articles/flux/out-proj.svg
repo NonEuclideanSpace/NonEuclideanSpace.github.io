@@ -10,6 +10,9 @@
     .flow { marker-end: url(#tip); }
     .row { fill: currentColor; fill-opacity: .17; }
     .slice { fill: currentColor; fill-opacity: .48; }
+
+    .weight { color: #801f2a; }
+    .weight.frame { fill: currentColor; fill-opacity: .12; }
   </style>
   <defs>
     <marker id="tip" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto">
@@ -32,10 +35,10 @@
 
   <text class="dimension" x="546" y="47">4096</text>
   <text class="dimension" transform="translate(407 163) rotate(-90)">4096</text>
-  <rect class="frame" x="418" y="58" width="256" height="210"/>
-  <rect class="row" x="418" y="58" width="256" height="17"/>
-  <rect class="slice" x="610" y="58" width="8" height="17"/>
-  <text class="formula" x="546" y="173">W</text>
+  <rect class="frame weight" x="418" y="58" width="256" height="210"/>
+  <rect class="row weight" x="418" y="58" width="256" height="17"/>
+  <rect class="slice weight" x="610" y="58" width="8" height="17"/>
+  <text class="formula" x="546" y="173"><tspan fill="#801f2a">W</tspan></text>
 
   <text class="dimension" x="944" y="77">4096</text>
   <text class="dimension" transform="translate(805 181) rotate(-90)">512</text>
@@ -43,7 +46,7 @@
   <rect class="row" x="816" y="122" width="256" height="20"/>
   <rect x="816" y="122" width="11" height="20" fill="currentColor" fill-opacity=".78"/>
   <text class="token" x="835" y="138">apple</text>
-  <text class="formula" x="944" y="182">P = CW<tspan baseline-shift="super" font-size="17" font-style="normal">⊤</tspan></text>
+  <text class="formula" x="944" y="182">P = C<tspan fill="#801f2a">W<tspan baseline-shift="super" font-size="17" font-style="normal">⊤</tspan></tspan></text>
 
   <path class="flow" d="M316 132h14q17 0 17 17v126q0 17 16 24"/>
   <path class="flow" d="M418 66.5h-23q-18 0-18 18V292"/>

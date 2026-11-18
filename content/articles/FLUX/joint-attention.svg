@@ -32,18 +32,18 @@
     <text class="dim" transform="translate(299 116) rotate(-90)">L</text>
     <text class="dim" x="420" y="163">L = (H/16)(W/16)</text>
     <path class="arrow" d="M531 90h82"/>
-    <text class="math sm" x="570" y="77">W<tspan class="sub">in</tspan>ᵀ</text>
+    <text class="math sm" x="570" y="77"><tspan fill="#801f2a">W<tspan class="sub">in</tspan>ᵀ</tspan></text>
     <text class="dim" x="728" y="39">4096</text>
     <rect class="frame" x="618" y="49" width="218" height="90"/>
     <rect class="band" x="619" y="81" width="216" height="17"/>
-    <text class="math" x="727" y="122">X = ZW<tspan class="sub">in</tspan>ᵀ</text>
+    <text class="math" x="727" y="122">X = Z<tspan fill="#801f2a">W<tspan class="sub">in</tspan>ᵀ</tspan></text>
     <path class="arrow" d="M837 90h61"/>
     <text class="dim" x="1088" y="39">4096</text>
     <rect class="frame" x="903" y="49" width="370" height="90"/>
     <rect class="band" x="904" y="81" width="368" height="17"/>
     <text class="math" x="1088" y="122">U = (1 + s) ⊙ LN(X) + b</text>
     <path class="arrow" d="M1088 140v46"/>
-    <text class="math" x="1088" y="217">[Q, K, V] = UW<tspan class="sub">qkv</tspan>ᵀ</text>
+    <text class="math" x="1088" y="217">[Q, K, V] = U<tspan fill="#801f2a">W<tspan class="sub">qkv</tspan>ᵀ</tspan></text>
     <text class="dim" x="1088" y="244">3 × (32 × 128)</text>
     <path class="line" d="M1088 255v12M932 268h312"/>
     <path class="arrow" d="M932 268v21M1088 268v21M1244 268v21"/>
@@ -115,7 +115,7 @@
   </g>
   <g aria-label="Combine all heads and write the gated update to the target stream">
     <path class="arrow" d="M1174 677v18q0 9-9 9H944q-9 0-9 9v11"/>
-    <text class="math" x="935" y="753">P = Concat(O₁, …, O₃₂) W<tspan class="sub">out</tspan>ᵀ</text>
+    <text class="math" x="935" y="753">P = Concat(O₁, …, O₃₂) <tspan fill="#801f2a">W<tspan class="sub">out</tspan>ᵀ</tspan></text>
     <text class="dim" x="935" y="784">32 × 128 → 4096</text>
     <path class="arrow" d="M752 745h-120"/>
     <rect class="frame" x="316" y="720" width="308" height="88"/>

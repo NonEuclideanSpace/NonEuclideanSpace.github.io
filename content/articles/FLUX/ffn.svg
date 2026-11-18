@@ -11,6 +11,9 @@
     .flow { marker-end: url(#tip); }
     .row { fill: currentColor; fill-opacity: .17; }
     .cell { fill: currentColor; fill-opacity: .78; }
+
+    #weight rect { color: #801f2a; }
+    #weight .frame { fill: currentColor; fill-opacity: .12; }
   </style>
   <defs>
     <marker id="tip" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto">
@@ -72,11 +75,11 @@
   <path class="flow" d="M646 190v124"/>
 
   <use href="#projection"/>
-  <text class="formula" x="297" y="315">Gate</text>
-  <text class="formula" x="288" y="510">G = Z Gate<tspan baseline-shift="super" font-size="17" class="operator">⊤</tspan></text>
+  <text class="formula" x="297" y="315"><tspan fill="#801f2a">Gate</tspan></text>
+  <text class="formula" x="288" y="510">G = Z <tspan fill="#801f2a">Gate<tspan baseline-shift="super" font-size="17" class="operator">⊤</tspan></tspan></text>
   <use href="#projection" transform="translate(552 0)"/>
-  <text class="formula" x="849" y="315">Up</text>
-  <text class="formula" x="840" y="510">U = Z Up<tspan baseline-shift="super" font-size="17" class="operator">⊤</tspan></text>
+  <text class="formula" x="849" y="315"><tspan fill="#801f2a">Up</tspan></text>
+  <text class="formula" x="840" y="510">U = Z <tspan fill="#801f2a">Up<tspan baseline-shift="super" font-size="17" class="operator">⊤</tspan></tspan></text>
   <path class="frame" d="M85 471v99"/>
   <path class="frame" d="M637 471v70q0 15 15 15h392q15 0 15 14"/>
   <path class="frame" d="M493 148v4q0 14-14 14H32q-16 0-16 16v388"/>

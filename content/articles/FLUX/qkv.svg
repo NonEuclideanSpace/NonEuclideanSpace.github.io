@@ -17,6 +17,9 @@
     .math { font: italic 32px "STIX Two Text", Georgia, serif; }
     .index { font-size: 64%; baseline-shift: -5px; }
     .upper { font-size: 56%; baseline-shift: 10px; }
+
+    .weights, .head-weights { color: #801f2a; }
+    .weights { fill-opacity: .12; }
   </style>
   <defs>
     <path id="arrow" d="M0 0v18m-5-5 5 5 5-5"/>
@@ -52,7 +55,7 @@
   <path class="flow" d="M672 223C672 251 1326 274 1326 331V435"/>
   <circle class="junction" cx="672" cy="223" r="3.6"/>
   <g transform="translate(224 0)">
-    <text class="math" x="-165" y="330">W<tspan class="index">Q</tspan></text>
+    <text class="math" x="-165" y="330"><tspan fill="#801f2a">W<tspan class="index">Q</tspan></tspan></text>
   </g>
   <g transform="translate(224 340)">
     <text class="axis" x="-20" y="-10">4096</text>
@@ -73,7 +76,7 @@
     <rect class="line" x="-196" y="0" width="392" height="212"/>
     <text class="axis" x="104.125" y="-28"><tspan font-style="italic">h</tspan> = 25</text>
     <path class="pointer" d="M104.125 -21V-2"/>
-    <text class="math" x="0" y="114">Q = YW<tspan class="index">Q</tspan><tspan class="upper">⊤</tspan></text>
+    <text class="math" x="0" y="114">Q = Y<tspan fill="#801f2a">W<tspan class="index">Q</tspan><tspan class="upper">⊤</tspan></tspan></text>
   </g>
   <g transform="translate(224 847)">
     <path class="line" d="M98 4v6h12.25v-6"/>
@@ -81,7 +84,7 @@
     <text class="axis" x="-99" y="25"><tspan font-style="italic">h</tspan> = 1, …, 32</text>
   </g>
   <g transform="translate(672 0)">
-    <text class="math" x="-165" y="357">W<tspan class="index">K</tspan></text>
+    <text class="math" x="-165" y="357"><tspan fill="#801f2a">W<tspan class="index">K</tspan></tspan></text>
   </g>
   <g transform="translate(672 367)">
     <text class="axis" x="-20" y="-10">4096</text>
@@ -102,7 +105,7 @@
     <rect class="line" x="-196" y="0" width="392" height="212"/>
     <text class="axis" x="122.5" y="-28"><tspan font-style="italic">h</tspan> = 7</text>
     <path class="pointer" d="M122.5 -21V-2"/>
-    <text class="math" x="0" y="114">K = YW<tspan class="index">K</tspan><tspan class="upper">⊤</tspan></text>
+    <text class="math" x="0" y="114">K = Y<tspan fill="#801f2a">W<tspan class="index">K</tspan><tspan class="upper">⊤</tspan></tspan></text>
   </g>
   <g transform="translate(672 847)">
     <path class="line" d="M98 4v6h49v-6"/>
@@ -110,7 +113,7 @@
     <text class="axis" x="-99" y="25"><tspan font-style="italic">h</tspan> = 1, …, 8</text>
   </g>
   <g transform="translate(1120 0)">
-    <text class="math" x="-165" y="357">W<tspan class="index">V</tspan></text>
+    <text class="math" x="-165" y="357"><tspan fill="#801f2a">W<tspan class="index">V</tspan></tspan></text>
   </g>
   <g transform="translate(1120 367)">
     <text class="axis" x="-20" y="-10">4096</text>
@@ -131,7 +134,7 @@
     <rect class="line" x="-196" y="0" width="392" height="212"/>
     <text class="axis" x="122.5" y="-28"><tspan font-style="italic">h</tspan> = 7</text>
     <path class="pointer" d="M122.5 -21V-2"/>
-    <text class="math" x="0" y="114">V = YW<tspan class="index">V</tspan><tspan class="upper">⊤</tspan></text>
+    <text class="math" x="0" y="114">V = Y<tspan fill="#801f2a">W<tspan class="index">V</tspan><tspan class="upper">⊤</tspan></tspan></text>
   </g>
   <g transform="translate(1120 847)">
     <path class="line" d="M98 4v6h49v-6"/>

@@ -43,7 +43,7 @@
     <text class="rowname" x="157" y="226">p</text>
     <text class="math" x="324" y="253">Y = (1 + s) ⊙ N + b</text>
     <path class="link" d="M324 266v57"/>
-    <text class="math" x="389" y="298">W<tspan class="sub">up, img</tspan>ᵀ</text>
+    <text class="math" x="389" y="298"><tspan fill="#801f2a">W<tspan class="sub">up, img</tspan>ᵀ</tspan></text>
     <text class="dim" x="513" y="323">24576</text>
     <rect class="frame" x="95" y="330" width="458" height="69"/>
     <rect class="band" x="96" y="341" width="456" height="16"/>
@@ -68,11 +68,11 @@
     <text class="math" x="324" y="562">F = SiLU(G) ⊙ U</text>
     <text class="dim" x="471" y="506">12288</text>
     <path class="link" d="M324 575v54"/>
-    <text class="math" x="394" y="605">W<tspan class="sub">down, img</tspan>ᵀ</text>
+    <text class="math" x="394" y="605"><tspan fill="#801f2a">W<tspan class="sub">down, img</tspan>ᵀ</tspan></text>
     <rect class="frame" x="178" y="634" width="292" height="62"/>
     <rect class="band" x="179" y="644" width="290" height="16"/>
     <text class="rowname" x="184" y="657">p</text>
-    <text class="math" x="324" y="684">D = FW<tspan class="sub">down, img</tspan>ᵀ</text>
+    <text class="math" x="324" y="684">D = F<tspan fill="#801f2a">W<tspan class="sub">down, img</tspan>ᵀ</tspan></text>
     <text class="dim" x="444" y="627">4096</text>
     <path class="link" d="M324 697v18"/>
     <text class="math" x="324" y="736">g ⊙ D</text>
@@ -112,7 +112,7 @@
     <text class="rowname" x="157" y="226">apple</text>
     <text class="math" x="324" y="253">Y = (1 + s) ⊙ N + b</text>
     <path class="link" d="M324 266v57"/>
-    <text class="math" x="389" y="298">W<tspan class="sub">up, txt</tspan>ᵀ</text>
+    <text class="math" x="389" y="298"><tspan fill="#801f2a">W<tspan class="sub">up, txt</tspan>ᵀ</tspan></text>
     <text class="dim" x="513" y="323">24576</text>
     <rect class="frame" x="95" y="330" width="458" height="69"/>
     <rect class="band" x="96" y="341" width="456" height="16"/>
@@ -137,11 +137,11 @@
     <text class="math" x="324" y="562">F = SiLU(G) ⊙ U</text>
     <text class="dim" x="471" y="506">12288</text>
     <path class="link" d="M324 575v54"/>
-    <text class="math" x="394" y="605">W<tspan class="sub">down, txt</tspan>ᵀ</text>
+    <text class="math" x="394" y="605"><tspan fill="#801f2a">W<tspan class="sub">down, txt</tspan>ᵀ</tspan></text>
     <rect class="frame" x="178" y="634" width="292" height="62"/>
     <rect class="band" x="179" y="644" width="290" height="16"/>
     <text class="rowname" x="184" y="657">apple</text>
-    <text class="math" x="324" y="684">D = FW<tspan class="sub">down, txt</tspan>ᵀ</text>
+    <text class="math" x="324" y="684">D = F<tspan fill="#801f2a">W<tspan class="sub">down, txt</tspan>ᵀ</tspan></text>
     <text class="dim" x="444" y="627">4096</text>
     <path class="link" d="M324 697v18"/>
     <text class="math" x="324" y="736">g ⊙ D</text>

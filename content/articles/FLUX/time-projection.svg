@@ -9,6 +9,9 @@
     .flow { marker-end: url(#tip); }
     .bracket { stroke-width: 1.1; stroke-opacity: .55; }
     .selected { fill: currentColor; fill-opacity: .21; }
+
+    .weight { color: #801f2a; }
+    .weight.frame { fill: currentColor; fill-opacity: .12; }
   </style>
   <defs>
     <marker id="tip" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto">
@@ -27,9 +30,9 @@
 
   <text class="dim" x="670" y="72">256</text>
   <text class="dim" transform="translate(496 172) rotate(-90)">4096</text>
-  <rect class="selected" x="510" y="86" width="320" height="14"/>
-  <rect class="frame" x="510" y="86" width="320" height="172"/>
-  <text class="math" x="670" y="182">W</text>
+  <rect class="selected weight" x="510" y="86" width="320" height="14"/>
+  <rect class="frame weight" x="510" y="86" width="320" height="172"/>
+  <text class="math" x="670" y="182"><tspan fill="#801f2a">W</tspan></text>
 
   <path class="flow" d="M390 109h36q17 0 17 17v46"/>
   <path class="flow" d="M510 93h-17q-15 0-15 15v66q0 15-15 15h-4"/>
@@ -42,6 +45,6 @@
   <rect class="selected" x="70" y="343" width="20" height="56"/>
   <path class="bracket" d="M90 343v56"/>
   <rect class="frame" x="70" y="343" width="760" height="56"/>
-  <text class="math" x="450" y="381">h = e(0.5) W<tspan font-size="17" baseline-shift="super" font-style="normal">⊤</tspan></text>
+  <text class="math" x="450" y="381">h = e(0.5) <tspan fill="#801f2a">W<tspan font-size="17" baseline-shift="super" font-style="normal">⊤</tspan></tspan></text>
   <path class="frame" d="M80 399v21"/>
 </svg>

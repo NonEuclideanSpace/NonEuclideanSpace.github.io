@@ -13,6 +13,9 @@
     .flow { marker-end: url(#tip); }
     .guide { stroke-width: 1.1; stroke-opacity: .55; }
     .selected { fill: currentColor; fill-opacity: .21; }
+
+    .weight { color: #801f2a; }
+    .weight.frame { fill: currentColor; fill-opacity: .12; }
   </style>
   <defs>
     <marker id="tip" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto">
@@ -29,9 +32,9 @@
   <g transform="translate(0 0)">
     <text class="dim" x="235" y="72">4096</text>
     <text class="dim" transform="translate(134 176) rotate(-90)">24576</text>
-    <rect class="selected" x="148" y="85" width="174" height="14"/>
-    <rect class="frame" x="148" y="85" width="174" height="182"/>
-    <text class="math" x="235" y="184">W<tspan class="sub">txt</tspan></text>
+    <rect class="selected weight" x="148" y="85" width="174" height="14"/>
+    <rect class="frame weight" x="148" y="85" width="174" height="182"/>
+    <text class="math" x="235" y="184"><tspan fill="#801f2a">W<tspan class="sub">txt</tspan></tspan></text>
 
     <path class="flow" d="M148 92H73"/>
     <circle class="frame" cx="57" cy="92" r="11"/>
@@ -43,7 +46,7 @@
     <rect class="selected" x="51" y="313" width="12" height="56"/>
     <rect class="frame" x="51" y="313" width="384" height="56"/>
     <path class="guide" d="M63 313v56"/>
-    <text class="math" x="243" y="350">rW<tspan class="sub">txt</tspan><tspan class="sup">⊤</tspan></text>
+    <text class="math" x="243" y="350">r<tspan fill="#801f2a">W<tspan class="sub">txt</tspan><tspan class="sup">⊤</tspan></tspan></text>
 
     <path class="guide" d="M51 374v6h62v-6m2 0v6h62v-6m2 0v6h62v-6m2 0v6h62v-6m2 0v6h62v-6m2 0v6h62v-6"/>
     <g class="coef">
@@ -59,9 +62,9 @@
   <g transform="translate(438 0)">
     <text class="dim" x="235" y="72">4096</text>
     <text class="dim" transform="translate(134 176) rotate(-90)">24576</text>
-    <rect class="selected" x="148" y="85" width="174" height="14"/>
-    <rect class="frame" x="148" y="85" width="174" height="182"/>
-    <text class="math" x="235" y="184">W<tspan class="sub">img</tspan></text>
+    <rect class="selected weight" x="148" y="85" width="174" height="14"/>
+    <rect class="frame weight" x="148" y="85" width="174" height="182"/>
+    <text class="math" x="235" y="184"><tspan fill="#801f2a">W<tspan class="sub">img</tspan></tspan></text>
 
     <path class="flow" d="M148 92H73"/>
     <circle class="frame" cx="57" cy="92" r="11"/>
@@ -73,7 +76,7 @@
     <rect class="selected" x="51" y="313" width="12" height="56"/>
     <rect class="frame" x="51" y="313" width="384" height="56"/>
     <path class="guide" d="M63 313v56"/>
-    <text class="math" x="243" y="350">rW<tspan class="sub">img</tspan><tspan class="sup">⊤</tspan></text>
+    <text class="math" x="243" y="350">r<tspan fill="#801f2a">W<tspan class="sub">img</tspan><tspan class="sup">⊤</tspan></tspan></text>
 
     <path class="guide" d="M51 374v6h62v-6m2 0v6h62v-6m2 0v6h62v-6m2 0v6h62v-6m2 0v6h62v-6m2 0v6h62v-6"/>
     <g class="coef">

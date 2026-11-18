@@ -40,7 +40,7 @@ svg {color:#142c4c} text {fill:currentColor;text-anchor:middle}
 <text class="dim" x="766" y="579">L = (H/16)(W/16)</text>
 <text class="math" x="238" y="620">BN<tspan class="sub">eval</tspan>(x<tspan class="sub">c</tspan>) = (x<tspan class="sub">c</tspan> − μ<tspan class="sub">run,c</tspan>) / √(σ<tspan class="sub">run,c</tspan>² + ε)</text>
 <path class="arrow" d="M766 587v6q0 9-9 9H464q-9 0-9 9v8"/>
-<text class="math" x="455" y="650">R = E<tspan class="sub">ref</tspan> W<tspan class="sub">in</tspan><tspan class="sup">⊤</tspan></text>
+<text class="math" x="455" y="650">R = E<tspan class="sub">ref</tspan> <tspan fill="#801f2a">W<tspan class="sub">in</tspan><tspan class="sup">⊤</tspan></tspan></text>
 <text class="dim" x="455" y="676">L × 128  →  L × 4096</text>
 <path class="arrow" d="M455 684v20"/>
 <text class="op" x="455" y="734">Block ℓ</text>

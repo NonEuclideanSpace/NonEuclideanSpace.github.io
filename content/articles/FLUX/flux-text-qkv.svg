@@ -14,6 +14,9 @@
     .tracked { transform: translateY(var(--row-shift, 0px)); }
     .row { fill: currentColor; fill-opacity: .17; }
     .cell { fill: currentColor; fill-opacity: .6; }
+
+    .weight { color: #801f2a; }
+    .weight.frame { fill: currentColor; fill-opacity: .12; }
   </style>
   <defs>
     <marker id="tip" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto"><path class="frame" d="M2 1.6 10 6 2 10.4"/></marker>
@@ -43,16 +46,16 @@
   <text class="token" x="122" y="90">apple</text>
   <text class="math" x="270" y="138">T<tspan class="sub" font-style="normal">attn</tspan></text>
 
-  <text class="math" x="635" y="29">W</text>
+  <text class="math" x="635" y="29"><tspan fill="#801f2a">W</tspan></text>
   <text class="dim" x="764" y="29">4096</text>
   <text class="dim" transform="translate(604 120) rotate(-90)">12288</text>
-  <rect class="row" x="620" y="40" width="288" height="8"/>
-  <rect class="frame" x="620" y="40" width="288" height="144"/>
-  <path class="guide" d="M620 88h288m-288 48h288"/>
+  <rect class="row weight" x="620" y="40" width="288" height="8"/>
+  <rect class="frame weight" x="620" y="40" width="288" height="144"/>
+  <path class="guide weight" d="M620 88h288m-288 48h288"/>
   <g class="math">
-    <text x="764" y="74">W<tspan class="sub">Q</tspan></text>
-    <text x="764" y="122">W<tspan class="sub">K</tspan></text>
-    <text x="764" y="170">W<tspan class="sub">V</tspan></text>
+    <text x="764" y="74"><tspan fill="#801f2a">W<tspan class="sub">Q</tspan></tspan></text>
+    <text x="764" y="122"><tspan fill="#801f2a">W<tspan class="sub">K</tspan></tspan></text>
+    <text x="764" y="170"><tspan fill="#801f2a">W<tspan class="sub">V</tspan></tspan></text>
   </g>
 
   <path class="flow" d="M427 85h29q14 0 14 14v30q0 12 9 21l14 13"/>
@@ -68,7 +71,7 @@
   <rect class="frame" x="47" y="240" width="924" height="100"/>
   <text class="token" x="62" y="272">apple</text>
   <path class="frame" d="M355 257v20m308-20v20"/>
-  <text class="math" x="509" y="315">[ Q | K | V ] = T<tspan class="sub" font-style="normal">attn</tspan> W<tspan class="sup" font-style="normal">⊤</tspan></text>
+  <text class="math" x="509" y="315">[ Q | K | V ] = T<tspan class="sub" font-style="normal">attn</tspan> <tspan fill="#801f2a">W<tspan class="sup" font-style="normal">⊤</tspan></tspan></text>
   <path class="guide" d="M48 344v6h306v-6m2 0v6h306v-6m2 0v6h306v-6"/>
   <g class="dim">
     <text x="201" y="371">4096</text><text x="509" y="371">4096</text><text x="817" y="371">4096</text>

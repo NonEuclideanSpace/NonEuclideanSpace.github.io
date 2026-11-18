@@ -53,7 +53,7 @@
   <text class="math small" x="1107" y="810">g</text>
 
   <path class="flow" d="M660 325v48"/>
-  <text class="math small" x="730" y="352">W<tspan class="sub">in, 9</tspan>ᵀ</text>
+  <text class="math small" x="730" y="352"><tspan fill="#801f2a">W<tspan class="sub">in, 9</tspan>ᵀ</tspan></text>
   <text class="dim" x="1045" y="368">36864</text>
   <rect class="frame" x="210" y="379" width="900" height="49"/>
   <path class="thin" d="M310 380v47m100-47v47m100-47v47m300-47v47"/>
@@ -90,10 +90,10 @@
   <text class="math" x="503" y="752">O</text><text class="math" x="713" y="752">F</text>
   <text class="dim" x="505" y="786">4096</text><text class="dim" x="769" y="786">12288</text>
   <path class="flow" d="M660 766v30"/>
-  <text class="math small" x="594" y="792">W<tspan class="sub">out, 9</tspan>ᵀ</text>
+  <text class="math small" x="594" y="792"><tspan fill="#801f2a">W<tspan class="sub">out, 9</tspan>ᵀ</tspan></text>
   <text class="dim" x="840" y="795">4096</text>
   <rect class="frame" x="474" y="801" width="372" height="45"/>
-  <text class="math" x="660" y="831">H₉ = H + g ⊙ ([O | F]W<tspan class="sub">out, 9</tspan>ᵀ)</text>
+  <text class="math" x="660" y="831">H₉ = H + g ⊙ ([O | F]<tspan fill="#801f2a">W<tspan class="sub">out, 9</tspan>ᵀ</tspan>)</text>
   <path class="flow" d="M445 822h25"/><path class="flow" d="M879 822h-29"/>
   <path class="flow" d="M660 847v24"/>
   <rect class="frame" x="465" y="877" width="390" height="37"/>

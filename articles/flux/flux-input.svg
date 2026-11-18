@@ -10,6 +10,9 @@
     .flow { marker-end: url(#tip); }
     .guide { stroke-width: 1.1; stroke-opacity: .5; }
     .row { fill: currentColor; fill-opacity: .17; }
+
+    .weight { color: #801f2a; }
+    .weight.frame { fill: currentColor; fill-opacity: .12; }
   </style>
   <defs>
     <marker id="tip" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto">
@@ -33,10 +36,10 @@
 
   <text class="dim" x="866" y="44">12288</text>
   <text class="dim" transform="translate(665 160) rotate(-90)">4096</text>
-  <rect class="row" x="676" y="55" width="380" height="20"/>
-  <rect class="frame" x="676" y="55" width="380" height="160"/>
-  <path class="guide" d="M802.667 55v20m126.666-20v20"/>
-  <text class="math" x="866" y="150">W</text>
+  <rect class="row weight" x="676" y="55" width="380" height="20"/>
+  <rect class="frame weight" x="676" y="55" width="380" height="160"/>
+  <path class="guide weight" d="M802.667 55v20m126.666-20v20"/>
+  <text class="math" x="866" y="150"><tspan fill="#801f2a">W</tspan></text>
 
   <path class="flow" d="M476 108h20q19 0 19 19v84q0 21 25 34"/>
   <path class="flow" d="M676 65h-63q-19 0-19 19v127q0 21-25 34"/>
@@ -50,5 +53,5 @@
   <rect x="420" y="333" width="11" height="20" fill="currentColor" fill-opacity=".78"/>
   <rect class="frame" x="420" y="327" width="280" height="96"/>
   <text class="token" x="439" y="348">apple</text>
-  <text class="math" x="560" y="395">T = EW<tspan baseline-shift="super" font-size="17" font-style="normal">⊤</tspan></text>
+  <text class="math" x="560" y="395">T = E<tspan fill="#801f2a">W<tspan baseline-shift="super" font-size="17" font-style="normal">⊤</tspan></tspan></text>
 </svg>
