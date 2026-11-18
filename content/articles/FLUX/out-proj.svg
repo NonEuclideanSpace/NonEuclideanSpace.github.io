@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1102" height="346" viewBox="0 0 1102 346" role="img" aria-labelledby="title">
+  <title id="title">Attention output projection. Each output coordinate is the dot product of a token row with one row of the learned weight matrix.</title>
+  <style>
+    svg { color: #142c4c; }
+    text { fill: currentColor; text-anchor: middle; }
+    .dimension, .token { font: 16px ui-monospace, monospace; }
+    .token { text-anchor: start; }
+    .formula { font: italic 28px "STIX Two Text", Georgia, serif; }
+    .frame, .flow { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .flow { marker-end: url(#tip); }
+    .row { fill: currentColor; fill-opacity: .17; }
+    .slice { fill: currentColor; fill-opacity: .48; }
+  </style>
+  <defs>
+    <marker id="tip" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto">
+      <path class="frame" d="M2 1.6 10 6 2 10.4"/>
+    </marker>
+    <pattern id="heads" x="60" width="8" height="20" patternUnits="userSpaceOnUse">
+      <path d="M.5 0v20" stroke="currentColor" stroke-opacity=".28"/>
+    </pattern>
+  </defs>
+
+  <path class="flow" d="M266 0v84"/>
+  <text class="dimension" x="188" y="77">4096</text>
+  <text class="dimension" transform="translate(49 168) rotate(-90)">512</text>
+  <rect class="frame" x="60" y="88" width="256" height="150"/>
+  <rect class="row" x="60" y="122" width="256" height="20"/>
+  <rect x="60" y="122" width="256" height="20" fill="url(#heads)"/>
+  <rect class="slice" x="252" y="122" width="8" height="20"/>
+  <text class="token" x="5" y="138">apple</text>
+  <text class="formula" x="188" y="182">C</text>
+
+  <text class="dimension" x="546" y="47">4096</text>
+  <text class="dimension" transform="translate(407 163) rotate(-90)">4096</text>
+  <rect class="frame" x="418" y="58" width="256" height="210"/>
+  <rect class="row" x="418" y="58" width="256" height="17"/>
+  <rect class="slice" x="610" y="58" width="8" height="17"/>
+  <text class="formula" x="546" y="173">W</text>
+
+  <text class="dimension" x="944" y="77">4096</text>
+  <text class="dimension" transform="translate(805 181) rotate(-90)">512</text>
+  <rect class="frame" x="816" y="88" width="256" height="150"/>
+  <rect class="row" x="816" y="122" width="256" height="20"/>
+  <rect x="816" y="122" width="11" height="20" fill="currentColor" fill-opacity=".78"/>
+  <text class="token" x="835" y="138">apple</text>
+  <text class="formula" x="944" y="182">P = CW<tspan baseline-shift="super" font-size="17" font-style="normal">⊤</tspan></text>
+
+  <path class="flow" d="M316 132h14q17 0 17 17v126q0 17 16 24"/>
+  <path class="flow" d="M418 66.5h-23q-18 0-18 18V292"/>
+  <circle class="frame" cx="377" cy="310" r="15"/>
+  <circle cx="377" cy="310" r="2.8" fill="currentColor"/>
+  <path class="flow" d="M393 310h348q25 0 25-25V154q0-22 22-22h25"/>
+  <path class="frame" d="M944 238v72q0 20-20 20H607q-16 0-16 16"/>
+</svg>

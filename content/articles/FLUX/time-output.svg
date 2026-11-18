@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="351" viewBox="0 0 900 351" role="img" aria-labelledby="title">
+  <title id="title">The second time projection and elementwise SiLU at the modulation input</title>
+  <style>
+    svg { color: #142c4c; }
+    text { fill: currentColor; text-anchor: middle; }
+    .math { font: italic 28px "STIX Two Text", Georgia, serif; }
+    .dim { font: 16px ui-monospace, monospace; }
+    .frame, .flow, .guide { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .flow { marker-end: url(#tip); }
+    .guide { stroke-width: 1.1; stroke-opacity: .55; }
+    .selected { fill: currentColor; fill-opacity: .21; }
+    .point { fill: currentColor; }
+  </style>
+  <defs>
+    <marker id="tip" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto">
+      <path class="frame" d="M2 1.6 10 6 2 10.4"/>
+    </marker>
+  </defs>
+
+  <path class="guide" d="M70 2v8h760V2"/>
+  <path class="flow" d="M450 10v50"/>
+
+  <text class="dim" x="215" y="54">4096</text>
+  <text class="dim" transform="translate(89 180) rotate(-90)">4096</text>
+  <rect class="selected" x="103" y="68" width="224" height="16"/>
+  <rect class="frame" x="103" y="68" width="224" height="224"/>
+  <text class="math" x="215" y="187">W<tspan font-size="18" baseline-shift="sub">2</tspan></text>
+
+  <path class="flow" d="M327 76h107"/>
+  <circle class="frame" cx="450" cy="76" r="11"/>
+  <circle class="point" cx="450" cy="76" r="2.5"/>
+  <path class="flow" d="M462 76h33q16 0 16 16v54"/>
+
+  <text class="dim" x="663" y="138">4096</text>
+  <text class="dim" transform="translate(488 180) rotate(-90)">1</text>
+  <rect class="selected" x="502" y="152" width="18" height="56"/>
+  <path class="guide" d="M520 152v56"/>
+  <rect class="frame" x="502" y="152" width="322" height="56"/>
+  <text class="math" x="663" y="189">v = aW<tspan font-size="18" baseline-shift="sub">2</tspan><tspan font-size="17" baseline-shift="super" font-style="normal">⊤</tspan></text>
+
+  <path class="flow" d="M511 208v61"/>
+  <text class="dim" x="663" y="260">4096</text>
+  <text class="dim" transform="translate(488 302) rotate(-90)">1</text>
+  <rect class="selected" x="502" y="274" width="18" height="56"/>
+  <path class="guide" d="M520 274v56"/>
+  <rect class="frame" x="502" y="274" width="322" height="56"/>
+  <text class="math" x="663" y="311" style="font-size:26px">r = <tspan font-style="normal">SiLU</tspan>(v) = v ⊙ σ(v)</text>
+</svg>

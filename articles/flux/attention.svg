@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1102" height="288" viewBox="0 0 1102 288" role="img" aria-labelledby="title">
+  <title id="title">Causal attention for query head 25 and key/value head 7. Follow the apple row and green column from masked scores to normalized weights, then weight the value rows to obtain the apple output.</title>
+  <style>
+    svg { color: #142c4c; }
+    text { fill: currentColor; text-anchor: middle; }
+    .axis, .token { font: 15px ui-monospace, monospace; }
+    .math { font: italic 28px "STIX Two Text", Georgia, serif; }
+    .operator { font: 18px "STIX Two Text", Georgia, serif; }
+    .frame, .flow, .guide { fill: none; stroke: currentColor; stroke-linejoin: round; stroke-linecap: round; stroke-width: 1.6; }
+    .flow { marker-end: url(#tip); }
+    .guide { opacity: .6; }
+    .row, .column, .future, .cell { fill: currentColor; }
+    .row { fill-opacity: .17; }
+    .column { fill-opacity: .1; }
+    .future { fill-opacity: .075; }
+    .cell { fill-opacity: .57; }
+  </style>
+  <defs>
+    <marker id="tip" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto">
+      <path class="frame" d="M2 1.6 10 6 2 10.4"/>
+    </marker>
+    <g id="causal">
+      <path class="future" d="M0 0H192V192Z"/>
+      <path class="guide" d="M0 0 192 192" style="opacity:.24"/>
+      <rect class="column" x="44" width="16" height="192"/>
+      <path class="row" d="M0 70H70L86 86H0Z"/>
+      <rect class="cell" x="44" y="70" width="16" height="16"/>
+      <rect class="frame" width="192" height="192"/>
+      <text class="token" x="52" y="-10">green</text>
+      <text class="axis" x="96" y="-35">512</text>
+      <text class="token" x="-7" y="83" style="text-anchor:end">apple</text>
+      <text class="axis" transform="translate(-10 130) rotate(-90)">512</text>
+    </g>
+    <g id="vector-matrix">
+      <rect class="frame" width="148" height="192"/>
+      <text class="axis" x="74" y="-13">128</text>
+      <text class="axis" transform="translate(-10 130) rotate(-90)">512</text>
+    </g>
+  </defs>
+  <g transform="translate(66 65)">
+    <use href="#causal"/>
+    <text class="operator" x="147" y="84">−∞</text>
+    <text class="math" x="96" y="130">S + M</text>
+  </g>
+  <path class="flow" d="M271 166H378"/>
+  <text class="operator" x="323" y="189">softmax</text>
+  <g transform="translate(395 65)">
+    <use href="#causal"/>
+    <text class="operator" x="147" y="84">0</text>
+    <text class="math" x="96" y="130">A</text>
+  </g>
+  <text class="math" x="628" y="173">×</text>
+  <g transform="translate(673 65)">
+    <rect class="row" y="44" width="148" height="16"/>
+    <use href="#vector-matrix"/>
+    <text class="token" x="8" y="57" style="text-anchor:start">green</text>
+    <text class="math" x="74" y="130">V</text>
+  </g>
+  <path class="flow" d="M835 166H914"/>
+  <g transform="translate(926 65)">
+    <rect class="row" y="70" width="148" height="16"/>
+    <use href="#vector-matrix"/>
+    <text class="token" x="8" y="83" style="text-anchor:start">apple</text>
+    <text class="math" x="74" y="130">O</text>
+  </g>
+</svg>

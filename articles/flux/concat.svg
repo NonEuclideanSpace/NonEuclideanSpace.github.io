@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1102" height="490" viewBox="0 0 1102 490" role="img" aria-labelledby="title">
+  <title id="title">The 32 attention head outputs are concatenated across columns. The apple row from head 25 occupies columns 3073 through 3200 in the 4096-dimensional apple row.</title>
+  <style>
+    svg { color: #142c4c; }
+    text { fill: currentColor; text-anchor: middle; }
+    .dim, .token, .head { font: 16px ui-monospace, monospace; }
+    .dots { font: 27px Georgia, serif; }
+    .frame, .flow, .guide { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .flow { marker-end: url(#tip); }
+    .row, .selected { fill: currentColor; }
+    .row { fill-opacity: .17; }
+    .selected { fill-opacity: .48; }
+  </style>
+  <defs>
+    <marker id="tip" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto">
+      <path class="frame" d="M2 1.6 10 6 2 10.4"/>
+    </marker>
+    <g id="head-output">
+      <rect class="frame" width="132" height="114"/>
+      <text class="dim" x="66" y="-9">128</text>
+      <text class="dim" transform="translate(-12 70) rotate(-90)">512</text>
+      <text class="token" x="7" y="50" style="text-anchor:start">apple</text>
+    </g>
+    <pattern id="head-boundaries" x="104" y="0" width="28" height="20" patternUnits="userSpaceOnUse">
+      <path d="M.55 0v20" stroke="currentColor" stroke-opacity=".45" stroke-width="1.1"/>
+    </pattern>
+  </defs>
+  <path class="flow" d="M1000 3C1000 30 770 15 770 52"/>
+  <g transform="translate(68 111)">
+    <text class="head" x="66" y="-38"><tspan font-style="italic">h</tspan> = 1</text>
+    <rect class="row" y="35" width="132" height="20"/>
+    <use href="#head-output"/>
+  </g>
+  <g transform="translate(282 111)">
+    <text class="head" x="66" y="-38"><tspan font-style="italic">h</tspan> = 2</text>
+    <rect class="row" y="35" width="132" height="20"/>
+    <use href="#head-output"/>
+  </g>
+  <text class="dots" x="556" y="166">⋯</text>
+  <g transform="translate(704 111)">
+    <text class="head" x="66" y="-38"><tspan font-style="italic">h</tspan> = 25</text>
+    <rect class="selected" y="35" width="132" height="20"/>
+    <use href="#head-output"/>
+  </g>
+  <text class="dots" x="877" y="166">⋯</text>
+  <g transform="translate(917 111)">
+    <text class="head" x="66" y="-38"><tspan font-style="italic">h</tspan> = 32</text>
+    <rect class="row" y="35" width="132" height="20"/>
+    <use href="#head-output"/>
+  </g>
+  <path class="flow" d="M200 156h8q10 0 10 10v64c0 40-100 39-100 84v38"/>
+  <path class="flow" d="M414 156h8q10 0 10 10v64c0 53-286 38-286 92v30"/>
+  <path class="flow" d="M836 156h8q10 0 10 10v64c0 41-64 45-64 84v38"/>
+  <path class="flow" d="M1049 156h8q10 0 10 10v64c0 41-81 45-81 84v38"/>
+
+  <text class="dim" x="552" y="304">4096</text>
+  <text class="dim" transform="translate(92 406) rotate(-90)">512</text>
+  <rect x="776" y="316" width="28" height="114" fill="currentColor" fill-opacity=".08"/>
+  <rect class="row" x="104" y="351" width="896" height="20"/>
+  <rect x="104" y="351" width="896" height="20" fill="url(#head-boundaries)"/>
+  <rect class="selected" x="776" y="351" width="28" height="20"/>
+  <rect class="frame" x="104" y="316" width="896" height="114"/>
+  <path class="guide" d="M776 316v114m28-114v114"/>
+  <text class="token" x="95" y="366" style="text-anchor:end">apple</text>
+  <path class="guide" d="M776 435v7h28v-7"/>
+  <text class="dim" x="790" y="465">3073–3200</text>
+  <path class="guide" d="M266 430v60"/>
+</svg>

@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1102" height="570" viewBox="0 0 1102 570" role="img" aria-labelledby="title">
+  <title id="title">Residual addition, post-attention RMSNorm, and the two input projections of the feed-forward network</title>
+  <style>
+    svg { color: #142c4c; }
+    text { fill: currentColor; text-anchor: middle; }
+    .dimension, .token { font: 16px ui-monospace, monospace; }
+    .token { text-anchor: start; }
+    .formula { font: italic 27px "STIX Two Text", Georgia, serif; }
+    .operator { font-style: normal; }
+    .frame, .flow { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .flow { marker-end: url(#tip); }
+    .row { fill: currentColor; fill-opacity: .17; }
+    .cell { fill: currentColor; fill-opacity: .78; }
+  </style>
+  <defs>
+    <marker id="tip" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto">
+      <path class="frame" d="M2 1.6 10 6 2 10.4"/>
+    </marker>
+    <g id="hidden">
+      <text class="dimension" x="122" y="-11">4096</text>
+      <text class="dimension" transform="translate(-11 78) rotate(-90)">512</text>
+      <rect class="row" y="19" width="244" height="20"/>
+      <rect class="frame" width="244" height="106"/>
+      <text class="token" x="9" y="34">apple</text>
+    </g>
+    <g id="weight">
+      <text class="dimension" x="139" y="-11">4096</text>
+      <text class="dimension" transform="translate(-11 70) rotate(-90)">12288</text>
+      <rect class="row" width="278" height="17"/>
+      <rect class="frame" width="278" height="136"/>
+    </g>
+    <g id="wide-output">
+      <text class="dimension" x="208" y="-11">12288</text>
+      <text class="dimension" transform="translate(-11 79) rotate(-90)">512</text>
+      <rect class="row" y="19" width="416" height="20"/>
+      <rect class="cell" y="19" width="10" height="20"/>
+      <rect class="frame" width="416" height="108"/>
+      <text class="token" x="18" y="34">apple</text>
+    </g>
+    <g id="dot">
+      <circle class="frame" r="14"/>
+      <circle r="2.8" fill="currentColor"/>
+    </g>
+    <g id="projection">
+      <use href="#weight" x="158" y="237"/>
+      <use href="#wide-output" x="80" y="432"/>
+      <path class="flow" d="M158 245.5h-25q-15 0-15 15v31q0 14-13 25"/>
+      <use href="#dot" x="94" y="331"/>
+      <path class="flow" d="M94 345v19q0 16-16 16H60q-16 0-16 16v48q0 17 17 17h16"/>
+    </g>
+  </defs>
+
+  <path class="flow" d="M591 0v39"/>
+  <g transform="translate(52 42)">
+    <use href="#hidden"/>
+    <text class="formula" x="122" y="78">X</text>
+  </g>
+  <path class="flow" d="M296 71h120"/>
+  <g transform="translate(419 42)">
+    <use href="#hidden"/>
+    <text class="formula" x="122" y="78">H = X + P</text>
+  </g>
+  <path class="flow" d="M663 71h120"/>
+  <g transform="translate(786 42)">
+    <use href="#hidden"/>
+    <text class="formula" x="122" y="78">Z = <tspan class="operator">RMSNorm</tspan>(H)</text>
+  </g>
+
+  <path class="frame" d="M1030 71h15q16 0 16 16v87q0 16-16 16H646"/>
+  <circle cx="646" cy="190" r="3.2" fill="currentColor"/>
+  <path class="flow" d="M646 190H110q-16 0-16 16v108"/>
+  <path class="flow" d="M646 190v124"/>
+
+  <use href="#projection"/>
+  <text class="formula" x="297" y="315">Gate</text>
+  <text class="formula" x="288" y="510">G = Z Gate<tspan baseline-shift="super" font-size="17" class="operator">⊤</tspan></text>
+  <use href="#projection" transform="translate(552 0)"/>
+  <text class="formula" x="849" y="315">Up</text>
+  <text class="formula" x="840" y="510">U = Z Up<tspan baseline-shift="super" font-size="17" class="operator">⊤</tspan></text>
+  <path class="frame" d="M85 471v99"/>
+  <path class="frame" d="M637 471v70q0 15 15 15h392q15 0 15 14"/>
+  <path class="frame" d="M493 148v4q0 14-14 14H32q-16 0-16 16v388"/>
+</svg>

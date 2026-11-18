@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="420" viewBox="0 0 900 420" role="img" aria-labelledby="title">
+  <title id="title">The first linear projection of the time embedding</title>
+  <style>
+    svg { color: #142c4c; }
+    text { fill: currentColor; text-anchor: middle; }
+    .math { font: italic 28px "STIX Two Text", Georgia, serif; }
+    .dim { font: 16px ui-monospace, monospace; }
+    .frame, .flow, .bracket { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .flow { marker-end: url(#tip); }
+    .bracket { stroke-width: 1.1; stroke-opacity: .55; }
+    .selected { fill: currentColor; fill-opacity: .21; }
+  </style>
+  <defs>
+    <marker id="tip" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto">
+      <path class="frame" d="M2 1.6 10 6 2 10.4"/>
+    </marker>
+  </defs>
+
+  <path class="bracket" d="M70 2v8h760V2"/>
+  <path class="flow" d="M450 10v8q0 14-14 14H132q-16 0-16 16v32"/>
+
+  <text class="dim" x="230" y="72">256</text>
+  <text class="dim" transform="translate(56 109) rotate(-90)">1</text>
+  <rect class="selected" x="70" y="86" width="320" height="46"/>
+  <rect class="frame" x="70" y="86" width="320" height="46"/>
+  <text class="math" x="230" y="118">e(0.5)</text>
+
+  <text class="dim" x="670" y="72">256</text>
+  <text class="dim" transform="translate(496 172) rotate(-90)">4096</text>
+  <rect class="selected" x="510" y="86" width="320" height="14"/>
+  <rect class="frame" x="510" y="86" width="320" height="172"/>
+  <text class="math" x="670" y="182">W</text>
+
+  <path class="flow" d="M390 109h36q17 0 17 17v46"/>
+  <path class="flow" d="M510 93h-17q-15 0-15 15v66q0 15-15 15h-4"/>
+  <circle class="frame" cx="443" cy="189" r="11"/>
+  <circle fill="currentColor" cx="443" cy="189" r="2.5"/>
+  <path class="flow" d="M443 201v69q0 19-19 19H101q-21 0-21 21v28"/>
+
+  <text class="dim" x="450" y="328">4096</text>
+  <text class="dim" transform="translate(56 371) rotate(-90)">1</text>
+  <rect class="selected" x="70" y="343" width="20" height="56"/>
+  <path class="bracket" d="M90 343v56"/>
+  <rect class="frame" x="70" y="343" width="760" height="56"/>
+  <text class="math" x="450" y="381">h = e(0.5) W<tspan font-size="17" baseline-shift="super" font-style="normal">⊤</tspan></text>
+  <path class="frame" d="M80 399v21"/>
+</svg>

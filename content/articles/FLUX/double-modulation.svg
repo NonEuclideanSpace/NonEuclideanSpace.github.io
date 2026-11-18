@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="456" viewBox="0 0 900 456" role="img" aria-labelledby="title">
+  <title id="title">Independent text and image modulation projections in the double-stream blocks</title>
+  <style>
+    svg { color: #142c4c; }
+    text { fill: currentColor; text-anchor: middle; }
+    .math { font: italic 28px "STIX Two Text", Georgia, serif; }
+    .coef { font: italic 21px "STIX Two Text", Georgia, serif; }
+    .operator { font: 18px "STIX Two Text", Georgia, serif; }
+    .dim { font: 16px ui-monospace, monospace; }
+    .sub { font-size: 17px; baseline-shift: sub; font-style: normal; }
+    .sup { font-size: 17px; baseline-shift: super; font-style: normal; }
+    .frame, .flow, .guide { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .flow { marker-end: url(#tip); }
+    .guide { stroke-width: 1.1; stroke-opacity: .55; }
+    .selected { fill: currentColor; fill-opacity: .21; }
+  </style>
+  <defs>
+    <marker id="tip" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto">
+      <path class="frame" d="M2 1.6 10 6 2 10.4"/>
+    </marker>
+  </defs>
+
+  <path class="guide" d="M502 1v7h322V1"/>
+  <path class="frame" d="M663 8v20q0 14-14 14H495"/>
+  <circle fill="currentColor" cx="495" cy="42" r="2.6"/>
+  <path class="flow" d="M495 42H71q-14 0-14 14v20"/>
+  <path class="flow" d="M495 42v34"/>
+
+  <g transform="translate(0 0)">
+    <text class="dim" x="235" y="72">4096</text>
+    <text class="dim" transform="translate(134 176) rotate(-90)">24576</text>
+    <rect class="selected" x="148" y="85" width="174" height="14"/>
+    <rect class="frame" x="148" y="85" width="174" height="182"/>
+    <text class="math" x="235" y="184">W<tspan class="sub">txt</tspan></text>
+
+    <path class="flow" d="M148 92H73"/>
+    <circle class="frame" cx="57" cy="92" r="11"/>
+    <circle fill="currentColor" cx="57" cy="92" r="2.5"/>
+    <path class="flow" d="M57 104v203"/>
+
+    <text class="dim" x="243" y="299">6 × 4096 = 24576</text>
+    <text class="dim" transform="translate(37 341) rotate(-90)">1</text>
+    <rect class="selected" x="51" y="313" width="12" height="56"/>
+    <rect class="frame" x="51" y="313" width="384" height="56"/>
+    <path class="guide" d="M63 313v56"/>
+    <text class="math" x="243" y="350">rW<tspan class="sub">txt</tspan><tspan class="sup">⊤</tspan></text>
+
+    <path class="guide" d="M51 374v6h62v-6m2 0v6h62v-6m2 0v6h62v-6m2 0v6h62v-6m2 0v6h62v-6m2 0v6h62v-6"/>
+    <g class="coef">
+      <text x="83" y="402">b</text><text x="147" y="402">s</text><text x="211" y="402">g</text>
+      <text x="275" y="402">b</text><text x="339" y="402">s</text><text x="403" y="402">g</text>
+    </g>
+    <path class="guide" d="M51 409v6h190v-6m2 0v6h192v-6"/>
+    <text class="operator" x="147" y="438">Attn</text>
+    <text class="operator" x="339" y="438">MLP</text>
+    <path class="frame" d="M83 418v38M147 445v11"/>
+  </g>
+
+  <g transform="translate(438 0)">
+    <text class="dim" x="235" y="72">4096</text>
+    <text class="dim" transform="translate(134 176) rotate(-90)">24576</text>
+    <rect class="selected" x="148" y="85" width="174" height="14"/>
+    <rect class="frame" x="148" y="85" width="174" height="182"/>
+    <text class="math" x="235" y="184">W<tspan class="sub">img</tspan></text>
+
+    <path class="flow" d="M148 92H73"/>
+    <circle class="frame" cx="57" cy="92" r="11"/>
+    <circle fill="currentColor" cx="57" cy="92" r="2.5"/>
+    <path class="flow" d="M57 104v203"/>
+
+    <text class="dim" x="243" y="299">6 × 4096 = 24576</text>
+    <text class="dim" transform="translate(37 341) rotate(-90)">1</text>
+    <rect class="selected" x="51" y="313" width="12" height="56"/>
+    <rect class="frame" x="51" y="313" width="384" height="56"/>
+    <path class="guide" d="M63 313v56"/>
+    <text class="math" x="243" y="350">rW<tspan class="sub">img</tspan><tspan class="sup">⊤</tspan></text>
+
+    <path class="guide" d="M51 374v6h62v-6m2 0v6h62v-6m2 0v6h62v-6m2 0v6h62v-6m2 0v6h62v-6m2 0v6h62v-6"/>
+    <g class="coef">
+      <text x="83" y="402">b</text><text x="147" y="402">s</text><text x="211" y="402">g</text>
+      <text x="275" y="402">b</text><text x="339" y="402">s</text><text x="403" y="402">g</text>
+    </g>
+    <path class="guide" d="M51 409v6h190v-6m2 0v6h192v-6"/>
+    <text class="operator" x="147" y="438">Attn</text>
+    <text class="operator" x="339" y="438">MLP</text>
+  </g>
+</svg>

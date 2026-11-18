@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1020" height="600" viewBox="0 0 1020 600" role="img" aria-labelledby="title">
+  <title id="title">Text QKV projection in a FLUX double-stream block. One matrix multiply produces three consecutive groups of 4096 features. Each group is split into 32 heads of 128 features.</title>
+  <style>
+    svg { color: #142c4c; }
+    text { fill: currentColor; text-anchor: middle; }
+    .dim, .token { font: 16px ui-monospace, monospace; }
+    .token { text-anchor: start; }
+    .math { font: italic 28px "STIX Two Text", Georgia, serif; }
+    .sub { font-size: 16px; baseline-shift: sub; }
+    .sup { font-size: 16px; baseline-shift: super; }
+    .frame, .flow, .guide { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .flow { marker-end: url(#tip); }
+    .guide { stroke-width: 1.1; stroke-opacity: .6; }
+    .tracked { transform: translateY(var(--row-shift, 0px)); }
+    .row { fill: currentColor; fill-opacity: .17; }
+    .cell { fill: currentColor; fill-opacity: .6; }
+  </style>
+  <defs>
+    <marker id="tip" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto"><path class="frame" d="M2 1.6 10 6 2 10.4"/></marker>
+    <g id="head-matrix">
+      <text class="dim" x="144" y="-12">4096</text>
+      <text class="dim" transform="translate(-13 52) rotate(-90)">512</text>
+      <rect class="row tracked" x="0" y="15" width="288" height="20"/>
+      <rect class="frame" x="0" y="0" width="288" height="100"/>
+      <text class="token tracked" x="8" y="30">apple</text>
+      <rect x="216" y="0" width="9" height="100" fill="currentColor" fill-opacity=".09"/>
+      <rect class="cell tracked" x="216" y="15" width="9" height="20"/>
+      <rect class="frame" x="216" y="0" width="9" height="100"/>
+      <text class="dim" x="221" y="-29"><tspan font-style="italic">h</tspan> = 25</text>
+      <path class="guide" d="M220.5 -22v18m-2.5-4 2.5 4 2.5-4"/>
+      <path class="guide" d="M216 104v5h9v-5"/>
+      <text class="dim" x="220.5" y="131">128</text>
+      <path class="frame" d="M220.5 136v12"/>
+      <text class="dim" x="86" y="124"><tspan font-style="italic">h</tspan> = 1, …, 32</text>
+    </g>
+  </defs>
+
+  <path class="flow" d="M508 0v9q0 12-12 12H162q-12 0-12 12v23"/>
+  <text class="dim" x="270" y="51">4096</text>
+  <text class="dim" transform="translate(99 116) rotate(-90)">512</text>
+  <rect class="row" x="114" y="75" width="312" height="20"/>
+  <rect class="frame" x="114" y="61" width="312" height="102"/>
+  <text class="token" x="122" y="90">apple</text>
+  <text class="math" x="270" y="138">T<tspan class="sub" font-style="normal">attn</tspan></text>
+
+  <text class="math" x="635" y="29">W</text>
+  <text class="dim" x="764" y="29">4096</text>
+  <text class="dim" transform="translate(604 120) rotate(-90)">12288</text>
+  <rect class="row" x="620" y="40" width="288" height="8"/>
+  <rect class="frame" x="620" y="40" width="288" height="144"/>
+  <path class="guide" d="M620 88h288m-288 48h288"/>
+  <g class="math">
+    <text x="764" y="74">W<tspan class="sub">Q</tspan></text>
+    <text x="764" y="122">W<tspan class="sub">K</tspan></text>
+    <text x="764" y="170">W<tspan class="sub">V</tspan></text>
+  </g>
+
+  <path class="flow" d="M427 85h29q14 0 14 14v30q0 12 9 21l14 13"/>
+  <path class="flow" d="M619 44h-49q-14 0-14 14v69q0 13-10 22l-21 15"/>
+  <circle class="frame" cx="509" cy="175" r="13"/>
+  <circle cx="509" cy="175" r="2.7" fill="currentColor"/>
+  <path class="flow" d="M509 189v8q0 12-12 12H31q-12 0-12 12v34q0 12 12 12h11"/>
+
+  <text class="dim" x="509" y="230">12288</text>
+  <text class="dim" transform="translate(32 307) rotate(-90)">512</text>
+  <rect class="row" x="47" y="257" width="924" height="20"/>
+  <rect class="cell" x="47" y="257" width="8" height="20"/>
+  <rect class="frame" x="47" y="240" width="924" height="100"/>
+  <text class="token" x="62" y="272">apple</text>
+  <path class="frame" d="M355 257v20m308-20v20"/>
+  <text class="math" x="509" y="315">[ Q | K | V ] = T<tspan class="sub" font-style="normal">attn</tspan> W<tspan class="sup" font-style="normal">⊤</tspan></text>
+  <path class="guide" d="M48 344v6h306v-6m2 0v6h306v-6m2 0v6h306v-6"/>
+  <g class="dim">
+    <text x="201" y="371">4096</text><text x="509" y="371">4096</text><text x="817" y="371">4096</text>
+  </g>
+
+  <path class="flow" d="M114 351v31q0 12-12 12H90q-12 0-12 12v41"/>
+  <path class="flow" d="M422 351v31q0 12-12 12h-5q-12 0-12 12v41"/>
+  <path class="flow" d="M730 351v31q0 12-12 12h-1q-12 0-12 12v41"/>
+  <g transform="translate(47 452)">
+    <use href="#head-matrix"/><text class="math" x="144" y="79">Q</text>
+  </g>
+  <g transform="translate(365 452)" style="--row-shift:20px">
+    <use href="#head-matrix"/>
+    <rect x="1" y="14" width="286" height="19" fill="currentColor" fill-opacity=".13"/>
+    <rect class="cell" x="216" y="14" width="9" height="19"/>
+    <text class="token" x="8" y="28">green</text><text class="math" x="144" y="79">K</text>
+  </g>
+  <g transform="translate(683 452)">
+    <use href="#head-matrix"/><text class="math" x="144" y="79">V</text>
+  </g>
+</svg>

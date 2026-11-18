@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="896" viewBox="0 0 1320 896" role="img" aria-labelledby="title desc">
+  <title id="title">The image and text feed-forward sublayers of FLUX.2 double-stream block one</title>
+  <desc id="desc">Follow image position p and text token apple through their separate learned weights. Each stream normalizes and time-modulates each token, projects to two equal channel groups, applies SiLU to G and multiplies by U, projects down, gates the result and adds the attention residual. Both streams enter double-stream block two. In the first denoising step reference tokens use the image-stream weights and their fixed time modulation.</desc>
+  <style>
+    svg { color: #142c4c; }
+    text { fill: currentColor; text-anchor: middle; font: 23px "STIX Two Text", Georgia, serif; }
+    .math { font-style: italic; }
+    .dim, .rowname { font: 15px ui-monospace, monospace; }
+    .sub { font-size: 14px; baseline-shift: sub; }
+    .op { font-size: 19px; }
+    .frame, .link, .wire, .thin { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .link { marker-end: url(#tip); }
+    .thin { stroke-width: 1; stroke-opacity: .5; }
+    .band { fill: currentColor; opacity: .17; }
+    .cell { fill: currentColor; opacity: .60; }
+    .port { fill: white; stroke: currentColor; stroke-width: 1.6; }
+    .rowname { text-anchor: start; }
+  </style>
+  <defs>
+    <marker id="tip" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><path class="wire" d="M2 1.6 10 6 2 10.4"/></marker>
+  </defs>
+  <g transform="translate(8 0)" aria-label="img MLP">
+    <path class="link" d="M462 0v5q0 9-9 9H333q-9 0-9 9v13"/>
+    <rect class="frame" x="178" y="41" width="292" height="66"/>
+    <rect class="band" x="179" y="51" width="290" height="16"/>
+    <text class="rowname" x="184" y="64">p</text>
+    <text class="math" x="324" y="95">X<tspan class="sub">attn</tspan></text>
+    <text class="dim" transform="translate(167 74.0) rotate(-90)">L</text>
+    <text class="dim" x="444" y="34">4096</text>
+    <text class="math" x="560" y="42">(b, s, g)<tspan class="sub">MLP, img</tspan></text>
+    <path class="wire" d="M559 56v11h61v646q0 9-9 9h-76"/>
+    <path class="link" d="M559 68v155q0 8-8 8h-46"/>
+    <text class="math op" x="535" y="216">s, b</text>
+    <path class="link" d="M190 108v3q0 7-7 7H64q-9 0-9 9v646q0 9 9 9h244"/>
+    <path class="link" d="M324 108v20"/>
+    <text class="math" x="251" y="152">N =</text>
+    <text class="math op" x="354" y="144">X<tspan class="sub">attn</tspan> − μ</text>
+    <path class="wire" d="M303 151h102"/>
+    <text class="math op" x="357" y="175">√(σ² + ε)</text>
+    <path class="link" d="M324 181v17"/>
+    <rect class="frame" x="151" y="203" width="346" height="62"/>
+    <rect class="band" x="152" y="213" width="344" height="16"/>
+    <text class="rowname" x="157" y="226">p</text>
+    <text class="math" x="324" y="253">Y = (1 + s) ⊙ N + b</text>
+    <path class="link" d="M324 266v57"/>
+    <text class="math" x="389" y="298">W<tspan class="sub">up, img</tspan>ᵀ</text>
+    <text class="dim" x="513" y="323">24576</text>
+    <rect class="frame" x="95" y="330" width="458" height="69"/>
+    <rect class="band" x="96" y="341" width="456" height="16"/>
+    <rect class="cell" x="248" y="341" width="8" height="16"/>
+    <rect class="cell" x="477" y="341" width="8" height="16"/>
+    <text class="rowname" x="102" y="354">p</text>
+    <path class="thin" d="M324 330v69"/>
+    <text class="math" x="210" y="385">G</text>
+    <text class="math" x="440" y="385">U</text>
+    <text class="dim" x="256" y="418">12288</text>
+    <text class="dim" x="484" y="418">12288</text>
+    <path class="link" d="M210 400v34"/>
+    <text class="math" x="210" y="458">SiLU(G)</text>
+    <path class="link" d="M210 468v6q0 8 8 8h90"/>
+    <path class="link" d="M438 400v74q0 8-8 8h-89"/>
+    <text class="math" x="324" y="488">⊙</text>
+    <path class="link" d="M324 496v12"/>
+    <rect class="frame" x="151" y="513" width="346" height="61"/>
+    <rect class="band" x="152" y="523" width="344" height="16"/>
+    <rect class="cell" x="382" y="523" width="10" height="16"/>
+    <text class="rowname" x="157" y="536">p</text>
+    <text class="math" x="324" y="562">F = SiLU(G) ⊙ U</text>
+    <text class="dim" x="471" y="506">12288</text>
+    <path class="link" d="M324 575v54"/>
+    <text class="math" x="394" y="605">W<tspan class="sub">down, img</tspan>ᵀ</text>
+    <rect class="frame" x="178" y="634" width="292" height="62"/>
+    <rect class="band" x="179" y="644" width="290" height="16"/>
+    <text class="rowname" x="184" y="657">p</text>
+    <text class="math" x="324" y="684">D = FW<tspan class="sub">down, img</tspan>ᵀ</text>
+    <text class="dim" x="444" y="627">4096</text>
+    <path class="link" d="M324 697v18"/>
+    <text class="math" x="324" y="736">g ⊙ D</text>
+    <path class="link" d="M536 722H366"/>
+    <text class="math op" x="490" y="711">g</text>
+    <path class="link" d="M324 745v24"/>
+<circle class="port" cx="324" cy="782" r="11"/>
+    <path class="wire" d="M319 782h10m-5-5v10"/>
+    <path class="link" d="M324 794v15"/>
+    <rect class="frame" x="154" y="814" width="340" height="62"/>
+    <rect class="band" x="155" y="824" width="338" height="16"/>
+    <text class="rowname" x="160" y="837">p</text>
+    <text class="math" x="324" y="864">X<tspan class="sub">out</tspan> = X<tspan class="sub">attn</tspan> + g ⊙ D</text>
+    <text class="dim" transform="translate(143 845.0) rotate(-90)">L</text>
+    <text class="dim" x="468" y="807">4096</text>
+  </g>
+  <g transform="translate(670 0)" aria-label="txt MLP">
+    <rect class="frame" x="178" y="41" width="292" height="66"/>
+    <rect class="band" x="179" y="51" width="290" height="16"/>
+    <text class="rowname" x="184" y="64">apple</text>
+    <text class="math" x="324" y="95">T<tspan class="sub">attn</tspan> = T + g<tspan class="sub">attn</tspan> ⊙ P<tspan class="sub">txt</tspan></text>
+    <text class="dim" transform="translate(167 74.0) rotate(-90)">L<tspan class="sub">txt</tspan></text>
+    <text class="dim" x="444" y="34">4096</text>
+    <text class="math" x="560" y="42">(b, s, g)<tspan class="sub">MLP, txt</tspan></text>
+    <path class="wire" d="M559 56v11h61v646q0 9-9 9h-76"/>
+    <path class="link" d="M559 68v155q0 8-8 8h-46"/>
+    <text class="math op" x="535" y="216">s, b</text>
+    <path class="link" d="M190 108v3q0 7-7 7H64q-9 0-9 9v646q0 9 9 9h244"/>
+    <path class="link" d="M324 108v20"/>
+    <text class="math" x="251" y="152">N =</text>
+    <text class="math op" x="354" y="144">T<tspan class="sub">attn</tspan> − μ</text>
+    <path class="wire" d="M303 151h102"/>
+    <text class="math op" x="357" y="175">√(σ² + ε)</text>
+    <path class="link" d="M324 181v17"/>
+    <rect class="frame" x="151" y="203" width="346" height="62"/>
+    <rect class="band" x="152" y="213" width="344" height="16"/>
+    <text class="rowname" x="157" y="226">apple</text>
+    <text class="math" x="324" y="253">Y = (1 + s) ⊙ N + b</text>
+    <path class="link" d="M324 266v57"/>
+    <text class="math" x="389" y="298">W<tspan class="sub">up, txt</tspan>ᵀ</text>
+    <text class="dim" x="513" y="323">24576</text>
+    <rect class="frame" x="95" y="330" width="458" height="69"/>
+    <rect class="band" x="96" y="341" width="456" height="16"/>
+    <rect class="cell" x="248" y="341" width="8" height="16"/>
+    <rect class="cell" x="477" y="341" width="8" height="16"/>
+    <text class="rowname" x="102" y="354">apple</text>
+    <path class="thin" d="M324 330v69"/>
+    <text class="math" x="210" y="385">G</text>
+    <text class="math" x="440" y="385">U</text>
+    <text class="dim" x="256" y="418">12288</text>
+    <text class="dim" x="484" y="418">12288</text>
+    <path class="link" d="M210 400v34"/>
+    <text class="math" x="210" y="458">SiLU(G)</text>
+    <path class="link" d="M210 468v6q0 8 8 8h90"/>
+    <path class="link" d="M438 400v74q0 8-8 8h-89"/>
+    <text class="math" x="324" y="488">⊙</text>
+    <path class="link" d="M324 496v12"/>
+    <rect class="frame" x="151" y="513" width="346" height="61"/>
+    <rect class="band" x="152" y="523" width="344" height="16"/>
+    <rect class="cell" x="382" y="523" width="10" height="16"/>
+    <text class="rowname" x="157" y="536">apple</text>
+    <text class="math" x="324" y="562">F = SiLU(G) ⊙ U</text>
+    <text class="dim" x="471" y="506">12288</text>
+    <path class="link" d="M324 575v54"/>
+    <text class="math" x="394" y="605">W<tspan class="sub">down, txt</tspan>ᵀ</text>
+    <rect class="frame" x="178" y="634" width="292" height="62"/>
+    <rect class="band" x="179" y="644" width="290" height="16"/>
+    <text class="rowname" x="184" y="657">apple</text>
+    <text class="math" x="324" y="684">D = FW<tspan class="sub">down, txt</tspan>ᵀ</text>
+    <text class="dim" x="444" y="627">4096</text>
+    <path class="link" d="M324 697v18"/>
+    <text class="math" x="324" y="736">g ⊙ D</text>
+    <path class="link" d="M536 722H366"/>
+    <text class="math op" x="490" y="711">g</text>
+    <path class="link" d="M324 745v24"/>
+<circle class="port" cx="324" cy="782" r="11"/>
+    <path class="wire" d="M319 782h10m-5-5v10"/>
+    <path class="link" d="M324 794v15"/>
+    <rect class="frame" x="154" y="814" width="340" height="62"/>
+    <rect class="band" x="155" y="824" width="338" height="16"/>
+    <text class="rowname" x="160" y="837">apple</text>
+    <text class="math" x="324" y="864">T<tspan class="sub">out</tspan> = T<tspan class="sub">attn</tspan> + g ⊙ D</text>
+    <text class="dim" transform="translate(143 845.0) rotate(-90)">L<tspan class="sub">txt</tspan></text>
+    <text class="dim" x="468" y="807">4096</text>
+  </g>
+  <path class="wire" d="M332 877v19M994 877v19"/>
+</svg>

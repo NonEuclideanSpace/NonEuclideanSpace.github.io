@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1020" height="323" viewBox="0 0 1020 323" role="img" aria-labelledby="title">
+  <title id="title">Text attention modulation. Scale and shift each normalized token row with the same two time-dependent vectors.</title>
+  <style>
+    svg { color: #142c4c; }
+    text { fill: currentColor; text-anchor: middle; }
+    .dim, .token { font: 16px ui-monospace, monospace; }
+    .token { text-anchor: start; }
+    .math { font: italic 28px "STIX Two Text", Georgia, serif; }
+    .frame, .flow { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .flow { marker-end: url(#tip); }
+    .row { fill: currentColor; fill-opacity: .17; }
+    .cell { fill: currentColor; fill-opacity: .55; }
+  </style>
+  <defs>
+    <marker id="tip" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto"><path class="frame" d="M2 1.6 10 6 2 10.4"/></marker>
+  </defs>
+
+  <path class="flow" d="M170 0v14q0 12-12 12H65q-12 0-12 12v21"/>
+  <path class="flow" d="M895 0v1q0 12-12 12H445q-12 0-12 12v34"/>
+  <path class="flow" d="M959 0v13q0 12-12 12H755q-12 0-12 12v22"/>
+
+  <text class="dim" x="170" y="52">4096</text>
+  <text class="dim" transform="translate(18 112) rotate(-90)">512</text>
+  <rect class="row" x="32" y="74" width="276" height="20"/>
+  <rect class="cell" x="32" y="74" width="8" height="20"/>
+  <rect class="frame" x="32" y="63" width="276" height="100"/>
+  <text class="token" x="47" y="89">apple</text>
+  <text class="math" x="170" y="136">T̂</text>
+
+  <text class="dim" x="525" y="52">4096</text>
+  <text class="dim" transform="translate(398 83) rotate(-90)">1</text>
+  <rect class="cell" x="412" y="63" width="8" height="36"/>
+  <rect class="frame" x="412" y="63" width="226" height="36"/>
+  <text class="math" x="525" y="90">b</text>
+
+  <text class="dim" x="835" y="52">4096</text>
+  <text class="dim" transform="translate(708 83) rotate(-90)">1</text>
+  <rect class="cell" x="722" y="63" width="8" height="36"/>
+  <rect class="frame" x="722" y="63" width="226" height="36"/>
+  <text class="math" x="835" y="90">s</text>
+
+  <path class="flow" d="M170 164v67q0 13 13 13h120"/>
+  <path class="flow" d="M525 100v48q0 12-12 12h-75q-12 0-12 12v37"/>
+  <path class="flow" d="M835 100v62q0 12-12 12H652q-12 0-12 12v23"/>
+
+  <text class="dim" x="508" y="204">4096</text>
+  <text class="dim" transform="translate(295 273) rotate(-90)">512</text>
+  <rect class="row" x="309" y="232" width="398" height="22"/>
+  <rect class="cell" x="309" y="232" width="8" height="22"/>
+  <rect class="frame" x="309" y="214" width="398" height="100"/>
+  <text class="token" x="324" y="248">apple</text>
+  <text class="math" x="508" y="291">T<tspan font-size="17" baseline-shift="sub" font-style="normal">attn</tspan> = T̂ ⊙ (1 + s) + b</text>
+  <path class="frame" d="M508 315v8"/>
+</svg>

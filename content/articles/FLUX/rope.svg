@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="950" height="398" viewBox="0 0 950 398" role="img" aria-labelledby="title">
+  <title id="title">RoPE rotates each component pair of the apple query and the green key in the same plane, by each token's position times the pair's frequency.</title>
+  <style>
+    svg { color: #142c4c; }
+    path, rect { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    text { fill: currentColor; font: italic 22px "STIX Two Text", Georgia, serif; text-anchor: middle; }
+    .sub { font-size: 68%; baseline-shift: -5px; }
+    .selected { fill: currentColor; fill-opacity: .13; stroke: none; }
+    .arrow { marker-end: url(#tip); }
+    .axis { opacity: .37; marker-end: url(#tip); }
+    .input { stroke-width: 2.2; stroke-dasharray: 6 5; opacity: .72; marker-end: url(#tip); }
+    .output { stroke-width: 2.5; marker-end: url(#tip); }
+  </style>
+  <defs>
+    <marker id="tip" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M2 1.6 10 6 2 10.4" stroke-width="1.9"/>
+    </marker>
+  </defs>
+
+  <path class="arrow" d="M188 3C188 27 300 15 300 42"/>
+  <path class="arrow" d="M551 3C551 27 364 15 364 42"/>
+  <text x="328" y="65">u ∈ {q̂<tspan class="sub" font-style="normal">apple</tspan>, k̂<tspan class="sub" font-style="normal">green</tspan>}</text>
+  <path class="arrow" d="M328 75v27"/>
+
+  <rect class="selected" x="180" y="111" width="49" height="37"/>
+  <rect class="selected" x="416" y="111" width="68" height="37"/>
+  <path d="M84 111H78v37h6 M576 111h6v37h-6"/>
+  <path d="M328 116v27" opacity=".32"/>
+  <text x="102" y="136">u<tspan class="sub">1</tspan></text>
+  <text x="151" y="136">⋯</text>
+  <text x="204" y="136">u<tspan class="sub">i</tspan></text>
+  <text x="255" y="136">⋯</text>
+  <text x="298" y="136">u<tspan class="sub">64</tspan></text>
+  <text x="357" y="136">u<tspan class="sub">65</tspan></text>
+  <text x="401" y="136">⋯</text>
+  <text x="450" y="136">u<tspan class="sub">i+64</tspan></text>
+  <text x="501" y="136">⋯</text>
+  <text x="548" y="136">u<tspan class="sub">128</tspan></text>
+
+  <path class="arrow" d="M204 152v9c0 26 97 17 97 43"/>
+  <path class="arrow" d="M450 152v9c0 26-96 17-96 43"/>
+  <text x="328" y="231">(u<tspan class="sub">i</tspan>, u<tspan class="sub">i+64</tspan>)</text>
+  <text x="328" y="260" style="font-size:17px">i = 1, …, 64</text>
+  <path class="arrow" d="M385 224H608"/>
+
+  <path class="axis" d="M638 238H855"/>
+  <path class="axis" d="M650 374V44"/>
+  <path d="M807.88 186.70A166 166 0 0 0 712.18 84.09" opacity=".33"/>
+  <path class="input" d="M650 238 807.88 186.70"/>
+  <path class="output" d="M650 238 712.18 84.09"/>
+  <circle cx="650" cy="238" r="2.6" fill="currentColor"/>
+  <path class="arrow" d="M716.57 216.37A70 70 0 0 0 676.22 173.10"/>
+  <text x="739" y="163">p<tspan class="sub" font-style="normal">apple</tspan> ω<tspan class="sub">i</tspan></text>
+  <text x="817" y="190" style="text-anchor:start">(q̂<tspan class="sub">i</tspan>, q̂<tspan class="sub">i+64</tspan>)</text>
+  <text x="717" y="70">(q′<tspan class="sub">i</tspan>, q′<tspan class="sub">i+64</tspan>)</text>
+
+  <path d="M712.65 360.96A138 138 0 0 0 777.03 291.92" opacity=".33"/>
+  <path class="input" d="M650 238 712.65 360.96"/>
+  <path class="output" d="M650 238 777.03 291.92"/>
+  <path class="arrow" d="M679.06 295.02A64 64 0 0 0 708.91 263.01"/>
+  <text x="727" y="307">p<tspan class="sub" font-style="normal">green</tspan> ω<tspan class="sub">i</tspan></text>
+  <text x="711" y="384">(k̂<tspan class="sub">i</tspan>, k̂<tspan class="sub">i+64</tspan>)</text>
+  <text x="788" y="298" style="text-anchor:start">(k′<tspan class="sub">i</tspan>, k′<tspan class="sub">i+64</tspan>)</text>
+</svg>

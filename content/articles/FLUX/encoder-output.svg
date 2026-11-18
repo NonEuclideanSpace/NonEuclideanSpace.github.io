@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1102" height="976" viewBox="0 0 1102 976" role="img" aria-labelledby="title">
+  <title id="title">From the gated feed-forward network to the FLUX.2 text condition</title>
+  <style>
+    svg { color: #142c4c; }
+    text { fill: currentColor; text-anchor: middle; }
+    .dim, .token { font: 16px ui-monospace, monospace; }
+    .token { text-anchor: start; }
+    .math { font: italic 27px "STIX Two Text", Georgia, serif; }
+    .small { font: italic 22px "STIX Two Text", Georgia, serif; }
+    .op { font-style: normal; }
+    .sup { baseline-shift: super; font-size: 16px; font-style: normal; }
+    .frame, .flow { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .flow { marker-end: url(#tip); }
+    .row { fill: currentColor; fill-opacity: .17; }
+    .cell { fill: currentColor; fill-opacity: .78; }
+  </style>
+  <defs>
+    <marker id="tip" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto">
+      <path class="frame" d="M2 1.6 10 6 2 10.4"/>
+    </marker>
+    <g id="hidden">
+      <text class="dim" x="124" y="-11">4096</text>
+      <text class="dim" transform="translate(-11 83) rotate(-90)">512</text>
+      <rect class="row" y="19" width="248" height="20"/>
+      <rect class="cell" y="19" width="10" height="20"/>
+      <rect class="frame" width="248" height="112"/>
+      <text class="token" x="17" y="34">apple</text>
+    </g>
+    <g id="layer-state">
+      <text class="dim" x="114" y="-11">4096</text>
+      <text class="dim" transform="translate(-11 63) rotate(-90)">512</text>
+      <rect class="row" y="17" width="228" height="20"/>
+      <rect class="frame" width="228" height="94"/>
+      <text class="token" x="8" y="32">apple</text>
+    </g>
+    <rect id="layer" class="frame" x="-38" y="-18" width="76" height="36" rx="2"/>
+  </defs>
+
+  <text class="small" x="608" y="17"><tspan class="op">SiLU</tspan>(G)</text>
+  <text class="small" x="1036" y="19">U</text>
+  <path class="flow" d="M561 0v6q0 16-16 16H136q-16 0-16 16v29"/>
+  <path class="flow" d="M1059 0v31q0 16-16 16H156q-15 0-19 14l-3 8"/>
+  <text x="125" y="94" class="math op">×</text>
+  <path class="flow" d="M123 100q0 13-14 13H73q-16 0-16 16v21q0 16 16 16h10"/>
+  <text class="dim" x="284" y="126">12288</text>
+  <text class="dim" transform="translate(77 222) rotate(-90)">512</text>
+  <rect class="row" x="88" y="156" width="392" height="20"/>
+  <rect class="cell" x="88" y="156" width="10" height="20"/>
+  <rect class="frame" x="88" y="137" width="392" height="120"/>
+  <text class="token" x="105" y="171">apple</text>
+  <text class="math" x="284" y="219">F = <tspan class="op">SiLU</tspan>(G) ⊙ U</text>
+
+  <text class="dim" x="831" y="126">12288</text>
+  <text class="dim" transform="translate(624 202) rotate(-90)">4096</text>
+  <rect class="row" x="635" y="137" width="392" height="17"/>
+  <rect class="frame" x="635" y="137" width="392" height="120"/>
+  <text class="math" x="831" y="205">Down</text>
+  <path class="flow" d="M480 166h20q16 0 16 16v25q0 12 18 23"/>
+  <path class="flow" d="M635 145.5h-36q-16 0-16 16v45q0 13-22 23"/>
+  <circle class="frame" cx="548" cy="242" r="14"/>
+  <circle cx="548" cy="242" r="2.8" fill="currentColor"/>
+  <path class="flow" d="M548 256v21q0 16-16 16H406q-17 0-17 17v43q0 17 17 17h9"/>
+
+  <path class="flow" d="M16 0v354q0 16 16 16h32"/>
+  <use href="#hidden" x="68" y="341"/>
+  <text class="math" x="192" y="421">H</text>
+  <use href="#hidden" x="419" y="341"/>
+  <text class="math" x="543" y="421">D = F Down<tspan class="sup">⊤</tspan></text>
+  <path class="flow" d="M316 370h10q16 0 16 16v64q0 16 16 16h367q16 0 16-16v-63"/>
+  <path class="flow" d="M667 370h57"/>
+  <text class="math op" x="741" y="379">+</text>
+  <path class="flow" d="M757 370h48"/>
+  <use href="#hidden" x="809" y="341"/>
+  <text class="math" x="933" y="421">X′ = H + D</text>
+  <path class="flow" d="M933 453v25q0 16-16 16H107q-16 0-16 16v27"/>
+
+  <g transform="translate(0 516)">
+    <use href="#layer" x="91" y="43"/>
+    <text class="small" x="91" y="50">ℓ = 1</text>
+    <path class="flow" d="M129 43h29"/>
+    <use href="#layer" x="200" y="43"/>
+    <text class="small" x="200" y="50">ℓ = 2</text>
+    <path class="frame" d="M238 43h14"/>
+    <text class="small op" x="271" y="49">⋯</text>
+    <path class="flow" d="M290 43h25"/>
+    <use href="#layer" x="357" y="43"/>
+    <text class="small" x="357" y="50">ℓ = 9</text>
+    <path class="frame" d="M395 43h32"/>
+    <text class="small op" x="454" y="49">⋯</text>
+    <path class="flow" d="M482 43h27"/>
+    <use href="#layer" x="551" y="43"/>
+    <text class="small" x="551" y="50">ℓ = 18</text>
+    <path class="frame" d="M589 43h32"/>
+    <text class="small op" x="648" y="49">⋯</text>
+    <path class="flow" d="M675 43h28"/>
+    <use href="#layer" x="745" y="43"/>
+    <text class="small" x="745" y="50">ℓ = 27</text>
+    <path class="frame" d="M783 43h47"/>
+    <text class="small op" x="855" y="49">⋯</text>
+    <path class="flow" d="M882 43h38"/>
+    <use href="#layer" x="962" y="43"/>
+    <text class="small" x="962" y="50">ℓ = 36</text>
+    <path class="flow" d="M962 61v22"/>
+    <text class="small op" x="962" y="108">RMSNorm</text>
+
+    <path class="flow" d="M357 61v17c0 24-77 18-77 46v37"/>
+    <path class="flow" d="M551 61v17c0 24 48 18 48 46v37"/>
+    <path class="flow" d="M745 61v17c0 24 77 18 77 46v37"/>
+    <use href="#layer-state" x="116" y="164"/>
+    <text class="small" x="230" y="236">X(9)</text>
+    <use href="#layer-state" x="437" y="164"/>
+    <text class="small" x="551" y="236">X(18)</text>
+    <use href="#layer-state" x="758" y="164"/>
+    <text class="small" x="872" y="236">X(27)</text>
+    <path class="flow" d="M344 191h12q14 0 14 14v43c0 36-115 12-115 50v28"/>
+    <path class="flow" d="M665 191h12q14 0 14 14v43c0 36-88 12-88 50v28"/>
+    <path class="flow" d="M986 191h12q14 0 14 14v43c0 36-165 12-165 50v28"/>
+
+    <text class="dim" x="551" y="300">12288</text>
+    <text class="dim" transform="translate(98 381) rotate(-90)">512</text>
+    <rect class="row" x="110" y="329" width="882" height="20"/>
+    <rect class="frame" x="110" y="310" width="882" height="100"/>
+    <path class="frame" d="M404 310v100m294-100v100" stroke-opacity=".55"/>
+    <text class="token" x="119" y="344">apple</text>
+    <path class="frame" d="M111 415v6h291v-6m4 0v6h290v-6m4 0v6h291v-6" stroke-opacity=".65"/>
+    <g class="dim">
+      <text x="257" y="443">4096</text>
+      <text x="551" y="443">4096</text>
+      <text x="845" y="443">4096</text>
+    </g>
+  </g>
+</svg>

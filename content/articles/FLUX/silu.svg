@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1102" height="254" viewBox="0 0 1102 254" role="img" aria-labelledby="title">
+  <title id="title">Elementwise SiLU on the gate projection</title>
+  <style>
+    svg { color: #142c4c; }
+    text { fill: currentColor; text-anchor: middle; }
+    .dimension, .token { font: 16px ui-monospace, monospace; }
+    .math { font: italic 27px "STIX Two Text", Georgia, serif; }
+    .axis-math { font: italic 18px "STIX Two Text", Georgia, serif; }
+    .number { font: 14px ui-monospace, monospace; }
+    .operator { font-style: normal; }
+    .frame, .flow, .curve, .axis { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .flow { marker-end: url(#tip); }
+    .axis { stroke-width: 1.15; stroke-opacity: .6; }
+    .curve { stroke-width: 2.25; }
+  </style>
+  <defs>
+    <marker id="tip" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto">
+      <path class="frame" d="M2 1.6 10 6 2 10.4"/>
+    </marker>
+  </defs>
+  <path class="flow" d="M85 0v23q0 15 15 15h36"/>
+  <g class="math">
+    <text x="200" y="46"><tspan class="operator">SiLU</tspan>(g) =</text>
+    <text x="301" y="23">g</text>
+    <path class="frame" d="M260 38h82"/>
+    <text x="301" y="65">1 + e<tspan baseline-shift="super" font-size="15">−g</tspan></text>
+  </g>
+  <path class="axis" d="M86 197h334m-5-3 5 3-5 3 M250 216V82m-3 5 3-5 3 5 M172 194v6m156-6v6 M247 131h6"/>
+  <g class="number">
+    <text x="172" y="225">−2</text>
+    <text x="328" y="218">2</text>
+    <text x="239" y="216">0</text>
+    <text x="237" y="136">2</text>
+  </g>
+  <text class="axis-math" x="432" y="202">g</text>
+  <text class="axis-math" x="206" y="91"><tspan class="operator">SiLU</tspan>(g)</text>
+  <path class="curve" d="M94 199.37
+           C107 199.95 120 200.73 133 201.7
+           C146 202.66 159 203.87 172 204.87
+           C185 205.87 198 206.67 211 205.88
+           C224 205.08 237 202.5 250 197
+           C263 191.5 276 183.08 289 172.88
+           C302 162.67 315 150.87 328 138.87
+           C341 126.87 354 114.66 367 102.7
+           C380 90.73 393 78.95 406 67.37"/>
+
+  <path class="flow" d="M353 38h92q18 0 18 18v65q0 18 18 18h71"/>
+  <text class="dimension" x="764" y="99">12288</text>
+  <text class="dimension" transform="translate(545 188) rotate(-90)">512</text>
+  <rect x="556" y="129" width="416" height="20" fill="currentColor" fill-opacity=".17"/>
+  <rect x="556" y="129" width="10" height="20" fill="currentColor" fill-opacity=".78"/>
+  <rect class="frame" x="556" y="110" width="416" height="108"/>
+  <text class="token" x="574" y="144" style="text-anchor:start">apple</text>
+  <text class="math" x="764" y="188"><tspan class="operator">SiLU</tspan>(G) = G ⊙ σ(G)</text>
+  <path class="frame" d="M561 149v105 M16 0v254 M1059 0v254"/>
+</svg>

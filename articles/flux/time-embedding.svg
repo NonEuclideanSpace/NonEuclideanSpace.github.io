@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="963" viewBox="0 0 900 963" role="img" aria-labelledby="title">
+  <title id="title">Sinusoidal encoding of the current denoising time</title>
+  <style>
+    svg { color: #142c4c; }
+    text { fill: currentColor; text-anchor: middle; }
+    .math { font: italic 28px "STIX Two Text", Georgia, serif; }
+    .small { font: italic 21px "STIX Two Text", Georgia, serif; }
+    .dim { font: 16px ui-monospace, monospace; }
+    .frame, .flow, .guide { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .flow { marker-end: url(#tip); }
+    .guide { stroke-width: 1.1; stroke-opacity: .55; }
+    .sup { font-size: 18px; baseline-shift: super; }
+    .sub { font-size: 18px; baseline-shift: sub; }
+  </style>
+  <defs>
+    <marker id="tip" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto">
+      <path class="frame" d="M2 1.6 10 6 2 10.4"/>
+    </marker>
+  </defs>
+
+  <text class="math" x="260" y="55">t</text>
+  <path class="flow" d="M260 70v57"/>
+  <text class="math" x="260" y="163">u = 1000t</text>
+
+  <text class="math" x="690" y="55">ω<tspan class="sub">i</tspan> = 10000<tspan class="sup">−i/128</tspan></text>
+  <text class="small" x="690" y="91">i = 0, …, 127</text>
+  <text class="dim" x="690" y="123">128</text>
+  <rect class="frame" x="535" y="137" width="310" height="50"/>
+  <text class="math" x="690" y="170">ω</text>
+  <text class="dim" transform="translate(523 162) rotate(-90)">1</text>
+
+  <path class="flow" d="M260 179v35q0 24 24 24h143"/>
+  <path class="flow" d="M690 187v27q0 24-24 24H473"/>
+  <text class="math" x="450" y="248" font-style="normal">×</text>
+  <path class="flow" d="M450 261v36q0 18-18 18H122q-18 0-18 18v8q0 18 18 18h14"/>
+
+  <text class="dim" x="450" y="329">128</text>
+  <rect class="frame" x="140" y="341" width="620" height="64"/>
+  <text class="math" x="450" y="382">θ = uω</text>
+  <text class="dim" transform="translate(128 382) rotate(-90)">1</text>
+
+  <path class="flow" d="M290 405v19q0 18-18 18h-19q-18 0-18 18v18"/>
+  <path class="flow" d="M610 405v19q0 18 18 18h19q18 0 18 18v18"/>
+  <text class="dim" x="380" y="473">128</text>
+  <text class="dim" x="810" y="473">128</text>
+  <rect class="frame" x="60" y="485" width="350" height="64"/>
+  <rect class="frame" x="490" y="485" width="350" height="64"/>
+  <text class="math" x="235" y="527"><tspan font-style="normal">cos</tspan> θ</text>
+  <text class="math" x="665" y="527"><tspan font-style="normal">sin</tspan> θ</text>
+  <text class="dim" transform="translate(48 521) rotate(-90)">1</text>
+  <text class="dim" transform="translate(478 521) rotate(-90)">1</text>
+
+  <path class="flow" d="M235 549v20c0 24 25 24 25 48v10"/>
+  <path class="flow" d="M665 549v20c0 24-25 24-25 48v10"/>
+  <text class="math" x="100" y="619">e(t)</text>
+  <text class="dim" x="450" y="619">256</text>
+  <rect x="70" y="635" width="380" height="64" fill="currentColor" fill-opacity=".09"/>
+  <rect x="450" y="635" width="380" height="64" fill="currentColor" fill-opacity=".17"/>
+  <rect class="frame" x="70" y="635" width="760" height="64"/>
+  <path class="guide" d="M450 635v64"/>
+  <text class="math" x="260" y="677"><tspan font-style="normal">cos</tspan> θ</text>
+  <text class="math" x="640" y="677"><tspan font-style="normal">sin</tspan> θ</text>
+  <text class="dim" transform="translate(58 667) rotate(-90)">1</text>
+  <path class="guide" d="M71 704v8h378v-8m2 0v8h378v-8"/>
+  <text class="dim" x="260" y="739">128</text>
+  <text class="dim" x="640" y="739">128</text>
+
+  <g role="img" aria-label="The 256 time embedding components at t = 0.5. Cosine components 1 to 128, sine components 129 to 256.">
+    <text class="math" x="70" y="795" style="text-anchor:start">e(0.5)</text>
+    <text class="small" x="260" y="822"><tspan font-style="normal">cos</tspan> θ</text>
+    <text class="small" x="640" y="822"><tspan font-style="normal">sin</tspan> θ</text>
+    <g class="dim" style="text-anchor:end">
+      <text x="58" y="840">1</text>
+      <text x="58" y="883">0</text>
+      <text x="58" y="926">−1</text>
+    </g>
+    <path class="guide" d="M70 878h760M450 832v92"/>
+    <path stroke="currentColor" stroke-opacity=".9" stroke-width="2.14" fill="none" d="M71.484 878v38.0055 M74.453 878v-40.6755 M77.422 878v-36.4861 M80.391 878v-30.0436 M83.359 878v19.5974 M86.328 878v42.1556 M89.297 878v19.2447 M92.266 878v-36.5389 M95.234 878v0.0808 M98.203 878v26.8178 M101.172 878v-0.4443 M104.141 878v-39.8602 M107.109 878v40.2201 M110.078 878v-6.0026 M113.047 878v-40.0167 M116.016 878v-41.5056 M118.984 878v-21.9803 M121.953 878v37.3483 M124.922 878v-11.1251 M127.891 878v7.7124 M130.859 878v-29.5912 M133.828 878v39.9172 M136.797 878v23.3665 M139.766 878v-11.5079 M142.734 878v-25.0342 M145.703 878v-21.0423 M148.672 878v1.1740 M151.641 878v35.3431 M154.609 878v32.8154 M157.578 878v-30.4188 M160.547 878v-15.9641 M163.516 878v40.7720 M166.484 878v-41.4935 M169.453 878v35.6034 M172.422 878v-33.3250 M175.391 878v36.6901 M178.359 878v-42.1049 M181.328 878v40.6236 M184.297 878v-21.2778 M187.266 878v-15.5370 M190.234 878v42.4693 M193.203 878v-22.0555 M196.172 878v-30.4370 M199.141 878v33.7904 M202.109 878v26.5157 M205.078 878v-30.8284 M208.047 878v-35.7101 M211.016 878v12.2019 M213.984 878v42.7702 M216.953 878v23.4379 M219.922 878v-18.5124 M222.891 878v-42.3424 M225.859 878v-32.6235 M228.828 878v-1.6377 M231.797 878v28.6096 M234.766 878v42.6372 M237.734 878v37.0270 M240.703 878v17.5378 M243.672 878v-6.6107 M246.641 878v-27.3352 M249.609 878v-39.8617 M252.578 878v-42.8676 M255.547 878v-37.5432 M258.516 878v-26.3861 M261.484 878v-12.1975 M264.453 878v2.5582 M267.422 878v16.0520 M270.391 878v27.1442 M273.359 878v35.2970 M276.328 878v40.4289 M279.297 878v42.7618 M282.266 878v42.6902 M285.234 878v40.6814 M288.203 878v37.2068 M291.172 878v32.7003 M294.141 878v27.5364 M297.109 878v22.0225 M300.078 878v16.3997 M303.047 878v10.8496 M306.016 878v5.5021 M308.984 878v0.4447 M311.953 878v-4.2686 M314.922 878v-8.6096 M317.891 878v-12.5696 M320.859 878v-16.1534 M323.828 878v-19.3755 M326.797 878v-22.2564 M329.766 878v-24.8204 M332.734 878v-27.0935 M335.703 878v-29.1018 M338.672 878v-30.8713 M341.641 878v-32.4265 M344.609 878v-33.7907 M347.578 878v-34.9851 M350.547 878v-36.0293 M353.516 878v-36.9409 M356.484 878v-37.7361 M359.453 878v-38.4288 M362.422 878v-39.0319 M365.391 878v-39.5565 M368.359 878v-40.0127 M371.328 878v-40.4090 M374.297 878v-40.7532 M377.266 878v-41.0521 M380.234 878v-41.3114 M383.203 878v-41.5365 M386.172 878v-41.7317 M389.141 878v-41.9009 M392.109 878v-42.0477 M395.078 878v-42.1749 M398.047 878v-42.2852 M401.016 878v-42.3808 M403.984 878v-42.4636 M406.953 878v-42.5354 M409.922 878v-42.5976 M412.891 878v-42.6514 M415.859 878v-42.6981 M418.828 878v-42.7385 M421.797 878v-42.7735 M424.766 878v-42.8039 M427.734 878v-42.8301 M430.703 878v-42.8529 M433.672 878v-42.8726 M436.641 878v-42.8897 M439.609 878v-42.9045 M442.578 878v-42.9173 M445.547 878v-42.9283 M448.516 878v-42.9379"/>
+    <path stroke="currentColor" stroke-opacity=".52" stroke-width="2.14" fill="none" d="M451.484 878v20.1142 M454.453 878v-13.9464 M457.422 878v22.7544 M460.391 878v-30.7633 M463.359 878v38.2746 M466.328 878v8.4799 M469.297 878v38.4531 M472.266 878v-22.6695 M475.234 878v42.9999 M478.203 878v33.6126 M481.172 878v42.9977 M484.141 878v-16.1295 M487.109 878v15.2099 M490.078 878v-42.5790 M493.047 878v-15.7373 M496.016 878v-11.2377 M498.984 878v-36.9576 M501.953 878v-21.3097 M504.922 878v41.5359 M507.891 878v-42.3027 M510.859 878v31.1987 M513.828 878v15.9879 M516.797 878v-36.0972 M519.766 878v-41.4315 M522.734 878v-34.9613 M525.703 878v-37.4996 M528.672 878v-42.9840 M531.641 878v-24.4922 M534.609 878v27.7876 M537.578 878v30.3924 M540.547 878v-39.9268 M543.516 878v13.6616 M546.484 878v11.2821 M549.453 878v-24.1121 M552.422 878v27.1743 M555.391 878v-22.4240 M558.359 878v8.7282 M561.328 878v14.0969 M564.297 878v-37.3665 M567.266 878v40.0949 M570.234 878v-6.7347 M573.203 878v-36.9128 M576.172 878v30.3742 M579.141 878v26.5934 M582.109 878v-33.8514 M585.078 878v-29.9768 M588.047 878v23.9539 M591.016 878v41.2324 M593.984 878v4.4394 M596.953 878v-36.0509 M599.922 878v-38.8110 M602.891 878v-7.4914 M605.859 878v28.0126 M608.828 878v42.9688 M611.797 878v32.1012 M614.766 878v5.5737 M617.734 878v-21.8632 M620.703 878v-39.2610 M623.672 878v-42.4888 M626.641 878v-33.1932 M629.609 878v-16.1260 M632.578 878v3.3719 M635.547 878v20.9644 M638.516 878v33.9525 M641.484 878v41.2337 M644.453 878v42.9238 M647.422 878v39.8915 M650.391 878v33.3495 M653.359 878v24.5585 M656.328 878v14.6460 M659.297 878v4.5202 M662.266 878v-5.1524 M665.234 878v-13.9292 M668.203 878v-21.5558 M671.172 878v-27.9229 M674.141 878v-33.0264 M677.109 878v-36.9325 M680.078 878v-39.7498 M683.047 878v-41.6087 M686.016 878v-42.6465 M688.984 878v-42.9977 M691.953 878v-42.7876 M694.922 878v-42.1293 M697.891 878v-41.1218 M700.859 878v-39.8506 M703.828 878v-38.3874 M706.797 878v-36.7920 M709.766 878v-35.1133 M712.734 878v-33.3908 M715.703 878v-31.6557 M718.672 878v-29.9327 M721.641 878v-28.2404 M724.609 878v-26.5931 M727.578 878v-25.0009 M730.547 878v-23.4711 M733.516 878v-22.0083 M736.484 878v-20.6153 M739.453 878v-19.2932 M742.422 878v-18.0419 M745.391 878v-16.8606 M748.359 878v-15.7476 M751.328 878v-14.7008 M754.297 878v-13.7177 M757.266 878v-12.7956 M760.234 878v-11.9317 M763.203 878v-11.1230 M766.172 878v-10.3667 M769.141 878v-9.6598 M772.109 878v-8.9994 M775.078 878v-8.3830 M778.047 878v-7.8077 M781.016 878v-7.2710 M783.984 878v-6.7706 M786.953 878v-6.3041 M789.922 878v-5.8692 M792.891 878v-5.4640 M795.859 878v-5.0865 M798.828 878v-4.7349 M801.797 878v-4.4073 M804.766 878v-4.1023 M807.734 878v-3.8183 M810.703 878v-3.5538 M813.672 878v-3.3076 M816.641 878v-3.0783 M819.609 878v-2.8649 M822.578 878v-2.6663 M825.547 878v-2.4814 M828.516 878v-2.3093"/>
+    <g class="dim">
+      <text x="71" y="949">1</text>
+      <text x="443" y="949" style="text-anchor:end">128</text>
+      <text x="457" y="949" style="text-anchor:start">129</text>
+      <text x="829" y="949">256</text>
+    </g>
+  </g>
+</svg>

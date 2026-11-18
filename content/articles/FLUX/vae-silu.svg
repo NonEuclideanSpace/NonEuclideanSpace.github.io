@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="313" viewBox="0 0 900 313" role="img" aria-labelledby="title">
+  <title id="title">SiLU maps each activation u to u times its sigmoid at the same position.</title>
+  <style>
+    svg {color:#142c4c}
+    text {fill:currentColor;text-anchor:middle}
+    .math {font:italic 23px "STIX Two Text",Georgia,serif}
+    .sub {font-size:15px;baseline-shift:sub}
+    .sup {font-size:15px;baseline-shift:super;font-style:normal}
+    .frame,.arrow,.axis,.guide {fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+    .arrow,.axis {marker-end:url(#tip)}
+    .axis {opacity:.5;stroke-width:1.1}
+    .guide {opacity:.58;stroke-dasharray:3 3;stroke-width:1.1}
+  </style>
+  <defs><marker id="tip" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path class="frame" d="M2 1.6 10 6 2 10.4"/></marker></defs>
+  <path class="arrow" d="M455 0v22"/>
+  <text class="math" x="455" y="51">A = Y ⊙ σ(Y)</text>
+  <path class="arrow" d="M455 60v6q0 8-8 8H233q-10 0-10 10v8"/>
+  <path class="arrow" d="M455 66q0 8 8 8h115q10 0 10 10v8"/>
+  <text class="math" x="218" y="115">a = u / (1 + e<tspan class="sup">−u</tspan>)</text>
+  <path class="axis" d="M74 208H348M213 241V124"/>
+  <text class="math" x="364" y="216">u</text>
+  <text class="math" x="192" y="145">a</text>
+  <path class="frame" d="M86.10 218.03 L88.80 218.27 L91.50 218.51 L94.20 218.75 L96.90 218.99 L99.60 219.23 L102.30 219.46 L105.00 219.68 L107.70 219.90 L110.40 220.11 L113.10 220.32 L115.80 220.51 L118.50 220.70 L121.20 220.87 L123.90 221.03 L126.60 221.17 L129.30 221.30 L132.00 221.41 L134.70 221.50 L137.40 221.57 L140.10 221.62 L142.80 221.64 L145.50 221.64 L148.20 221.61 L150.90 221.55 L153.60 221.46 L156.30 221.34 L159.00 221.18 L161.70 220.98 L164.40 220.75 L167.10 220.47 L169.80 220.15 L172.50 219.79 L175.20 219.38 L177.90 218.92 L180.60 218.42 L183.30 217.86 L186.00 217.25 L188.70 216.59 L191.40 215.87 L194.10 215.09 L196.80 214.26 L199.50 213.36 L202.20 212.41 L204.90 211.40 L207.60 210.33 L210.30 209.19 L213.00 208.00 L215.70 206.74 L218.40 205.43 L221.10 204.05 L223.80 202.61 L226.50 201.11 L229.20 199.56 L231.90 197.94 L234.60 196.27 L237.30 194.54 L240.00 192.75 L242.70 190.91 L245.40 189.02 L248.10 187.07 L250.80 185.08 L253.50 183.04 L256.20 180.95 L258.90 178.82 L261.60 176.65 L264.30 174.43 L267.00 172.18 L269.70 169.89 L272.40 167.56 L275.10 165.20 L277.80 162.81 L280.50 160.39 L283.20 157.94 L285.90 155.47 L288.60 152.97 L291.30 150.45 L294.00 147.91 L296.70 145.35 L299.40 142.77 L302.10 140.18 L304.80 137.57 L307.50 134.95 L310.20 132.31 L312.90 129.67 L315.60 127.01"/>
+  <path class="guide" d="M213 189.81H244.28V208"/>
+  <circle cx="244.28" cy="189.81" r="3.6" fill="currentColor"/>
+  <text class="math" x="175" y="195">uσ(u)</text>
+  <text class="math" x="244" y="231">u</text>
+  <text class="math" x="588" y="115">u = Y<tspan class="sub">c</tspan>(y, x)</text>
+  <path class="arrow" d="M588 126v26"/>
+  <text class="math" x="588" y="181">σ(u)</text>
+  <path class="arrow" d="M588 192v24"/>
+  <rect class="frame" x="488" y="222" width="200" height="37"/>
+  <text class="math" x="588" y="247">A<tspan class="sub">c</tspan>(y, x) = uσ(u)</text>
+  <text class="math" x="588" y="290">A ∈ ℝ<tspan class="sup">C×H×W</tspan></text>
+</svg>

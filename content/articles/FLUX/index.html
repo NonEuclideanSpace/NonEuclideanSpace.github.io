@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FLUX</title>
+<style>
+    html, body { margin: 0; background: #fff; color: #111; color-scheme: only light; overscroll-behavior: none; }
+    main { position: relative; height: 100dvh; overflow: clip; cursor: grab; touch-action: pinch-zoom; }
+    main.dragging, main.dragging pre { cursor: grabbing; user-select: none; }
+    .stage { position: absolute; left: 0; top: 0; transform-origin: 0 0; display: flex; align-items: flex-start; gap: 160px; width: max-content; --ink: #142c4c; --line: 1.5px; color: var(--ink); }
+    .encoder-lane { width: 1102px; flex: 0 0 1102px; }
+    .flux-lane { display: grid; grid-template-columns: 1102px 900px; align-items: start; column-gap: 100px; width: 2102px; flex: 0 0 2102px; }
+    .flux-text { width: 1102px; align-self: stretch; display: flex; flex-direction: column; }
+    .flux-text::after { content: ""; margin: 8px 0 0 560px; flex: 1; border-left: 1.6px solid var(--ink); }
+    .flux-lane .text-attn-modulation, .flux-lane .flux-text-qkv, .flux-lane .flux-qk-norm, .flux-lane .flux-text-rope { grid-column: 1 / -1; width: 1020px; margin-left: 390px; }
+    .image-lanes { flex: 0 0 auto; }
+    .joint-attention { display: block; width: 1320px; height: 820px; margin: 24px auto 0; user-select: none; }
+    .double-stream-mlp { display: block; width: 1320px; height: 896px; margin: 0 auto; user-select: none; }
+    .single-stream { display: block; width: 1320px; height: 918px; margin: 0 auto; user-select: none; }
+    .output-to-rgb { display: block; width: 1320px; height: 1000px; margin: 0 auto; user-select: none; }
+    .ref-image-lane { position: relative; display: grid; grid-template-columns: repeat(3, 900px); align-items: start; column-gap: 64px; padding: 26px 0 16px; flex: 0 0 auto; }
+    .ref-image-lane .column-flow { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; fill: none; stroke: var(--ink); stroke-width: 1.5px; stroke-linecap: round; stroke-linejoin: round; }
+    .time-branch { width: 900px; flex: 0 0 900px; }
+    .encoder-lane > div { position: relative; width: 100%; }
+    .encoder-lane img, .flux-lane img, .ref-image-lane img { display: block; width: 100%; height: auto; user-select: none; }
+    .encoder-lane .preamble { display: flex; flex-direction: column; align-items: center; gap: 0; padding-top: 12px; }
+    .input, .tokenizer, .embedding, .step-link, .attention-link { display: block; fill: none; stroke: var(--ink); stroke-width: var(--line); stroke-linecap: round; stroke-linejoin: round; }
+    .input { width: 92px; height: 64px; stroke-width: 1.05; }
+    .tokenizer { width: 108px; height: 105px; stroke-width: 1.05; }
+    .embedding { width: 184px; height: 118px; }
+    .embedding text { fill: var(--ink); stroke: none; }
+    .step-link { width: 14px; height: 34px; flex: 0 0 34px; }
+    .vector-row { font: 17px "STIX Two Text", "Times New Roman", serif; }
+    .vector-row tspan { font-size: 11px; baseline-shift: -4px; }
+    math { margin: 0; }
+    .preamble math { font-size: 24px; }
+    .flux-norm { display: flex; flex-direction: column; align-items: center; width: 280px; margin: -15px 0 0 420px; font-size: 28px; }
+    .flux-norm math { margin-top: 8px; }
+    .flux-qk-norm .head-norms { padding: 0 34px 6px 32px; align-items: center; font-size: 22px; }
+    .flux-qk-norm > svg { display: block; fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .head-norms { display: grid; grid-template-columns: repeat(3, 1fr); padding-inline: 0.588235%; font-size: 20px; }
+    .encoder-lane .rope-stage { margin-top: 4px; }
+    .rope-stage img { width: 950px; }
+    .attention-diagram { font-size: 24px; }
+    .attention-link { width: 14px; height: 25px; margin: 0 auto 8px; }
+    .attention-detail { display: grid; grid-template-columns: 324fr 334fr 240fr 204fr; align-items: center; font-size: 20px; }
+    .attention-detail math:last-child { grid-column: 4; }
+    .encoder-lane .concat-diagram { margin-top: 6px; }
+    .message { box-sizing: border-box; font: 14px/1.4 ui-monospace, monospace; width: calc(44ch + 11px); padding: 0 4px; border: var(--line) solid var(--ink); border-radius: 3px; color: #111; }
+    .message.template { width: calc(41ch + 11px); }
+    ::highlight(field-name) { color: #2455a4; }
+    #formatted-text:not(:empty) { margin-bottom: -1lh; clip-path: inset(0 0 1lh); }
+    pre { cursor: text; margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; outline: none; }
+    .lane-link { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+    .lane-link path { fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+</style>
+</head>
+<body>
+<main aria-label="Canvas"><div class="stage"><section class="encoder-lane" aria-label="Qwen3 text encoding"><div class="preamble"><svg class="input" viewBox="0 0 52 36" role="img" aria-label="Raw prompt input">
+      <rect x="1.5" y="3" width="48" height="30" rx="3"/>
+      <path d="M8 11h3m5 0h3m5 0h3m5 0h3m5 0h3 M8 18h3m5 0h3m5 0h3m5 0h3m5 0h3 M15 25h21"/>
+      
+    </svg>
+<svg class="step-link" viewBox="0 0 14 34" aria-hidden="true"><path d="M7 1v32m-5-6 5 6 5-6"/></svg>
+<div class="message"><pre lang="en" aria-label="Input message" contenteditable="plaintext-only">{
+  "role": "user",
+  "content": "A green apple rests on a dark wooden lab bench, its curves softly outlined by cool light from the window."
+}</pre></div>
+<svg class="step-link" viewBox="0 0 14 34" aria-hidden="true"><path d="M7 1v32m-5-6 5 6 5-6"/></svg>
+<div class="message template"><pre id="formatted-text" lang="en" aria-label="Chat template output"></pre></div>
+<svg class="step-link" viewBox="0 0 14 34" aria-hidden="true"><path d="M7 1v32m-5-6 5 6 5-6"/></svg>
+<svg class="tokenizer" viewBox="0 -20 66 64" role="img" aria-label="Tokenization">
+            <rect x="5" y="1" width="56" height="12"/>
+            <path d="M18 7v2m0 2v2 M44 1v3m0 6v3"/>
+            <g>
+              <circle cx="12.5" cy="-13.5" r="3.2"/>
+              <circle cx="23.5" cy="-13.5" r="3.2"/>
+              <path d="M14.3-10.9 22 3.5 M21.7-10.9 14 3.5"/>
+            </g>
+            <path d="M33 17v10m-4-4 4 4 4-4"/>
+            <rect x="1" y="31" width="13" height="12" rx="1"/>
+            <rect x="18" y="31" width="26" height="12" rx="1"/>
+            <rect x="48" y="31" width="17" height="12" rx="1"/>
+          </svg>
+<svg class="step-link" viewBox="0 0 14 34" aria-hidden="true"><path d="M7 1v32m-5-6 5 6 5-6"/></svg>
+<svg class="embedding" viewBox="0 0 184 118" role="img" aria-label="Token embeddings">
+          <rect x="18" y="32.5" width="16" height="15" rx="1.5"/>
+          <rect x="2" y="64.5" width="32" height="15" rx="1.5"/>
+          <rect x="13" y="96.5" width="21" height="15" rx="1.5"/>
+          <text x="119" y="14" text-anchor="middle" font-size="15">4096</text>
+          <path d="M55 24v-4h126v4" stroke-width="1.2"/>
+          <defs>
+            <g id="embedding-vector-frame">
+              <path d="M39 0h10m-3.5-3.5L49 0l-3.5 3.5 M60-9h-5V10h5 M176-9h5V10h-5"/>
+              <text x="103" y="4">⋯,</text>
+            </g>
+          </defs>
+          <g class="vector-row" transform="translate(0 40)">
+            <use href="#embedding-vector-frame"/>
+            <text x="63" y="4">𝑥<tspan>1,1</tspan>,</text>
+            <text x="131" y="4">𝑥<tspan>1,4096</tspan></text>
+          </g>
+          <g class="vector-row" transform="translate(0 72)">
+            <use href="#embedding-vector-frame"/>
+            <text x="63" y="4">𝑥<tspan>2,1</tspan>,</text>
+            <text x="131" y="4">𝑥<tspan>2,4096</tspan></text>
+          </g>
+          <g class="vector-row" transform="translate(0 104)">
+            <use href="#embedding-vector-frame"/>
+            <text x="63" y="4">𝑥<tspan>3,1</tspan>,</text>
+            <text x="131" y="4">𝑥<tspan>3,4096</tspan></text>
+          </g>
+        </svg>
+<svg class="step-link" viewBox="0 0 14 34" aria-hidden="true"><path d="M7 1v32m-5-6 5 6 5-6"/></svg>
+<math display="block" aria-label="RMSNorm, component i of each token">
+            <msub><mi>y</mi><mi>i</mi></msub><mo>=</mo>
+            <mfrac>
+              <mrow><msub><mi>γ</mi><mi>i</mi></msub><msub><mi>x</mi><mi>i</mi></msub></mrow>
+              <msqrt>
+                <mfrac><mn>1</mn><mn>4096</mn></mfrac>
+                <munderover><mo>∑</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mn>4096</mn></munderover>
+                <msubsup><mi>x</mi><mi>j</mi><mn>2</mn></msubsup>
+                <mo>+</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>6</mn></mrow></msup>
+              </msqrt>
+            </mfrac>
+          </math></div>
+<div class="qkv-diagram"><img src="qkv.svg" width="1360" height="934" draggable="false" alt="Q, K and V projections. A dot product between one input row and one weight row gives one output element. The projections split into 32, 8 and 8 heads of width 128. Y, Q, K and V each highlight the green and apple rows. The darker intersections mark query head 25 for apple and key and value head 7 for green."><div class="head-norms">
+              <math display="block" aria-label="Q RMSNorm per 128-dimensional head">
+                <msub><mover accent="true"><mi>q</mi><mo>^</mo></mover><mi>i</mi></msub><mo>=</mo>
+                <mfrac>
+                  <mrow><msubsup><mi>γ</mi><mi>i</mi><mi>Q</mi></msubsup><msub><mi>q</mi><mi>i</mi></msub></mrow>
+                  <msqrt>
+                    <mfrac><mn>1</mn><mn>128</mn></mfrac>
+                    <munderover><mo>∑</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mn>128</mn></munderover>
+                    <msubsup><mi>q</mi><mi>j</mi><mn>2</mn></msubsup>
+                    <mo>+</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>6</mn></mrow></msup>
+                  </msqrt>
+                </mfrac>
+              </math>
+              <math display="block" aria-label="K RMSNorm per 128-dimensional head">
+                <msub><mover accent="true"><mi>k</mi><mo>^</mo></mover><mi>i</mi></msub><mo>=</mo>
+                <mfrac>
+                  <mrow><msubsup><mi>γ</mi><mi>i</mi><mi>K</mi></msubsup><msub><mi>k</mi><mi>i</mi></msub></mrow>
+                  <msqrt>
+                    <mfrac><mn>1</mn><mn>128</mn></mfrac>
+                    <munderover><mo>∑</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mn>128</mn></munderover>
+                    <msubsup><mi>k</mi><mi>j</mi><mn>2</mn></msubsup>
+                    <mo>+</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>6</mn></mrow></msup>
+                  </msqrt>
+                </mfrac>
+              </math>
+            </div></div>
+<div class="rope-stage"><img src="rope.svg" width="950" height="398" draggable="false" alt="RoPE rotates the apple query and the green key in the same plane. Dashed lines show their original orientations and solid lines show their rotated orientations. Each angle is the token position times the same frequency."></div>
+<div class="attention-diagram"><svg class="attention-link" viewBox="0 0 14 25" aria-hidden="true"><path d="M7 0v22m-5-6 5 6 5-6"/></svg>
+<math display="block" aria-label="Causal scaled dot-product attention over all token positions in a head">
+                  <mi>O</mi><mo>=</mo><mi mathvariant="normal">softmax</mi><mo>(</mo>
+                  <mfrac>
+                    <mrow><msup><mi>Q</mi><mo>′</mo></msup><msup><mrow><mo>(</mo><msup><mi>K</mi><mo>′</mo></msup><mo>)</mo></mrow><mo>⊤</mo></msup></mrow>
+                    <msqrt><mn>128</mn></msqrt>
+                  </mfrac>
+                  <mo>+</mo><mi>M</mi><mo>)</mo><mi>V</mi>
+                </math>
+<img src="attention.svg" width="1102" height="288" draggable="false" alt="The score for apple querying green is in the apple row and green column. Future positions are masked. Row-wise softmax gives the weights used to combine V into a 128-dimensional output at each position.">
+<div class="attention-detail">
+                  <math display="block" aria-label="Unmasked attention score matrix">
+                    <mi>S</mi><mo>=</mo>
+                    <mfrac>
+                      <mrow><msup><mi>Q</mi><mo>′</mo></msup><msup><mrow><mo>(</mo><msup><mi>K</mi><mo>′</mo></msup><mo>)</mo></mrow><mo>⊤</mo></msup></mrow>
+                      <msqrt><mn>128</mn></msqrt>
+                    </mfrac>
+                  </math>
+                  <math display="block" aria-label="Attention weight matrix from row-wise softmax">
+                    <mi>A</mi><mo>=</mo><mi mathvariant="normal">softmax</mi><mo>(</mo><mi>S</mi><mo>+</mo><mi>M</mi><mo>)</mo>
+                  </math>
+                  <math display="block" aria-label="Output matrix">
+                    <mi>O</mi><mo>=</mo><mi>A</mi><mi>V</mi>
+                  </math>
+                </div></div>
+<div class="concat-diagram"><img src="concat.svg" width="1102" height="490" draggable="false" alt="The outputs of the 32 heads are concatenated by columns, preserving the order of the 512 token rows. Each head contributes 128 columns. The apple vector from head 25 occupies columns 3073 through 3200."></div>
+<div class="out-proj-diagram"><img src="out-proj.svg" width="1102" height="346" draggable="false" alt="The concatenated apple row and the first row of W feed a dot product. The result fills the first coordinate of the apple row in P. The full output projection is P = C W transpose."></div>
+<div class="ffn-diagram"><img src="ffn.svg" width="1102" height="570" draggable="false" alt="The layer input X and attention output P add to H. RMSNorm scales each token row of H to give Z. The same apple row of Z is projected by the gate and up weight matrices. Both map 4096 input features to 12288 output features."></div>
+<div class="silu-diagram"><img src="silu.svg" width="1102" height="254" draggable="false" alt="The first coordinate of the apple row in G passes through SiLU and occupies the same position in the result. The curve shows SiLU over its scalar input. SiLU acts elementwise on the full 512 by 12288 gate matrix."></div>
+<div class="encoder-output"><img src="encoder-output.svg" width="1102" height="976" draggable="false" alt="Corresponding apple features from SiLU(G) and U are multiplied. The down projection returns 4096 features. Adding the saved H completes layer 1. Qwen3 runs 36 layers with independent weights and a final RMSNorm. FLUX reads the outputs of layers 9, 18 and 27, concatenating their features in that order into a 512 by 12288 prompt embedding."></div></section><section class="flux-lane" aria-label="FLUX text input projection"><div class="flux-text"><img src="flux-input.svg" width="1102" height="438" draggable="false" alt="The 512 by 12288 text features enter FLUX. A learned 4096 by 12288 weight matrix projects each token row into 4096 features. The apple row and the first weight row feed a dot product, producing the first apple output coordinate. T equals E times W transpose."><div class="flux-norm">
+<svg class="step-link" viewBox="0 0 14 34" aria-hidden="true"><path d="M7 1v32m-5-6 5 6 5-6"/></svg>
+<math display="block" aria-label="Layer normalization over the 4096 features of each text token">
+  <mover accent="true"><mi>T</mi><mo>^</mo></mover><mo>=</mo>
+  <mfrac>
+    <mrow><mi>T</mi><mo>−</mo><mi>μ</mi></mrow>
+    <msqrt><msup><mi>σ</mi><mn>2</mn></msup><mo>+</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>6</mn></mrow></msup></msqrt>
+  </mfrac>
+</math>
+</div></div><div class="time-branch"><img src="time-embedding.svg" width="900" height="963" draggable="false" alt="Independent denoising time input. Scale t by 1000, multiply by 128 fixed frequencies, compute cosine and sine, and concatenate all 128 cosine values before all 128 sine values into a 256-dimensional time vector. The bars below show its 256 components at t = 0.5."><img class="time-projection" src="time-projection.svg" width="900" height="420" draggable="false" alt="Time input projection. The full 256-component row at t = 0.5 and the first row of the learned weight matrix W feed a dot product, which fills the first coordinate of the 4096-component row h. W has 4096 rows and 256 columns."><img class="time-silu" src="time-silu.svg" width="900" height="377" draggable="false" alt="SiLU transforms each coordinate of the time vector independently. The first coordinate goes through the scalar function and returns to the first coordinate of the 4096-dimensional result. The two marked curve points illustrate the function at minus one and plus one."><img class="time-output" src="time-output.svg" width="900" height="351" draggable="false" alt="The complete SiLU output row and the first weight row of W2 feed a dot product. Its result is the first coordinate of the shared 4096-dimensional time vector. Modulation applies SiLU to each coordinate of v, yielding r. The highlighted first coordinate remains in the same position."><img class="double-modulation" src="double-modulation.svg" width="900" height="456" draggable="false" alt="The full time vector r feeds both branches. Independent text and image weight matrices each have 24576 rows and 4096 columns. A dot product with the first row fills the first output coordinate. Each branch produces six 4096-dimensional vectors, ordered shift, scale and gate for attention, then shift, scale and gate for the MLP."></div>
+<img class="text-attn-modulation" src="text-attn-modulation.svg" width="1020" height="323" draggable="false" alt="The normalized text matrix T hat receives the attention scale and shift of the text stream. Each of the 512 rows uses the same two 4096-dimensional vectors. T attn equals T hat times one plus s elementwise, plus b.">
+<img class="flux-text-qkv" src="flux-text-qkv.svg" width="1020" height="600" draggable="false" alt="The same 4096-dimensional apple row is projected by one 12288 by 4096 weight matrix. Three equal output groups form Q, K and V. Each has 512 rows and 32 heads of width 128.">
+<div class="flux-qk-norm">
+  <svg viewBox="0 0 1020 34" width="1020" height="34" aria-hidden="true">
+    <defs><path id="flux-norm-link" d="M76.5 0v1q0 7-7 7h-62q-7.5 0-7.5 7.5V29m-4-5 4 5 4-5"/></defs>
+    <use href="#flux-norm-link" x="191"/><use href="#flux-norm-link" x="509"/><use href="#flux-norm-link" x="827"/>
+  </svg>
+  <div class="head-norms">
+<math display="block" aria-label="FLUX text Q RMSNorm per 128-dimensional head">
+                <msub><mover accent="true"><mi>q</mi><mo>^</mo></mover><mi>i</mi></msub><mo>=</mo>
+                <mfrac>
+                  <mrow><msubsup><mi>γ</mi><mi>i</mi><mi>Q</mi></msubsup><msub><mi>q</mi><mi>i</mi></msub></mrow>
+                  <msqrt>
+                    <mfrac><mn>1</mn><mn>128</mn></mfrac>
+                    <munderover><mo>∑</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mn>128</mn></munderover>
+                    <msubsup><mi>q</mi><mi>j</mi><mn>2</mn></msubsup>
+                    <mo>+</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>6</mn></mrow></msup>
+                  </msqrt>
+                </mfrac>
+              </math>
+              <math display="block" aria-label="FLUX text K RMSNorm per 128-dimensional head">
+                <msub><mover accent="true"><mi>k</mi><mo>^</mo></mover><mi>i</mi></msub><mo>=</mo>
+                <mfrac>
+                  <mrow><msubsup><mi>γ</mi><mi>i</mi><mi>K</mi></msubsup><msub><mi>k</mi><mi>i</mi></msub></mrow>
+                  <msqrt>
+                    <mfrac><mn>1</mn><mn>128</mn></mfrac>
+                    <munderover><mo>∑</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mn>128</mn></munderover>
+                    <msubsup><mi>k</mi><mi>j</mi><mn>2</mn></msubsup>
+                    <mo>+</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>6</mn></mrow></msup>
+                  </msqrt>
+                </mfrac>
+              </math>
+    <math display="block" aria-label="Value vector passed through"><mi>v</mi></math>
+  </div>
+</div>
+<img class="flux-text-rope" src="flux-text-rope.svg" width="1020" height="430" draggable="false" alt="Four 32-dimensional groups per text head. Only the last group rotates with word position. For the same component pair, the apple query rotates by its position times omega and the green key by its position times omega. Dashed and solid arrows show the pair before and after rotation. V passes through."></section>
+<div class="image-lanes"><section class="ref-image-lane" aria-label="Reference image encoder">
+  <div class="ref-column">
+    <img class="vae-input-conv" src="vae-input-conv.svg" width="900" height="550" draggable="false" alt="The reference apple, marked RGB neighborhood and learned input convolution.">
+    <img class="vae-groupnorm" src="vae-groupnorm.svg" width="900" height="554" draggable="false" alt="First GroupNorm on the four actual apple feature maps of the selected group.">
+    <img class="vae-silu" src="vae-silu.svg" width="900" height="313" draggable="false" alt="SiLU at the same spatial position.">
+  </div>
+  <div class="ref-column">
+    <img class="vae-resnet-conv1" src="vae-resnet-conv1.svg" width="900" height="338" draggable="false" alt="First residual block convolution across all channels of the marked apple neighborhood.">
+    <img class="vae-resnet-norm2" src="vae-resnet-norm2.svg" width="900" height="678" draggable="false" alt="Second GroupNorm of the first residual block, with four feature maps and the marked output.">
+    <img class="vae-example-close" src="vae-example-close.svg" width="900" height="184" draggable="false" alt="The second SiLU and convolution use the same operations as above. Adding the saved block input completes the example.">
+  </div>
+  <div class="ref-column">
+    <img class="vae-repeat-stages" src="vae-repeat-stages.svg" width="900" height="388" draggable="false" alt="Four resolution stages following the complete residual-block example. Repeat counts are one, two, two and two. The first block in the middle two stages projects the shortcut to the new width.">
+    <img class="vae-mid-attn" src="vae-detail/mid-attn.svg" width="900" height="570" draggable="false" decoding="async" alt="mid attn. Y to D.">
+    <img class="vae-head-readout" src="vae-head-readout.svg" width="900" height="128" draggable="false" alt="The attention residual passes through another residual block and the encoder output head to select the mean.">
+    <img class="vae-reference-interface" src="vae-reference-output.svg" width="900" height="478" draggable="false" alt="Patch packing, inference BatchNorm, flattening, input projection and per-layer reference key-value cache.">
+  </div>
+  <svg class="column-flow" aria-hidden="true"><path id="ref-into-conv"/><path id="ref-into-stages"/></svg>
+</section>
+<img class="joint-attention" src="joint-attention.svg" width="1320" height="820" draggable="false" alt="First joint attention in FLUX. Follow one target noise position through the image projection, modulation and a single attention head. It reads text, reference and target values and receives a gated update from all 32 heads.">
+<img class="double-stream-mlp" src="double-stream-mlp.svg" width="1320" height="896" draggable="false" alt="The separate image and text MLPs in FLUX double-stream block one. Follow image position p and text token apple through LayerNorm, time modulation, the up projection, SwiGLU, the down projection and the gated residual into block two.">
+<img class="single-stream" src="single-stream.svg" width="1320" height="918" draggable="false" alt="Double-stream blocks 2–8 repeat. Block 9 starts the single stream, stacking text, reference and target tokens by rows. Its parallel attention and SwiGLU outputs are joined by features for one gated residual. Blocks 10–32 repeat this structure.">
+<img class="output-to-rgb" src="output-to-rgb.svg" width="1320" height="1000" draggable="false" alt="From block 32 to RGB. Target rows predict a flow velocity, Euler updates the latent tokens and the next denoising pass reuses the per-layer reference KV. At the last step the grid is restored, denormalized, unpacked and VAE-decoded to RGB. The separate apple pair shows VAE reconstruction of the reference.">
+</div><svg class="lane-link" aria-hidden="true"><defs><marker id="lane-tip" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto"><path d="M2 1.6 10 6 2 10.4"/></marker></defs><path id="encoder-to-flux" marker-end="url(#lane-tip)"/></svg></div></main>
+  <script>
+    const canvas = document.querySelector("[contenteditable]");
+    const formattedText = document.querySelector("#formatted-text");
+    const key = "flux2-architecture-canvas";
+    canvas.textContent = localStorage.getItem(key) ?? canvas.textContent;
+    function colorFields() {
+      const fields = new Highlight();
+      const nodes = document.createTreeWalker(canvas, NodeFilter.SHOW_TEXT);
+      while (nodes.nextNode()) {
+        const node = nodes.currentNode;
+        for (const match of node.data.matchAll(/"(role|content)"(?=\s*:)/g)) {
+          const range = new Range();
+          const start = match.index + 1;
+          range.setStart(node, start);
+          range.setEnd(node, start + match[1].length);
+          fields.add(range);
+        }
+      }
+      CSS.highlights.set("field-name", fields);
+    }
+    function renderMessage() {
+      colorFields();
+      formattedText.textContent = "";
+      let message;
+      try {
+        message = JSON.parse(canvas.innerText);
+      } catch (error) {
+        if (error instanceof SyntaxError) return;
+        throw error;
+      }
+      if (message?.role === "user" && typeof message.content === "string") {
+        formattedText.textContent = "<|im_start|>user\n" + message.content
+          + "<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n";
+      }
+    }
+    renderMessage();
+    canvas.addEventListener("input", () => {
+      localStorage.setItem(key, canvas.innerText);
+      renderMessage();
+    });
+
+    const viewport = document.querySelector("main");
+    const stage = document.querySelector(".stage");
+    let scale = 1;
+    let offsetX = 0;
+    let offsetY = 0;
+    let drag = null;
+
+    function updateView(constrain = true) {
+      if (constrain) {
+        const midX = viewport.clientWidth / 2;
+        const midY = viewport.clientHeight / 2;
+        offsetX = Math.max(midX - stage.offsetWidth * scale, Math.min(midX, offsetX));
+        offsetY = Math.max(midY - stage.offsetHeight * scale, Math.min(midY, offsetY));
+      }
+      stage.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+    }
+
+    viewport.addEventListener("pointerdown", event => {
+      if (!event.isPrimary || drag || (event.button !== 0 && event.button !== 1)) return;
+      if (event.button === 0 && event.target.closest("pre")) return;
+      event.preventDefault();
+      canvas.blur();
+      window.getSelection()?.removeAllRanges();
+      drag = { id: event.pointerId, x: event.clientX, y: event.clientY };
+      viewport.setPointerCapture(event.pointerId);
+      viewport.classList.add("dragging");
+    });
+    viewport.addEventListener("pointermove", event => {
+      if (drag?.id !== event.pointerId) return;
+      offsetX += event.clientX - drag.x;
+      offsetY += event.clientY - drag.y;
+      drag.x = event.clientX;
+      drag.y = event.clientY;
+      updateView();
+    });
+    function endDrag(event) {
+      if (drag?.id !== event.pointerId) return;
+      drag = null;
+      viewport.classList.remove("dragging");
+    }
+    viewport.addEventListener("pointerup", endDrag);
+    viewport.addEventListener("pointercancel", endDrag);
+    viewport.addEventListener("lostpointercapture", endDrag);
+    viewport.addEventListener("auxclick", event => {
+      if (event.button === 1) event.preventDefault();
+    });
+
+    function zoomAt(factor, x, y) {
+      const next = Math.min(4, Math.max(0.1, scale * factor));
+      const ratio = next / scale;
+      offsetX = x - (x - offsetX) * ratio;
+      offsetY = y - (y - offsetY) * ratio;
+      scale = next;
+      updateView();
+    }
+
+
+    function connectLanes() {
+      const source = document.querySelector(".encoder-output");
+      const target = document.querySelector(".flux-lane");
+      const startX = source.offsetLeft + 992;
+      const startY = source.offsetTop + 855;
+      const endX = target.offsetLeft + 36;
+      const endY = target.offsetTop + 108;
+      const turnX = source.offsetWidth + 80;
+      document.querySelector("#encoder-to-flux").setAttribute("d",
+        `M${startX} ${startY}H${turnX - 18}Q${turnX} ${startY} ${turnX} ${startY - 18}V${endY + 18}Q${turnX} ${endY} ${turnX + 18} ${endY}H${endX}`);
+    }
+
+    function connectReferenceColumns() {
+      const columns = document.querySelectorAll(".ref-column");
+      const bends = [
+        [document.querySelector("#ref-into-conv"), 588, 588, 8],
+        [document.querySelector("#ref-into-stages"), 455, 445, 8]
+      ];
+      for (const [i, [path, from, to, top]] of bends.entries()) {
+        const left = columns[i];
+        const right = columns[i + 1];
+        const start = left.offsetLeft + from;
+        const end = right.offsetLeft + to;
+        const gutter = (left.offsetLeft + left.offsetWidth + right.offsetLeft) / 2;
+        const bottom = left.offsetTop + left.offsetHeight;
+        path.setAttribute("d", `M${start} ${bottom - 8}V${bottom}q0 7 7 7H${gutter-7}q7 0 7-7V${top+7}q0-7 7-7H${end-7}q7 0 7 7V${right.offsetTop}`);
+      }
+    }
+
+    function focusDiagram() {
+      const sections = {
+        "#qkv": ".qkv-diagram", "#rope": ".rope-stage", "#attention": ".attention-diagram",
+        "#concat": ".concat-diagram", "#out-proj": ".out-proj-diagram", "#ffn": ".ffn-diagram",
+        "#silu": ".silu-diagram", "#text-condition": ".encoder-output", "#flux": ".flux-lane",
+        "#time": ".time-branch", "#time-projection": ".time-projection", "#time-silu": ".time-silu", "#time-output": ".time-output", "#double-modulation": ".double-modulation", "#text-attn-modulation": ".text-attn-modulation", "#flux-text-qkv": ".flux-text-qkv", "#flux-qk-norm": ".flux-qk-norm", "#flux-text-rope": ".flux-text-rope", "#vae-conv-in": ".vae-input-conv", "#vae-groupnorm": ".vae-groupnorm", "#vae-silu": ".vae-silu", "#vae-conv1": ".vae-resnet-conv1", "#vae-norm2": ".vae-resnet-norm2", "#vae-output": ".ref-image-lane", "#vae-repeats": ".vae-repeat-stages", "#vae-example-end": ".vae-example-close", "#vae-kv": ".vae-reference-interface", "#vae-second-block": ".vae-repeat-stages", "#vae-deep-norm": ".vae-repeat-stages", "#vae-bottleneck": ".vae-mid-attn", "#vae-batchnorm": ".vae-reference-interface", "#joint-attention": ".joint-attention", "#double-stream-mlp": ".double-stream-mlp", "#single-stream": ".single-stream", "#output-to-rgb": ".output-to-rgb", "#overview": ".stage", "#top": ".stage"
+      };
+      const topView = !sections[location.hash] || location.hash === "#top";
+      const diagram = document.querySelector(sections[location.hash] || ".stage");
+      const viewHeight = topView ? Math.max(document.querySelector(".preamble").offsetHeight, document.querySelector(".flux-lane").offsetHeight) + 30 : diagram.offsetHeight;
+      scale = Math.min(1, (innerWidth - 48) / diagram.offsetWidth, (innerHeight - 48) / viewHeight);
+      updateView(false);
+      const bounds = diagram.getBoundingClientRect();
+      offsetX += (innerWidth - bounds.width) / 2 - bounds.left;
+      offsetY += Math.max(12, (innerHeight - viewHeight * scale) / 2) - bounds.top;
+      updateView();
+    }
+    window.addEventListener("hashchange", focusDiagram);
+    window.addEventListener("resize", () => updateView());
+    window.addEventListener("load", () => {
+      connectLanes();
+      connectReferenceColumns();
+      focusDiagram();
+    });
+    new ResizeObserver(connectLanes).observe(document.querySelector(".encoder-lane"));
+    new ResizeObserver(connectReferenceColumns).observe(document.querySelector(".ref-image-lane"));
+
+    viewport.addEventListener("wheel", event => {
+      event.preventDefault();
+      const mode = event.deltaMode;
+      const dx = event.deltaX * (mode === 2 ? viewport.clientWidth : mode === 1 ? 16 : 1);
+      const dy = event.deltaY * (mode === 2 ? viewport.clientHeight : mode === 1 ? 16 : 1);
+      if (event.ctrlKey || event.metaKey) {
+        const change = Math.max(-0.35, Math.min(0.35, -dy * 0.01));
+        zoomAt(Math.exp(change), event.clientX, event.clientY);
+        return;
+      }
+      if (event.shiftKey && dx === 0) {
+        offsetX -= dy;
+      } else {
+        offsetX -= dx;
+        offsetY -= dy;
+      }
+      updateView();
+    }, { passive: false });
+
+    document.addEventListener("keydown", event => {
+      if (event.key !== "0" || (event.target.isContentEditable && !event.metaKey && !event.ctrlKey)) return;
+      event.preventDefault();
+      location.hash = "#top";
+      focusDiagram();
+    });
+  </script>
+</body>
+</html>

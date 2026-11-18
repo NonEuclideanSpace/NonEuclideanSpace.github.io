@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1102" height="438" viewBox="0 0 1102 438" role="img" aria-labelledby="title">
+  <title id="title">FLUX text input projection. Three Qwen layer representations are projected into the FLUX hidden space.</title>
+  <style>
+    svg { color: #142c4c; }
+    text { fill: currentColor; text-anchor: middle; }
+    .dim, .token { font: 16px ui-monospace, monospace; }
+    .token { text-anchor: start; }
+    .math { font: italic 28px "STIX Two Text", Georgia, serif; }
+    .frame, .flow, .guide { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .flow { marker-end: url(#tip); }
+    .guide { stroke-width: 1.1; stroke-opacity: .5; }
+    .row { fill: currentColor; fill-opacity: .17; }
+  </style>
+  <defs>
+    <marker id="tip" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto">
+      <path class="frame" d="M2 1.6 10 6 2 10.4"/>
+    </marker>
+  </defs>
+
+  <text class="dim" x="258" y="64">12288</text>
+  <text class="dim" transform="translate(28 166) rotate(-90)">512</text>
+  <rect class="row" x="40" y="98" width="436" height="20"/>
+  <rect class="frame" x="40" y="75" width="436" height="140"/>
+  <path class="guide" d="M185.333 75v140m145.334-140v140"/>
+  <text class="token" x="49" y="113">apple</text>
+  <text class="math" x="258" y="172">E</text>
+  <path class="guide" d="M41 220v6h143v-6m3 0v6h143v-6m3 0v6h142v-6"/>
+  <g class="dim">
+    <text x="112.667" y="247">4096</text>
+    <text x="258" y="247">4096</text>
+    <text x="403.333" y="247">4096</text>
+  </g>
+
+  <text class="dim" x="866" y="44">12288</text>
+  <text class="dim" transform="translate(665 160) rotate(-90)">4096</text>
+  <rect class="row" x="676" y="55" width="380" height="20"/>
+  <rect class="frame" x="676" y="55" width="380" height="160"/>
+  <path class="guide" d="M802.667 55v20m126.666-20v20"/>
+  <text class="math" x="866" y="150">W</text>
+
+  <path class="flow" d="M476 108h20q19 0 19 19v84q0 21 25 34"/>
+  <path class="flow" d="M676 65h-63q-19 0-19 19v127q0 21-25 34"/>
+  <circle class="frame" cx="555" cy="255" r="15"/>
+  <circle cx="555" cy="255" r="2.8" fill="currentColor"/>
+  <path class="flow" d="M555 270v9q0 13-13 13H403q-15 0-15 15v21q0 15 15 15h13"/>
+
+  <text class="dim" x="560" y="316">4096</text>
+  <text class="dim" transform="translate(408 385) rotate(-90)">512</text>
+  <rect class="row" x="420" y="333" width="280" height="20"/>
+  <rect x="420" y="333" width="11" height="20" fill="currentColor" fill-opacity=".78"/>
+  <rect class="frame" x="420" y="327" width="280" height="96"/>
+  <text class="token" x="439" y="348">apple</text>
+  <text class="math" x="560" y="395">T = EW<tspan baseline-shift="super" font-size="17" font-style="normal">⊤</tspan></text>
+</svg>

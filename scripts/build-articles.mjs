@@ -264,6 +264,8 @@ function listing(folder, trail) {
   const items = [
     ...folder.folders.filter(hasNotes).map((f) => `<li><a href="${folderUrl(f)}">${escapeHtml(f.name)}</a></li>`),
     ...folder.notes.map((n) => `<li><a href="${noteUrl(n)}">${escapeHtml(n.title)}</a></li>`),
+    ...folder.folders.filter((f) => !hasNotes(f) && f.files.some((file) => file.name === "index.html"))
+      .map((f) => `<li><a href="${folderUrl(f)}">${escapeHtml(f.name)}</a></li>`),
   ];
   const title = folder.rel ? folder.name : "Articles";
   const listing = items.length

@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="918" viewBox="0 0 1320 918" role="img" aria-labelledby="title desc">
+  <title id="title">Double-stream blocks 2–8 and the first single-stream block, block 9</title>
+  <desc id="desc">Seven more double-stream blocks use the same structure with their own weights. On the first denoising pass, text, reference and target tokens are stacked along the sequence axis. All use the single block's input and output weights. A fused projection creates Q, K, V, G and U. Joint attention and SwiGLU process these in parallel. Their outputs are concatenated along the feature axis, projected together and gated into a single residual. Reference queries attend only reference keys and use modulation at zero time. Blocks 10 through 32 repeat the single-stream structure.</desc>
+  <style>
+    svg { color: #142c4c; }
+    text { fill: currentColor; text-anchor: middle; font: 23px "STIX Two Text", Georgia, serif; }
+    .math { font-style: italic; }
+    .small { font-size: 19px; }
+    .dim,.row { font: 15px ui-monospace, monospace; }
+    .row { text-anchor: start; }
+    .sub { font-size: 14px; baseline-shift: sub; }
+    .wire,.frame,.thin,.flow { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .thin { stroke-width: 1; stroke-opacity: .48; }
+    .flow { marker-end: url(#tip); }
+    .band { fill: currentColor; opacity: .17; }
+  </style>
+  <defs>
+    <marker id="tip" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><path class="wire" d="M2 1.6 10 6 2 10.4"/></marker>
+  </defs>
+
+  <path class="flow" d="M332 0v14"/><path class="flow" d="M994 0v14"/>
+  <rect class="frame" x="250" y="18" width="820" height="40"/>
+  <text x="660" y="45">Double-stream · Blocks 2–8　×7</text>
+  <path class="flow" d="M332 59v35"/><path class="flow" d="M994 59v35"/>
+  <rect class="frame" x="248" y="100" width="168" height="80"/>
+  <path class="thin" d="M248 140h168"/>
+  <text class="math" x="332" y="128">R₈</text><text class="math" x="332" y="167">X₈</text>
+  <rect class="frame" x="909" y="100" width="170" height="40"/>
+  <text class="math" x="994" y="128">T₈</text>
+  <path class="flow" d="M908 120h-85q-8 0-8 8v2q0 8-8 8h-11"/>
+  <path class="flow" d="M417 120h39q8 0 8 8v39q0 8 8 8h51"/>
+  <path class="flow" d="M417 160h15q8 0 8 8v34q0 8 8 8h75"/>
+
+  <text class="small" x="660" y="91">Block 9 · Single-stream 1</text>
+  <text class="dim" x="760" y="105">4096</text>
+  <rect class="frame" x="528" y="112" width="264" height="118"/>
+  <rect class="band" x="529" y="128" width="262" height="15"/><rect class="band" x="529" y="202" width="262" height="15"/>
+  <path class="thin" d="M528 151h264m-264 40h264"/>
+  <text class="row" x="536" y="140">apple</text><text class="row" x="536" y="214">p</text>
+  <text class="math" x="660" y="140">T₈</text><text class="math" x="660" y="179">R₈</text><text class="math" x="660" y="216">X₈</text>
+  <text class="math small" x="887" y="186">H = [T₈; R₈; X₈]</text>
+  <text class="dim" x="753" y="252">L<tspan class="sub">txt</tspan> + L<tspan class="sub">ref</tspan> + L</text>
+
+  <path class="flow" d="M622 231v40"/>
+  <path class="wire" d="M528 225h-405q-9 0-9 9v579q0 9 9 9h345"/>
+  <rect class="frame" x="468" y="277" width="385" height="47"/>
+  <text class="math" x="660" y="307">Y = (1 + s) ⊙ LN(H) + b</text>
+  <text class="math small" x="1021" y="265">(b, s, g)<tspan class="sub">single</tspan></text>
+  <text class="dim" x="1045" y="291">txt, img: t　 ref: 0</text>
+  <path class="flow" d="M946 298q-6 0-12 2h-75"/>
+  <text class="math small" x="898" y="289">b, s</text>
+  <path class="wire" d="M1136 299h24q8 0 8 8v507q0 8-8 8H851"/>
+  <text class="math small" x="1107" y="810">g</text>
+
+  <path class="flow" d="M660 325v48"/>
+  <text class="math small" x="730" y="352">W<tspan class="sub">in, 9</tspan>ᵀ</text>
+  <text class="dim" x="1045" y="368">36864</text>
+  <rect class="frame" x="210" y="379" width="900" height="49"/>
+  <path class="thin" d="M310 380v47m100-47v47m100-47v47m300-47v47"/>
+  <text class="math" x="260" y="411">Q</text><text class="math" x="360" y="411">K</text>
+  <text class="math" x="460" y="411">V</text><text class="math" x="660" y="411">G</text><text class="math" x="960" y="411">U</text>
+  <g class="dim"><text x="260" y="451">4096</text><text x="360" y="451">4096</text><text x="460" y="451">4096</text><text x="660" y="451">12288</text><text x="960" y="451">12288</text></g>
+
+  <path class="flow" d="M243 458v24"/><path class="flow" d="M343 458v24"/>
+  <text class="small" x="243" y="505">RMSNorm</text><text class="small" x="343" y="505">RMSNorm</text>
+  <path class="wire" d="M243 513v10m100-10v10"/>
+  <text class="small" x="243" y="546">RoPE</text><text class="small" x="343" y="546">RoPE</text>
+  <path class="flow" d="M243 554v20"/><path class="flow" d="M343 554v20"/>
+  <rect class="frame" x="143" y="581" width="371" height="44"/>
+  <text class="math small" x="328" y="609">A = softmax<tspan class="sub">row</tspan>(Q′K′ᵀ / √128 + M)</text>
+  <path class="flow" d="M460 457v90q0 8 8 8h51q8 0 8 8v84q0 8-8 8h-81"/>
+  <path class="flow" d="M328 626v16"/>
+  <text class="math" x="328" y="671">O = Concat<tspan class="sub">heads</tspan>(AV)</text>
+  <text class="math small" x="343" y="709">M<tspan class="sub">ref → txt, img</tspan> = −∞</text>
+  <text class="math small" x="343" y="737">M<tspan class="sub">else</tspan> = 0</text>
+  <text class="math small" x="326" y="767">KV cache₉ = (K′<tspan class="sub">ref</tspan>, V<tspan class="sub">ref</tspan>)</text>
+
+  <path class="flow" d="M660 457v63"/>
+  <text class="math" x="660" y="549">SiLU(G)</text>
+  <path class="flow" d="M660 559v15q0 8 8 8h119"/>
+  <path class="flow" d="M960 457v117q0 8-8 8H827"/>
+  <text x="807" y="589">⊙</text>
+  <path class="flow" d="M807 596v46"/>
+  <text class="math" x="807" y="671">F = SiLU(G) ⊙ U</text>
+
+  <path class="flow" d="M406 677v5q0 8 8 8h80q8 0 8 8v18"/>
+  <path class="flow" d="M807 680v6q0 8-8 8h-79q-8 0-8 8v14"/>
+  <rect class="frame" x="450" y="723" width="420" height="41"/>
+  <path class="thin" d="M555 723v41"/>
+  <text class="math" x="503" y="752">O</text><text class="math" x="713" y="752">F</text>
+  <text class="dim" x="505" y="786">4096</text><text class="dim" x="769" y="786">12288</text>
+  <path class="flow" d="M660 766v30"/>
+  <text class="math small" x="594" y="792">W<tspan class="sub">out, 9</tspan>ᵀ</text>
+  <text class="dim" x="840" y="795">4096</text>
+  <rect class="frame" x="474" y="801" width="372" height="45"/>
+  <text class="math" x="660" y="831">H₉ = H + g ⊙ ([O | F]W<tspan class="sub">out, 9</tspan>ᵀ)</text>
+  <path class="flow" d="M445 822h25"/><path class="flow" d="M879 822h-29"/>
+  <path class="flow" d="M660 847v24"/>
+  <rect class="frame" x="465" y="877" width="390" height="37"/>
+  <text class="small" x="660" y="902">Blocks 10–32　×23</text>
+  <path class="wire" d="M660 914v4"/>
+</svg>

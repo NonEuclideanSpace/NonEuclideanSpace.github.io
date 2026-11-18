@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1020" height="430" viewBox="0 0 1020 430" role="img" aria-labelledby="title">
+  <title id="title">Text RoPE. Each 128-dimensional head has four 32-dimensional positional groups. The text coordinates are zero on the first three axes. On the last axis each of 16 adjacent pairs rotates by its token position times its frequency. The two planes show the same pair for the apple query and the green key. Values bypass rotation.</title>
+  <style>
+    svg { color: #142c4c; }
+    text { fill: currentColor; text-anchor: middle; }
+    .math { font: italic 23px "STIX Two Text", Georgia, serif; }
+    .dim { font: 15px ui-monospace, monospace; }
+    .sub { font: 14px "STIX Two Text", Georgia, serif; baseline-shift: sub; }
+    .frame, .guide, .axis, .before, .after, .turn, .link { stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .guide, .axis { stroke-opacity: .46; stroke-width: 1.15; }
+    .link, .before, .after, .turn { marker-end: url(#tip); }
+    .before { stroke-dasharray: 5 4; stroke-opacity: .72; }
+    .after { stroke-width: 2.3; }
+    .active { fill: currentColor; fill-opacity: .13; }
+  </style>
+  <defs>
+    <marker id="tip" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto">
+      <path class="frame" d="M2 1.6 10 6 2 10.4"/>
+    </marker>
+    <g id="head">
+      <path class="link" d="M0 0v3q0 7-7 7h-145q-9 0-9 9v49q0 8 8 8h7"/>
+      <path class="guide" d="M-140 47v-7h280v7"/>
+      <text class="dim" y="31">128</text>
+      <g class="dim"><text x="-105" y="58">32</text><text x="-35" y="58">32</text><text x="35" y="58">32</text><text x="105" y="58">32</text></g>
+      <rect class="active" x="70" y="64" width="70" height="25"/>
+      <rect class="frame" x="-140" y="64" width="280" height="25"/>
+      <path class="guide" d="M-70 64v25M0 64v25M70 64v25"/>
+      <g class="dim"><text x="-105" y="112">0</text><text x="-35" y="112">0</text><text x="35" y="112">0</text></g>
+      <path class="guide" d="M69.5 120v6h70v-6"/>
+      <text class="dim" x="105" y="146">16 × 2</text>
+    </g>
+    <g id="plane">
+      <path class="axis" d="M-58 0H119m-5-3 5 3-5 3 M0 40V-95m-3 5 3-5 3 5"/>
+      <circle r="2.5" fill="currentColor"/>
+    </g>
+  </defs>
+
+  <g transform="translate(191 0)">
+    <use href="#head"/>
+    <text class="math" x="105" y="111">p<tspan class="sub">apple</tspan></text>
+    <path class="link" d="M140 126h16q10 0 10 10V266q0 8-8 8H146"/>
+  </g>
+  <g transform="translate(509 0)">
+    <use href="#head"/>
+    <text class="math" x="105" y="111">p<tspan class="sub">green</tspan></text>
+    <path class="link" d="M140 126h16q10 0 10 10V331q0 8-8 8H140"/>
+  </g>
+
+  <g transform="translate(180 297)">
+    <use href="#plane"/>
+    <path class="before" d="M0 0 85.72 -24.58"/>
+    <path class="after" d="M0 0 39.02 -80.00"/>
+    <path class="turn" d="M49.02 -14.06A51 51 0 0 0 22.36 -45.84"/>
+    <text class="math" x="102" y="-21" style="text-anchor:start">q̂<tspan class="sub">apple</tspan></text>
+    <text class="math" x="41" y="-90">q′<tspan class="sub">apple</tspan></text>
+    <text class="math" x="90" y="-48">p<tspan class="sub">apple</tspan> ω</text>
+  </g>
+  <g transform="translate(498 297)">
+    <use href="#plane"/>
+    <path class="before" d="M0 0 76.69 41.97"/>
+    <path class="after" d="M0 0 85.82 -16.67"/>
+    <path class="turn" d="M47.39 25.94A54 54 0 0 0 53 -10.3"/>
+    <text class="math" x="93" y="46" style="text-anchor:start">k̂<tspan class="sub">green</tspan></text>
+    <text class="math" x="101" y="-17" style="text-anchor:start">k′<tspan class="sub">green</tspan></text>
+    <text class="math" x="92" y="19">p<tspan class="sub">green</tspan> ω</text>
+  </g>
+  <path class="link" d="M827 0v324"/>
+  <text class="math" x="827" y="350">v</text>
+  <path class="guide" d="M110 359v8h515v-8"/>
+  <text class="math" x="367" y="403">Δθ = (p<tspan class="sub">apple</tspan> − p<tspan class="sub">green</tspan>) ω</text>
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="128" viewBox="0 0 900 128" role="img" aria-labelledby="title">
+<title id="title">Add the bottleneck attention update, repeat the residual block once and read out the posterior mean.</title>
+<style>svg {color:#142c4c} text {fill:currentColor;text-anchor:middle} .op {font:21px "STIX Two Text",Georgia,serif} .math {font:italic 23px "STIX Two Text",Georgia,serif} .dim {font:15px ui-monospace,monospace} .sub {font-size:70%;baseline-shift:sub} .sup {font-size:70%;baseline-shift:super} .frame,.arrow {fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round} .arrow {marker-end:url(#tip)}</style>
+<defs><marker id="tip" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path class="frame" d="M2 1.6 10 6 2 10.4"/></marker></defs>
+
+<path class="arrow" d="M455 0v14"/>
+<text class="math" x="455" y="40">F′ = ResBlock(X + D)</text>
+<path class="arrow" d="M455 50v14"/>
+<text class="op" x="450" y="91">GroupNorm  →  SiLU  →  Conv<tspan class="sub">3×3</tspan>  →  Conv<tspan class="sub">1×1</tspan>  →  (μ, log σ²)  →  μ</text>
+<path class="frame" d="M737 101v2q0 8-8 8h-22q-8 0-8 8v9"/>
+</svg>

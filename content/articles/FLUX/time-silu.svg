@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="377" viewBox="0 0 900 377" role="img" aria-labelledby="title">
+  <title id="title">Elementwise SiLU on the time features</title>
+  <style>
+    svg { color: #142c4c; }
+    text { fill: currentColor; text-anchor: middle; }
+    .math { font: italic 28px "STIX Two Text", Georgia, serif; }
+    .small { font: italic 20px "STIX Two Text", Georgia, serif; }
+    .dim { font: 16px ui-monospace, monospace; }
+    .number { font: 15px ui-monospace, monospace; }
+    .operator { font-style: normal; }
+    .frame, .flow, .axis, .curve, .guide { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .flow { marker-end: url(#tip); }
+    .axis { stroke-width: 1.1; stroke-opacity: .55; }
+    .guide { stroke-width: 1.1; stroke-dasharray: 3 4; stroke-opacity: .5; }
+    .curve { stroke-width: 2.35; }
+  </style>
+  <defs>
+    <marker id="tip" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto">
+      <path class="frame" d="M2 1.6 10 6 2 10.4"/>
+    </marker>
+  </defs>
+
+  <path class="flow" d="M80 0v64q0 15 15 15h43"/>
+  <g class="math">
+    <text x="203" y="88"><tspan class="operator">SiLU</tspan>(x) =</text>
+    <text x="333" y="66">x</text>
+    <path class="frame" d="M263 79h140"/>
+    <text x="333" y="111">1 + <tspan class="operator">exp</tspan>(−x)</text>
+  </g>
+
+  <path class="axis" d="M453 189h382m-5-3 5 3-5 3 M645 220V30m-3 5 3-5 3 5"/>
+  <text class="small" x="848" y="195">x</text>
+  <text class="small" x="633" y="28" style="text-anchor:end"><tspan class="operator">SiLU</tspan>(x)</text>
+  <text class="number" x="637" y="181" style="text-anchor:end">0</text>
+  <path class="guide" d="M570 189v16.41 M720 189v-44.60"/>
+  <path class="curve" d="M465.00 201.18
+             C475.00 201.99 485.00 202.80 495.00 203.54
+             C507.50 204.47 520.00 205.27 532.50 205.69
+             C545.00 206.11 557.50 206.14 570.00 205.41
+             C582.50 204.67 595.00 203.16 607.50 200.51
+             C620.00 197.87 632.50 194.08 645.00 189.00
+             C657.50 183.92 670.00 177.54 682.50 170.01
+             C695.00 162.49 707.50 153.84 720.00 144.41
+             C732.50 134.97 745.00 124.78 757.50 114.19
+             C770.00 103.61 782.50 92.63 795.00 81.54
+             C805.00 72.67 815.00 63.72 825.00 54.78"/>
+  <circle fill="currentColor" cx="570" cy="205.41" r="3.8"/>
+  <circle fill="currentColor" cx="720" cy="144.40" r="3.8"/>
+  <text class="number" x="563" y="232">(−1, −0.269)</text>
+  <text class="number" x="698" y="117">(1, 0.731)</text>
+
+  <path class="flow" d="M250 122v44q0 17-17 17H97q-17 0-17 17v93"/>
+  <text class="dim" x="450" y="283">4096</text>
+  <text class="dim" transform="translate(56 327) rotate(-90)">1</text>
+  <rect x="70" y="300" width="20" height="56" fill="currentColor" fill-opacity=".21"/>
+  <path class="axis" d="M90 300v56"/>
+  <rect class="frame" x="70" y="300" width="760" height="56"/>
+  <text class="math" x="450" y="338">a = <tspan class="operator">SiLU</tspan>(h) = h ⊙ σ(h)</text>
+</svg>
